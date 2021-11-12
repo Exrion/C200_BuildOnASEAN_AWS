@@ -13,6 +13,27 @@ namespace C200_Web_Application.Controllers
             return View("Home");
         }
 
+        public IActionResult Home()
+        {
+            return View("Home");
+        }
+
+        public IActionResult Cameras()
+        {
+            return View("Cameras_Admin");
+        }
+
+        public IActionResult Contacts()
+        {
+            return View("Contacts_Admin");
+        }
+
+        public IActionResult Analytics()
+        {
+            return View("Analytics_Admin");
+        }
+
+        //TEMP; REMOVE LATER
         public IActionResult Test()
         {
             return View("Test");
