@@ -8,7 +8,7 @@ namespace C200_Web_Application.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Home()
+        public IActionResult Index()
         {
             return View("Home");
         }
