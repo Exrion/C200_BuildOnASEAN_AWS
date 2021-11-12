@@ -12,5 +12,10 @@ namespace C200_Web_Application.Controllers
         {
             return View("Home");
         }
+
+        public IActionResult Test()
+        {
+            return View("Test");
+        }
     }
 }
