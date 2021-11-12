@@ -6,16 +6,11 @@ using System.Threading.Tasks;
 
 namespace C200_Web_Application.Controllers
 {
-    public class HomeController : Controller
+    public class AdminController : Controller
     {
         public IActionResult Index()
         {
             return View("Home");
-        }
-
-        public IActionResult Login()
-        {
-            return View();
         }
     }
 }
