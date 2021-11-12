@@ -1,13 +1,58 @@
 ﻿<!DOCTYPE html>
 <html lang="en-gb">
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" name="viewport" content="width=device-width""/>
     <title>Home | @ViewData["Username"]</title>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
 </head>
 <body>
     <div class="container">
-        test
+        <!--Header-->
+        <header>
+            <div class="row">
+                <div class="col">
+                    <!--Logo Image-->
+                    <a class="navbar-brand" href="#">
+                        <img src="~/Images/Home/logo.png" alt="Logo of Versent" class="logo" height="64"/>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <!--Displays the name of the current page-->
+                    @ViewData["PageName"]
+                </div>
+                <div class="col">
+                    <!--Navigation Bar-->
+                    <ul class="navbar">
+                        <li><a href="#">Cameras</a></li>
+                        <li><a href="#">Analytics</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!--Main Body-->
+        <main>
+            <div class="row">
+
+            </div>
+        </main>
+        
+        <!--Footer-->
+        <footer>
+            <div class="row">
+                <div class="col">
+                    <!--Credits-->
+                    <p class="footer"><small>Developed by Jerald, Titus, Yuan Wei and Nicole</small></p>
+                </div>
+                <div class="col-6">
+                    <!--White Space-->
+                </div>
+                <div class="col">
+                    <!--To be decided; back to top button or copyright or smth-->
+                </div>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

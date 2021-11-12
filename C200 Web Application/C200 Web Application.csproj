@@ -14,4 +14,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\lib\jquery\jquery.min.js" />
+  </ItemGroup>
+
 </Project>
