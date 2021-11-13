@@ -38,6 +38,7 @@
             <!--Nav Bar items-->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav">
+                    <!--Each razor is to check for active page and apply the active Bootstrap CSS class to it.-->
                     <a class="nav-item nav-link @activeList[0]" href="@Url.Action("Home", "Admin")">Home</a>
                     <a class="nav-item nav-link @activeList[1]" href="@Url.Action("Cameras", "Admin")">Cameras</a>
                     <a class="nav-item nav-link @activeList[2]" href="@Url.Action("Contacts", "Admin")">Contacts</a>
