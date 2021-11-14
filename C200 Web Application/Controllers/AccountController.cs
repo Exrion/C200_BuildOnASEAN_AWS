@@ -12,6 +12,11 @@ namespace TestArea.Controllers
     public class AccountController : Controller
     {
         [HttpGet]
+        public IActionResult Home()
+        {
+            return View();
+        }
+
         public IActionResult Login()
         {
             return View();
