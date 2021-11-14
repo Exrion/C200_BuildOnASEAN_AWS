@@ -38,6 +38,11 @@ namespace C200_Web_Application.Controllers
             return View("Analytics_Content");
         }
 
+        public IActionResult About()
+        {
+            return View("About_Us");
+        }
+
         //TEMP; REMOVE LATER
         public IActionResult Test()
         {
