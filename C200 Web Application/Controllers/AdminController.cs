@@ -8,6 +8,11 @@ namespace C200_Web_Application.Controllers
 {
     public class AdminController : Controller
     {
+        public void Main(string[] args)
+        {
+
+        }
+
         public IActionResult Index()
         {
             return View("Home_Content");
