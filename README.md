@@ -3,8 +3,8 @@ A team project for AWS' Build On ASEAN 2021 hackathon. </br>
 </br>
 =====TEAM=====</br>
 Titus Lim (https://github.com/Exrion)</br>
-Nicole (email_here)</br>
-Yuan Wei (email_here)</br>
+Nicole (nicolegoh2003@gmail.com)</br>
+Yuan Wei (02yuanweic2@gmail.com)</br>
 Jerald (jerald.lohrj@gmail.com)</br>
 </br>
 =====ABOUT THE PROJECT=====</br>
