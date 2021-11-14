@@ -32,7 +32,7 @@ namespace TestArea.Controllers
 
             }
 
-            return View("Home");
+            return View("~/Views/Admin/Home_Content.cshtml");
         }
     }
 }
