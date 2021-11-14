@@ -1,0 +1,28 @@
+﻿<!--   <?php include('server.php')?>    -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form In Design</title>
+    <link rel="stylesheet" href="~/css/Home/loginstyle.css" />
+</head>
+<body>
+    <div class="container">
+        <img src="~/Images/Home/background.jpg" />
+        <form method="POST" action="/Account/verify">
+            <div class="form_input">
+                <input type="text" name="username" placeholder="Username" />
+
+            </div>
+
+            <div class="form_input">
+                <input type="password" name="password" placeholder="Password" />
+
+            </div>
+            <input type="submit" name="submit" value="LOGIN" class="btn-login" />
+        </form>
+        <div class="alert alert-danger">
+            @ViewData["Message"]
+        </div>
+    </div>
+</body>
+</html>
