@@ -1,32 +1,72 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    var action = ViewContext.RouteData.Values["action"].ToString();
+    string[] activeList = { "", "", "", "", ""};
+
+    switch(action)
+    {
+        case("Home"):
+            activeList[0] = "active";
+            break;
+
+        case ("Index"):
+            activeList[0] = "active";
+            break;
+
+        case ("About"):
+            activeList[1] = "active";
+            break;
+
+        case ("Services"):
+            activeList[2] = "active";
+            break;
+
+        case ("Contact"):
+            activeList[3] = "active";
+            break;
+
+        case ("Login"):
+            activeList[4] = "active";
+            break;
+    }
+
+    }
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <title>Test</title>
-    <link rel="stylesheet" href="~/css/Account/style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
 </head>
 <body>
-    <header>
-        <div class="wrapper">
-            <div class="logo">
-                <img src="/Images/Account/logo.png" />
-            </div>
-            <ul class="nav-area">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="/Account/login">Login</a></li>
-            </ul>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
+<div class="container"">
+     <header>
+         
+         <nav class="navbar navbar-expand navbar-light bg-light">
+             <a class="navbar-brand" href="@Url.Action("Home", "Account")">
+                 <img src="~/Images/Account/logo.png" width="30" height="30" class="d-inline-block align-top" />
+             </a>
 
-        <div class="welcome-text">
-            <h1>Welcome to C200</h1>
-            <a href="#">View</a>
-        </div>
-    </header>
+
+             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                 <span class="navbar-toggler-icon"></span>
+             </button>
+
+             <div class="collapse navbar-collapse" id="navbarNav">
+                 <div class="navbar-nav">
+
+                     <a class="nav-item nav-link @activeList[0]" href="@Url.Action("Home", "Account")">Home</a>
+                     <a class="nav-item nav-link @activeList[1]" href="@Url.Action("About", "Account")">About</a>
+                     <a class="nav-item nav-link @activeList[2]" href="@Url.Action("Services", "Account")">Services</a>
+                     <a class="nav-item nav-link @activeList[3]" href="@Url.Action("Contact", "Account")">Contact</a>
+                     <a class="nav-item nav-link @activeList[4]" href="@Url.Action("Login", "Account")">Login</a>
+
+                 </div>
+
+             </div>
+         </nav>
+        </header>
+</div>
 </body>
 </html>
