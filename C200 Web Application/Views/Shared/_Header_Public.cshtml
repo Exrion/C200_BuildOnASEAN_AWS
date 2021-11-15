@@ -1,10 +1,10 @@
 ﻿@{ 
     var action = ViewContext.RouteData.Values["action"].ToString();
-    string[] activeList = { "", "", "", "", ""};
+    string[] activeList = { "", "", "", "", "" };
 
-    switch(action)
+    switch (action)
     {
-        case("Home"):
+        case ("Home"):
             activeList[0] = "active";
             break;
 
@@ -28,27 +28,17 @@
             activeList[4] = "active";
             break;
     }
+}
 
-    }
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Test</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-</head>
-<body>
+
 <div class="container"">
-     <header>
-         
+     <header>         
          <nav class="navbar navbar-expand navbar-light bg-light">
              <a class="navbar-brand" href="@Url.Action("Home", "Account")">
                  <img src="~/Images/Account/logo.png" width="30" height="30" class="d-inline-block align-top" />
              </a>
-
-
              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                  <span class="navbar-toggler-icon"></span>
              </button>
@@ -63,10 +53,7 @@
                      <a class="nav-item nav-link @activeList[4]" href="@Url.Action("Login", "Account")">Login</a>
 
                  </div>
-
-             </div>
+              </div>
          </nav>
-        </header>
+     </header>
 </div>
-</body>
-</html>

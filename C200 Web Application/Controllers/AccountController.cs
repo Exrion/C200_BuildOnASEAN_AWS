@@ -14,7 +14,7 @@ namespace TestArea.Controllers
         [HttpGet]
         public IActionResult Home()
         {
-            return View();
+            return View("Home_Content_Public");
         }
 
         public IActionResult Login()
