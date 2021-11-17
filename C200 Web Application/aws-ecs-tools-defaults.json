@@ -26,5 +26,5 @@
     "deployment-maximum-percent"         : 200,
     "elb-target-group"                   : "arn:aws:elasticloadbalancing:us-east-1:364269233282:targetgroup/C200WebApplication/fb6a6b0e59e0964b",
     "elb-container-port"                 : 80,
-    "vstoolkit-deployment-mode"          : "DeployService"
+    "vstoolkit-deployment-mode"          : "PushOnly"
 }
