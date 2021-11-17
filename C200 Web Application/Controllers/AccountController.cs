@@ -39,5 +39,10 @@ namespace TestArea.Controllers
 
             return View("~/Views/Admin/Home_Content.cshtml");
         }
+
+        public IActionResult Contacts()
+        {
+            return View("~/Views/Account/Contacts_Content.cshtml");
+        }
     }
 }
