@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/C200 Web Application",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:62251",
       "sslPort": 0
@@ -11,6 +15,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "admin/home",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
