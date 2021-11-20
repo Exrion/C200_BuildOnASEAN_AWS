@@ -23,7 +23,7 @@ namespace C200_Web_Application___Identity.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About_Us()
         {
             return View();
         }
