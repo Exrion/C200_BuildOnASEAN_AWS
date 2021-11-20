@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using C200_Web_Application___Identity.Areas.Identity.Data
+
+@inject SignInManager<WebAppUser> SignInManager
+@inject UserManager<WebAppUser> UserManager
+
+<div class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <a class="nav-item nav-link" href="@Url.Action("Index", "Home")">Home</a>
+    }
+    else
+    {
+        <a class="nav-item nav-link" href="@Url.Action("Index", "Home")">Home</a>
+    }
+</div>
