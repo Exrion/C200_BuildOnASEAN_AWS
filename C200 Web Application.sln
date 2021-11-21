@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C200 Web Application", "C200 Web Application\C200 Web Application.csproj", "{24842AC7-1CA5-4843-8D36-0C16FD309685}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C200 Web Application - Identity", "C200 Web Application - Identity\C200 Web Application - Identity.csproj", "{647FF0A1-41DE-4D4B-A6DB-76D842C0DA02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "C200 Web Application - Identity", "C200 Web Application - Identity\C200 Web Application - Identity.csproj", "{647FF0A1-41DE-4D4B-A6DB-76D842C0DA02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{24842AC7-1CA5-4843-8D36-0C16FD309685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{24842AC7-1CA5-4843-8D36-0C16FD309685}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{24842AC7-1CA5-4843-8D36-0C16FD309685}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{24842AC7-1CA5-4843-8D36-0C16FD309685}.Release|Any CPU.Build.0 = Release|Any CPU
 		{647FF0A1-41DE-4D4B-A6DB-76D842C0DA02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{647FF0A1-41DE-4D4B-A6DB-76D842C0DA02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{647FF0A1-41DE-4D4B-A6DB-76D842C0DA02}.Release|Any CPU.ActiveCfg = Release|Any CPU

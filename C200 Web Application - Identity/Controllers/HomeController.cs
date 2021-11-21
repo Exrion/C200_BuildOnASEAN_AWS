@@ -23,6 +23,21 @@ namespace C200_Web_Application___Identity.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Services()
+        {
+            return View();
+        }
+
+        public IActionResult Contact_Us()
+        {
+            return View();
+        }
+
         public IActionResult About_Us()
         {
             return View();
