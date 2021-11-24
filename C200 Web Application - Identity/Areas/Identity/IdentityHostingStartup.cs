@@ -21,6 +21,7 @@ namespace C200_Web_Application___Identity.Areas.Identity
                         context.Configuration.GetConnectionString("AuthDBContextConnection")));
 
                 services.AddDefaultIdentity<WebAppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<AuthDBContext>();
             });
         }
