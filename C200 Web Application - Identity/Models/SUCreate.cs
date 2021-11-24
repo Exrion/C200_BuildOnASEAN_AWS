@@ -24,6 +24,7 @@ namespace C200_Web_Application___Identity.Models
                 WebAppUser user = new WebAppUser();
                 user.UserName = "su@gmail.com";
                 user.Email = "su@gmail.com";
+                user.EmailConfirmed = true;
 
                 IdentityResult result = userManager.CreateAsync(user, "SUser1234!").Result;
 
