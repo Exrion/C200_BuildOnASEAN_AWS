@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace C200_Web_Application___Identity.Models
 {
-    public static class SUCreate
+    public static class RoleAndUser_Create
     {
         public static void SeedData(UserManager<WebAppUser> userManager, RoleManager<IdentityRole> roleManager)
         {

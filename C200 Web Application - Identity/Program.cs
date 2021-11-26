@@ -25,7 +25,7 @@ namespace C200_Web_Application___Identity
                 {
                     var userManager = serviceProvider.GetRequiredService<UserManager<C200_Web_Application___Identity.Areas.Identity.Data.WebAppUser>>();
                     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                    SUCreate.SeedData(userManager, roleManager);
+                    RoleAndUser_Create.SeedData(userManager, roleManager);
                 }
                 catch (Exception ex)
                 {
