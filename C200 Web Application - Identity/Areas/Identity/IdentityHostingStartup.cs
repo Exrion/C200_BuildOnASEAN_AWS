@@ -22,6 +22,12 @@ namespace C200_Web_Application___Identity.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("AuthDBContextConnection")));
                 services.AddTransient<IEmailSender, EmailSender>();
+                services.Configure<IdentityOptions>(options =>
+                {
+                    //===Customize Identity===
+                    //User
+                    options.User.RequireUniqueEmail = true;
+                });
 
                 services.AddDefaultIdentity<WebAppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddRoles<IdentityRole>()

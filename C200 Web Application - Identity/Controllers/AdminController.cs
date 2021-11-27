@@ -46,5 +46,35 @@ namespace C200_Web_Application___Identity.Controllers
             var users = userManager.Users;
             return View(users);
         }
+        [Authorize(Roles = "SU")]
+        public async Task<IActionResult> EditUserAsync(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                TempData["UserID_Error"] = string.Format("User ID {0} mismatch", id);
+                return RedirectToAction("Users");
+            }
+            else
+            {
+                return View("EditUser", user);
+            }
+        }
+        [Authorize(Roles = "SU")]
+        public async Task<IActionResult> DeleteUserAsync(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                TempData["UserID_Error"] = string.Format("User ID {0} mismatch", id);
+                return RedirectToAction("Users");
+            }
+            else
+            {
+                return View("DeleteUser", user);
+            }
+        }
     }
 }
