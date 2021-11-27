@@ -5,14 +5,14 @@
 @inject UserManager<WebAppUser> UserManager
 
 <div class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+    @if (SignInManager.IsSignedIn(User) && !this.User.IsInRole("SU"))
     {
         <a class="nav-item nav-link" href="@Url.Action("Dashboard", "Admin")">Dashboard</a>
         <a class="nav-item nav-link" href="@Url.Action("Cameras", "Admin")">Cameras</a>
         <a class="nav-item nav-link" href="@Url.Action("Contacts", "Admin")">Contacts</a>
         <a class="nav-item nav-link" href="@Url.Action("Analytics", "Admin")">Analytics</a>
     }
-    else
+    else if (!SignInManager.IsSignedIn(User))
     {
         <a class="nav-item nav-link" href="@Url.Action("Index", "Home")">Home</a>
         <a class="nav-item nav-link" href="@Url.Action("About", "Home")">About</a>
