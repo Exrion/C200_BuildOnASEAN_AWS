@@ -44,14 +44,6 @@ namespace C200_Web_Application___Identity.Models
                 IdentityResult roleResult = roleManager.
                 CreateAsync(role).Result;
             }
-            
-            if (!roleManager.RoleExistsAsync("Admin").Result)
-            {
-                IdentityRole role = new IdentityRole();
-                role.Name = "Admin";
-                IdentityResult roleResult = roleManager.
-                CreateAsync(role).Result;
-            }
         }
 
     }

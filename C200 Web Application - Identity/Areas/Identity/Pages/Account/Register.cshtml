@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Identity
 @using C200_Web_Application___Identity.Areas.Identity.Data
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Create a new user";
     @inject SignInManager<WebAppUser> SignInManager
     @inject UserManager<WebAppUser> UserManager
 }
@@ -19,7 +19,6 @@ else
     <div class="row">
         <div class="col-md-4">
             <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                <h4>Create a new account.</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">

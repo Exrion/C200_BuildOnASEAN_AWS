@@ -1,0 +1,43 @@
+﻿@model IEnumerable<C200_Web_Application___Identity.Areas.Identity.Data.WebAppUser>
+
+@{
+    ViewData["Title"] = "Users List | Admin";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <section>
+            @{
+                if (@Model == null)
+                {
+                    <div class="col-md-6">
+                        <p class="alert alert-danger">Database is either empty or cannot be reached!</p>
+                    </div>
+                }
+                else
+                {
+                    <h1>Users List</h1>
+                    <a class="btn btn-primary" id="register" asp-area="Identity" asp-page="/Account/Register">Add new user</a>
+                    <hr />
+
+                    foreach (var user in Model)
+                    {
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                User Id : @user.Id
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@user.UserName</h5>
+                                <h5 class="card-title">Email confirmed: @user.EmailConfirmed</h5>
+                            </div>
+                            <div class="card-footer">
+                                <a href="@Url.Action("Edit", "Admin")" class="btn btn-primary">Edit</a>
+                                <a href="@Url.Action("Delete", "Admin")" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </section>
+    </div>
+</div>

@@ -19,4 +19,8 @@
         <a class="nav-item nav-link" href="@Url.Action("Services", "Home")">Services</a>
         <a class="nav-item nav-link" href="@Url.Action("Contact_Us", "Home")">Contact Us</a>
     }
+    else if (SignInManager.IsSignedIn(User) && this.User.IsInRole("SU"))
+    {
+        <a class="nav-item nav-link" href="@Url.Action("Users", "Admin")">Users</a>
+    }
 </div>
