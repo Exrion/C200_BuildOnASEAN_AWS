@@ -5,7 +5,7 @@
 }
 
 <h1>Edit User</h1>
-<form method="post" action="/Admin/EditUserPost">
+<form method="post">
     <div class="form-group row">
         <!--ID Input - Disabled-->
         <label asp-for="Id" name="Id" class="col-md-2 col-form-label">User ID :</label>
@@ -31,7 +31,7 @@
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group row btn-toolbar">
         <div class="col-md-1 btn-group">
-            <input type="submit" value="Update" class="btn btn-primary" /><br />
+            <button type="submit" class="btn btn-primary">Update</button>
         </div>
         <div class="col-md-1 btn-group">
             <a href="/Admin/Users" class="btn-primary btn">Cancel</a>
@@ -57,7 +57,7 @@
             }
         </div>
         <div class="card-footer">
-            <a href="#" class="btn btn-primary">Manage Roles</a>
+            <a href="#" class="btn btn-primary disabled">Manage Roles</a>
         </div>
     </div>
 
@@ -79,7 +79,7 @@
             }
         </div>
         <div class="card-footer">
-            <a href="#" class="btn btn-primary">Manage Roles</a>
+            <a href="#" class="btn btn-primary btn disabled">Manage Roles</a>
         </div>
     </div>
 </form>
