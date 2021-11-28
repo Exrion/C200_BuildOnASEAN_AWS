@@ -25,7 +25,7 @@ namespace C200_Web_Application___Identity.Controllers
 
         public IActionResult About()
         {
-            return View();
+            return View("About_Us");
         }
 
         public IActionResult Services()
