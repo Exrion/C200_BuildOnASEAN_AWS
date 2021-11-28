@@ -1,4 +1,5 @@
 ﻿using C200_Web_Application___Identity.Areas.Identity.Data;
+using C200_Web_Application___Identity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,7 @@ namespace C200_Web_Application___Identity.Controllers
             return View(users);
         }
         [Authorize(Roles = "SU")]
-        public async Task<IActionResult> EditUserAsync(string id)
+        public async Task<IActionResult> EditUser(string id)
         {
             var user = await userManager.FindByIdAsync(id);
 
@@ -56,13 +57,23 @@ namespace C200_Web_Application___Identity.Controllers
                 TempData["UserID_Error"] = string.Format("User ID {0} mismatch", id);
                 return RedirectToAction("Users");
             }
-            else
+
+            var userClaims = await userManager.GetClaimsAsync(user);
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var model = new EditUserViewModel
             {
-                return View("EditUser", user);
-            }
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                Claims = userClaims.Select(c => c.Value).ToList(),
+                Roles = (List<string>)userRoles
+            };
+
+            return View(model);
         }
         [Authorize(Roles = "SU")]
-        public async Task<IActionResult> DeleteUserAsync(string id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await userManager.FindByIdAsync(id);
 
@@ -73,7 +84,7 @@ namespace C200_Web_Application___Identity.Controllers
             }
             else
             {
-                return View("DeleteUser", user);
+                return View(user);
             }
         }
     }

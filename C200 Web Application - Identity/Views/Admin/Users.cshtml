@@ -13,7 +13,6 @@
                     <div class="col-md-6">
                         <p class="alert alert-danger">@TempData["UserID_Error"]</p>
                     </div>
-                    <hr />
                 }
             }
             @{
@@ -40,8 +39,8 @@
                                 <h5 class="card-title">Email confirmed: @user.EmailConfirmed</h5>
                             </div>
                             <div class="card-footer">
-                                <a href="/Admin/EditUserAsync/@user.Id" class="btn btn-primary">Edit</a>
-                                <a href="/Admin/DeleteUserAsync/@user.Id" class="btn btn-danger">Delete</a>
+                                <a href="/Admin/EditUser/@user.Id" class="btn btn-primary">Edit</a>
+                                <a href="/Admin/DeleteUser/@user.Id" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
                     }
