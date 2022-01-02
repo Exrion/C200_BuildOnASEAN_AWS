@@ -1,3 +1,36 @@
 ﻿@{
     ViewData["Title"] = "Cameras | Admin";
 }
+
+<head>
+    <script src="https://unpkg.com/amazon-kinesis-video-streams-webrtc/dist/kvs-webrtc.min.js%22%3E></script>
+    <title>Access Camera Clusters</title>
+</head>
+<main>
+    <div class="container">
+        <div class="col-sm-8">
+            <h1>Camera Clusters</h1>
+            <label><a href="https://awslabs.github.io/amazon-kinesis-video-streams-webrtc-sdk-js/examples/index.html%22%3EClick here for master camera setup</a></label>
+            <table class="table table-condensed table-hover">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Level</th>
+                </tr>
+                <tr class="clickable" onclick="window.location='https://console.aws.amazon.com/kinesisvideo/home?region=us-east-1#/signalingChannels/signalingChannelName/camera1'" style="cursor:pointer;">
+                    <td>001</td>
+                    <td>Camera 1</td>
+                    <td>Causeway Point</td>
+                    <td>1</td>
+                </tr>
+                <tr class="clickable" onclick="window.location='https://console.aws.amazon.com/kinesisvideo/home?region=us-east-1#/signalingChannels/signalingChannelName/camera2'" style="cursor:pointer;">
+                    <td>002</td>
+                    <td>Camera 2</td>
+                    <td>Causeway Point</td>
+                    <td>1</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>
