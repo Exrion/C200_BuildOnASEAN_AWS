@@ -19,8 +19,9 @@ namespace C200_Web_Application___Identity.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<AuthDBContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("AuthDBContextConnection")));
+                    options.UseMySql(
+                        context.Configuration.GetConnectionString("AuthDBContextConnection"),
+                        ServerVersion.AutoDetect(context.Configuration.GetConnectionString("AuthDBContextConnection"))));
                 services.AddTransient<IEmailSender, EmailSender>();
                 services.Configure<IdentityOptions>(options =>
                 {
