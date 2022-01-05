@@ -5,14 +5,20 @@
 <head>
     <script src="https://unpkg.com/amazon-kinesis-video-streams-webrtc/dist/kvs-webrtc.min.js"></script>
     <title>Access Camera Clusters</title>
+    <style>
+        .hover tr:hover
+        {
+            background-color:darkseagreen;
+        }
+    </style>
 </head>
 <main>
     <div class="container">
         <div class="col-sm-8">
             <h1>Camera Clusters</h1>
             <label><a href="https://awslabs.github.io/amazon-kinesis-video-streams-webrtc-sdk-js/examples/index.html%22%3E">Click here for master camera setup</a></label>
-            <table class="table table-condensed table-hover">
-                <tr>
+            <table class="table table-condensed hover">
+                <tr style="background-color:transparent">
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Location</th>
