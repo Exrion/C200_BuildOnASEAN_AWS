@@ -1,5 +1,5 @@
-﻿using C200_Web_Application___Identity.Areas.Identity.Data;
-using C200_Web_Application___Identity.Models;
+﻿using C200_Web_Application___Identity.Models;
+using C200_Web_Application___Identity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +14,6 @@ namespace C200_Web_Application___Identity.Controllers
     [Authorize]
     public class AdminController : Controller
     {
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<WebAppUser> userManager;
-
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<WebAppUser> userManager)
-        {
-            this.roleManager = roleManager;
-            this.userManager = userManager;
-        }
         public IActionResult Dashboard()
         {
             return View();
@@ -44,8 +36,8 @@ namespace C200_Web_Application___Identity.Controllers
         [Authorize(Roles = "SU")]
         public IActionResult Users()
         {
-            var users = userManager.Users;
-            return View(users);
+            List<Users> usersList = LoadUsersAndRoles.GenUsersAndRoles();
+            return View(usersList);
         }
         [Authorize(Roles = "SU")]
         [HttpGet]
@@ -111,7 +103,7 @@ namespace C200_Web_Application___Identity.Controllers
         //Delete User Button
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
+            var user = LoadUsersAndRoles.FindUser(id);
 
             if (user == null)
             {
@@ -121,21 +113,21 @@ namespace C200_Web_Application___Identity.Controllers
             }
             else
             {
-                var result = await userManager.DeleteAsync(user);
+                string sql = @"DELETE FROM Users WHERE Id='{0}'";
+                int rows = DBUtl.ExecSQL(String.Format(sql, id));
 
-                if (result.Succeeded)
+                if (rows == 1)
                 {
                     TempData["Error_type"] = "alert-info";
                     TempData["Error_msg"] = "User deleted";
                     return RedirectToAction("Users");
                 }
-
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError("", error.Description);
+                    TempData["Error_type"] = "alert-warning";
+                    TempData["Error_msg"] = "Delete Unsuccessful";
+                    return RedirectToAction("Users");
                 }
-
-                return View("Users");
             }
         }
     }

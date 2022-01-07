@@ -23,9 +23,8 @@ namespace C200_Web_Application___Identity
                 var serviceProvider = scope.ServiceProvider;
                 try
                 {
-                    var userManager = serviceProvider.GetRequiredService<UserManager<C200_Web_Application___Identity.Areas.Identity.Data.WebAppUser>>();
-                    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                    RoleAndUser_Create.SeedData(userManager, roleManager);
+                    //TODO Seed Roles and Users
+                    //RoleAndUser_Create.SeedData(userManager, roleManager);
                 }
                 catch (Exception ex)
                 {
