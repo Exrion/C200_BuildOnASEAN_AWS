@@ -38,5 +38,22 @@ namespace C200_Web_Application___Identity.Services
             }
             return null;
         }
+
+        public static bool FindSuperUser()
+        {
+            List<Users> UsersAndRoles = GenUsersAndRoles();
+            foreach (Users user in UsersAndRoles)
+            {
+                if (user.role.Equals("SU"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
     }
 }

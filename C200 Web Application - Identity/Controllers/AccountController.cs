@@ -66,7 +66,7 @@ namespace C200_Web_Application___Identity.Controllers
 
             string select = String.Format(sql, uid, pw);
             DataTable ds = DBUtl.GetTable(select);
-            if (ds.Rows.Count == 1)
+            if (ds != null)
             {
                 principal =
                    new ClaimsPrincipal(

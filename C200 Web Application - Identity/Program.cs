@@ -1,4 +1,5 @@
 using C200_Web_Application___Identity.Models;
+using C200_Web_Application___Identity.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -23,8 +24,7 @@ namespace C200_Web_Application___Identity
                 var serviceProvider = scope.ServiceProvider;
                 try
                 {
-                    //TODO Seed Roles and Users
-                    //RoleAndUser_Create.SeedData(userManager, roleManager);
+                    RoleAndUser_Create.createDefaultSuper();
                 }
                 catch (Exception ex)
                 {

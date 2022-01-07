@@ -43,7 +43,7 @@ namespace C200_Web_Application___Identity.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
+            var user = LoadUsersAndRoles.FindUser(id);
 
             if (user == null)
             {
@@ -51,53 +51,41 @@ namespace C200_Web_Application___Identity.Controllers
                 TempData["Error_msg"] = string.Format("User ID {0} mismatch", id);
                 return RedirectToAction("Users");
             }
-
-            var userClaims = await userManager.GetClaimsAsync(user);
-            var userRoles = await userManager.GetRolesAsync(user);
-
-            var model = new EditUserViewModel
-            {
-                Id = user.Id,
-                Email = user.Email,
-                UserName = user.UserName,
-                Claims = userClaims.Select(c => c.Value).ToList(),
-                Roles = (List<string>)userRoles
-            };
-
-            return View(model);
+            return View(user);
         }
         [Authorize(Roles = "SU")]
         [HttpPost]
-        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        public async Task<IActionResult> EditUser(Users updateUser)
         {
-            var user = await userManager.FindByIdAsync(model.Id);
+            var user = LoadUsersAndRoles.FindUser(updateUser.id);
 
             if (user == null)
             {
                 TempData["Error_type"] = "alert-danger";
-                TempData["Error_msg"] = string.Format("User ID {0} mismatch", model.Id);
+                TempData["Error_msg"] = string.Format("User ID {0} mismatch", updateUser.id);
                 return RedirectToAction("Users");
             }
             else
             {
-                user.Email = model.Email;
-                user.UserName = model.UserName;
+                user.email = updateUser.email;
+                user.username = updateUser.username;
 
-                var result = await userManager.UpdateAsync(user);
+                string sql = @"UPDATE Users SET username='{0}', email='{1}' WHERE Id='{2}'";
+                int rows = DBUtl.ExecSQL(string.Format(sql, DBUtl.EscQuote(user.username), DBUtl.EscQuote(user.email), updateUser.id));
 
-                if (result.Succeeded)
+                if (rows == 1)
                 {
                     TempData["Error_type"] = "alert-info";
                     TempData["Error_msg"] = "User data updated";
                     return RedirectToAction("Users");
                 }
-
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError("", error.Description);
+                    TempData["Error_type"] = "alert-warning";
+                    TempData["Error_msg"] = "User data not updated";
+                    return RedirectToAction("Users");
                 }
             }
-            return View(model);
         }
         
         //Delete User Button
