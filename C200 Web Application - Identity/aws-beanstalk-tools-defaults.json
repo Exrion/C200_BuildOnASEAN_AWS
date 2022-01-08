@@ -1,0 +1,21 @@
+
+{
+    "region" : "us-east-1",
+    "configuration" : "Debug",
+    "framework"     : "net5.0",
+    "self-contained" : false,
+    "application"    : "C200WebApplication",
+    "environment"    : "C200WebApplication-dev",
+    "app-path"       : "/",
+    "iis-website"    : "Default Web Site",
+    "enable-xray"    : true,
+    "enhanced-health-type" : "enhanced",
+    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-0c83e133005b53779,sg-03426b1ef00579431\";\"aws:ec2:vpc,Subnets\"=\"subnet-0ef4ad435baccaac7\"",
+    "solution-stack"       : "64bit Windows Server Core 2019 v2.8.0 running IIS 10.0",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "c200webapplication-dev",
+    "instance-type"        : "t2.micro",
+    "key-pair"             : "nicole",
+    "instance-profile"     : "LabInstanceProfile",
+    "service-role"         : "LabRole"
+}
