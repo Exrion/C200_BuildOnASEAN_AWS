@@ -62,11 +62,11 @@ namespace C200_Web_Application___Identity.Controllers
         {
             principal = null;
 
-            string sql = @"SELECT* FROM Users WHERE UserId = '{0}' AND UserPw = HASHBYTES('SHA2_256', '{1}')";
+            string sql = @"SELECT* FROM users WHERE Id = '{0}' AND Password = SHA2('{1}', 256)";
 
             string select = String.Format(sql, uid, pw);
             DataTable ds = DBUtl.GetTable(select);
-            if (ds != null)
+            if (ds.Rows.Count == 1)
             {
                 principal =
                    new ClaimsPrincipal(

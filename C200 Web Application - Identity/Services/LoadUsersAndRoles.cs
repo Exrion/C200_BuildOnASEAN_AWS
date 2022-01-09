@@ -17,7 +17,7 @@ namespace C200_Web_Application___Identity.Services
         //Load Users and Roles
         public static List<Users> GenUsersAndRoles()
         {
-            string sql = @"SELECT* FROM Users";
+            string sql = "SELECT * FROM users";
             List<Users> UsersAndRoles = DBUtl.GetList<Users>(sql);
             return UsersAndRoles;
         }
@@ -27,7 +27,7 @@ namespace C200_Web_Application___Identity.Services
             List<Users> UsersAndRoles = GenUsersAndRoles();
             foreach (Users user in UsersAndRoles)
             {
-                if (user.id == id)
+                if (user.Id == id)
                 {
                     return user;
                 }
@@ -44,7 +44,7 @@ namespace C200_Web_Application___Identity.Services
             List<Users> UsersAndRoles = GenUsersAndRoles();
             foreach (Users user in UsersAndRoles)
             {
-                if (user.role.Equals("SU"))
+                if (user.Role.Equals("SU"))
                 {
                     return true;
                 }

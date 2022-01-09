@@ -7,9 +7,10 @@ namespace C200_Web_Application___Identity.Models
 {
     public class Users
     {
-        public string id { get; set; }
-        public string username { get; set; }
-        public string role { get; set; }
-        public string email { get; set; }
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string Role { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using MySqlConnector;
 using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
@@ -86,8 +86,8 @@ public static class DBUtl
       DB_SQL = String.Format(sql, list);
 
       DataTable dt = new DataTable();
-      using (SqlConnection dbConn = new SqlConnection(DB_CONNECTION))
-      using (SqlDataAdapter dAdptr = new SqlDataAdapter(DB_SQL, dbConn))
+      using (MySqlConnection dbConn = new MySqlConnection(DB_CONNECTION))
+      using (MySqlDataAdapter dAdptr = new MySqlDataAdapter(DB_SQL, dbConn))
       {
          try
          {
@@ -112,8 +112,8 @@ public static class DBUtl
       DB_SQL = String.Format(sql, list);
 
       int rowsAffected = 0;
-      using (SqlConnection dbConn = new SqlConnection(DB_CONNECTION))
-      using (SqlCommand dbCmd = dbConn.CreateCommand())
+      using (MySqlConnection dbConn = new MySqlConnection(DB_CONNECTION))
+      using (MySqlCommand dbCmd = dbConn.CreateCommand())
       {
          try
          {

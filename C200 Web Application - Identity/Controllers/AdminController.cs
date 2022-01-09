@@ -14,6 +14,10 @@ namespace C200_Web_Application___Identity.Controllers
     [Authorize]
     public class AdminController : Controller
     {
+        public IActionResult Index()
+        {
+            return View("Dashboard");
+        }
         public IActionResult Dashboard()
         {
             return View();
@@ -57,21 +61,21 @@ namespace C200_Web_Application___Identity.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(Users updateUser)
         {
-            var user = LoadUsersAndRoles.FindUser(updateUser.id);
+            var user = LoadUsersAndRoles.FindUser(updateUser.Id);
 
             if (user == null)
             {
                 TempData["Error_type"] = "alert-danger";
-                TempData["Error_msg"] = string.Format("User ID {0} mismatch", updateUser.id);
+                TempData["Error_msg"] = string.Format("User ID {0} mismatch", updateUser.Id);
                 return RedirectToAction("Users");
             }
             else
             {
-                user.email = updateUser.email;
-                user.username = updateUser.username;
+                user.Email = updateUser.Email;
+                user.UserName = updateUser.UserName;
 
                 string sql = @"UPDATE Users SET username='{0}', email='{1}' WHERE Id='{2}'";
-                int rows = DBUtl.ExecSQL(string.Format(sql, DBUtl.EscQuote(user.username), DBUtl.EscQuote(user.email), updateUser.id));
+                int rows = DBUtl.ExecSQL(string.Format(sql, DBUtl.EscQuote(user.UserName), DBUtl.EscQuote(user.Email), updateUser.Id));
 
                 if (rows == 1)
                 {
