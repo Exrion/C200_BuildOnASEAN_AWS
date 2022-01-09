@@ -45,7 +45,7 @@ namespace C200_Web_Application___Identity.Controllers
         }
         [Authorize(Roles = "SU")]
         [HttpGet]
-        public async Task<IActionResult> EditUser(string id)
+        public IActionResult EditUser(string id)
         {
             var user = LoadUsersAndRoles.FindUser(id);
 
@@ -59,7 +59,7 @@ namespace C200_Web_Application___Identity.Controllers
         }
         [Authorize(Roles = "SU")]
         [HttpPost]
-        public async Task<IActionResult> EditUser(Users updateUser)
+        public IActionResult EditUser(Users updateUser)
         {
             var user = LoadUsersAndRoles.FindUser(updateUser.Id);
 
@@ -91,9 +91,10 @@ namespace C200_Web_Application___Identity.Controllers
                 }
             }
         }
-        
+
+        [Authorize(Roles = "SU")]
         //Delete User Button
-        public async Task<IActionResult> DeleteUser(string id)
+        public IActionResult DeleteUser(string id)
         {
             var user = LoadUsersAndRoles.FindUser(id);
 
@@ -118,6 +119,44 @@ namespace C200_Web_Application___Identity.Controllers
                 {
                     TempData["Error_type"] = "alert-warning";
                     TempData["Error_msg"] = "Delete Unsuccessful";
+                    return RedirectToAction("Users");
+                }
+            }
+        }
+
+        [Authorize(Roles = "SU")]
+        [HttpGet]
+        //Create User Button
+        public IActionResult CreateUser()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "SU")]
+        [HttpPost]
+        //Create User Button
+        public IActionResult CreateUser(Users user)
+        {
+            if (LoadUsersAndRoles.FindUser(user.Id) != null)
+            {
+                TempData["Error_type"] = "alert-danger";
+                TempData["Error_msg"] = string.Format("User ID must be unique", user.Id);
+                return RedirectToAction("Users");
+            }
+            else
+            {
+                bool success = RoleAndUser_Create.createUser(user.Id, user.Email, user.Password, user.UserName);
+
+                if (success)
+                {
+                    TempData["Error_type"] = "alert-info";
+                    TempData["Error_msg"] = "User Added";
+                    return RedirectToAction("Users");
+                }
+                else
+                {
+                    TempData["Error_type"] = "alert-warning";
+                    TempData["Error_msg"] = "Create Unsuccessful";
                     return RedirectToAction("Users");
                 }
             }
