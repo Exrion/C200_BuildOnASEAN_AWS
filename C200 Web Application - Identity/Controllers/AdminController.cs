@@ -74,7 +74,7 @@ namespace C200_Web_Application___Identity.Controllers
                 user.Email = updateUser.Email;
                 user.UserName = updateUser.UserName;
 
-                string sql = @"UPDATE Users SET username='{0}', email='{1}' WHERE Id='{2}'";
+                string sql = @"UPDATE users SET username='{0}', email='{1}' WHERE Id='{2}'";
                 int rows = DBUtl.ExecSQL(string.Format(sql, DBUtl.EscQuote(user.UserName), DBUtl.EscQuote(user.Email), updateUser.Id));
 
                 if (rows == 1)
@@ -106,7 +106,7 @@ namespace C200_Web_Application___Identity.Controllers
             }
             else
             {
-                string sql = @"DELETE FROM Users WHERE Id='{0}'";
+                string sql = @"DELETE FROM users WHERE Id='{0}'";
                 int rows = DBUtl.ExecSQL(String.Format(sql, id));
 
                 if (rows == 1)

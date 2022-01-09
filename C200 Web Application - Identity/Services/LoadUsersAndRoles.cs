@@ -31,10 +31,6 @@ namespace C200_Web_Application___Identity.Services
                 {
                     return user;
                 }
-                else
-                {
-                    return null;
-                }
             }
             return null;
         }
