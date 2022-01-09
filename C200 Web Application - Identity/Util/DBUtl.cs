@@ -23,9 +23,9 @@ public static class DBUtl
             .Build();
       string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
       if (env.Equals("Development"))
-         DB_CONNECTION = config.GetConnectionString("DefaultConnection");
+         DB_CONNECTION = config.GetConnectionString("AuthDBContextConnection");
       else if (env.Equals("Production"))
-         DB_CONNECTION = config.GetConnectionString("ProductionConnection");
+         DB_CONNECTION = config.GetConnectionString("AuthDBContextConnection");
    }
 
    public static List<dynamic> GetList(string sql, params object[] list)
