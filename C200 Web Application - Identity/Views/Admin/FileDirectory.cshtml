@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "File Directory | Admin";
+}
+<head>
+    <style>
+        /* Remove default bullets */
+        ul, #myUL {
+            list-style-type: none;
+        }
+
+        /* Remove margins and padding from the parent ul */
+        #myUL {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the caret/arrow */
+        .caret {
+            cursor: pointer;
+            user-select: none; /* Prevent text selection */
+        }
+
+            /* Create the caret/arrow with a unicode, and style it */
+            .caret::before {
+                content: "\25B6";
+                color: black;
+                display: inline-block;
+                margin-right: 6px;
+            }
+
+        /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+        .caret-down::before {
+            transform: rotate(90deg);
+        }
+
+        /* Hide the nested list */
+        .nested {
+            display: none;
+        }
+
+        /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        This is a file directory for the <b>images</b> and <b>recordings</b> which will be displayed with a TreeView and a File Explorer like directory to view the images and recordings based on
+        >Location
+        >Level
+        >Camera
+        >Images (snapshots from recordings)/
+        >Recordings
+    </p>
+
+    <class>
+        <ul id="myUL">
+            <li>
+                <span class="caret">Location</span>
+                <ul class="nested">
+                    <li>CausewayPoint</li>
+                    <li>JurongPoint</li>
+                    <li>
+                        <span class="caret">Level</span>
+                        <ul class="nested">
+                            <li>Level 1</li>
+                            <li>Level 2</li>
+                            <li>
+                                <span class="caret">Cameras</span>
+                                <ul class="nested">
+                                    <li>Camera_01</li>
+                                    <li>Camera_02</li>
+                                    <li>Camera_03</li>
+                                    <li>Camera_04</li>
+                                    <li>
+                                        <span class="caret">Images</span>
+                                        <ul class="nested">
+                                            <li>Image001</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="caret">Recordings</span>
+                                        <ul class="nested">
+                                            <li>Recording001</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </class>
+</body>
