@@ -1,5 +1,5 @@
-﻿using C200_Web_Application___Identity.Areas.Identity.Data;
-using C200_Web_Application___Identity.Models;
+﻿using C200_Web_Application___Identity.Models;
+using C200_Web_Application___Identity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,13 +14,9 @@ namespace C200_Web_Application___Identity.Controllers
     [Authorize]
     public class AdminController : Controller
     {
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly UserManager<WebAppUser> userManager;
-
-        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<WebAppUser> userManager)
+        public IActionResult Index()
         {
-            this.roleManager = roleManager;
-            this.userManager = userManager;
+            return View("Dashboard");
         }
         public IActionResult Dashboard()
         {
@@ -48,14 +44,14 @@ namespace C200_Web_Application___Identity.Controllers
         [Authorize(Roles = "SU")]
         public IActionResult Users()
         {
-            var users = userManager.Users;
-            return View(users);
+            List<Users> usersList = LoadUsersAndRoles.GenUsersAndRoles();
+            return View(usersList);
         }
         [Authorize(Roles = "SU")]
         [HttpGet]
-        public async Task<IActionResult> EditUser(string id)
+        public IActionResult EditUser(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
+            var user = LoadUsersAndRoles.FindUser(id);
 
             if (user == null)
             {
@@ -63,59 +59,48 @@ namespace C200_Web_Application___Identity.Controllers
                 TempData["Error_msg"] = string.Format("User ID {0} mismatch", id);
                 return RedirectToAction("Users");
             }
-
-            var userClaims = await userManager.GetClaimsAsync(user);
-            var userRoles = await userManager.GetRolesAsync(user);
-
-            var model = new EditUserViewModel
-            {
-                Id = user.Id,
-                Email = user.Email,
-                UserName = user.UserName,
-                Claims = userClaims.Select(c => c.Value).ToList(),
-                Roles = (List<string>)userRoles
-            };
-
-            return View(model);
+            return View(user);
         }
         [Authorize(Roles = "SU")]
         [HttpPost]
-        public async Task<IActionResult> EditUser(EditUserViewModel model)
+        public IActionResult EditUser(Users updateUser)
         {
-            var user = await userManager.FindByIdAsync(model.Id);
+            var user = LoadUsersAndRoles.FindUser(updateUser.Id);
 
             if (user == null)
             {
                 TempData["Error_type"] = "alert-danger";
-                TempData["Error_msg"] = string.Format("User ID {0} mismatch", model.Id);
+                TempData["Error_msg"] = string.Format("User ID {0} mismatch", updateUser.Id);
                 return RedirectToAction("Users");
             }
             else
             {
-                user.Email = model.Email;
-                user.UserName = model.UserName;
+                user.Email = updateUser.Email;
+                user.UserName = updateUser.UserName;
 
-                var result = await userManager.UpdateAsync(user);
+                string sql = @"UPDATE users SET username='{0}', email='{1}' WHERE Id='{2}'";
+                int rows = DBUtl.ExecSQL(string.Format(sql, DBUtl.EscQuote(user.UserName), DBUtl.EscQuote(user.Email), updateUser.Id));
 
-                if (result.Succeeded)
+                if (rows == 1)
                 {
                     TempData["Error_type"] = "alert-info";
                     TempData["Error_msg"] = "User data updated";
                     return RedirectToAction("Users");
                 }
-
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError("", error.Description);
+                    TempData["Error_type"] = "alert-warning";
+                    TempData["Error_msg"] = "User data not updated";
+                    return RedirectToAction("Users");
                 }
             }
-            return View(model);
         }
-        
+
+        [Authorize(Roles = "SU")]
         //Delete User Button
-        public async Task<IActionResult> DeleteUser(string id)
+        public IActionResult DeleteUser(string id)
         {
-            var user = await userManager.FindByIdAsync(id);
+            var user = LoadUsersAndRoles.FindUser(id);
 
             if (user == null)
             {
@@ -125,21 +110,59 @@ namespace C200_Web_Application___Identity.Controllers
             }
             else
             {
-                var result = await userManager.DeleteAsync(user);
+                string sql = @"DELETE FROM users WHERE Id='{0}'";
+                int rows = DBUtl.ExecSQL(String.Format(sql, id));
 
-                if (result.Succeeded)
+                if (rows == 1)
                 {
                     TempData["Error_type"] = "alert-info";
                     TempData["Error_msg"] = "User deleted";
                     return RedirectToAction("Users");
                 }
-
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError("", error.Description);
+                    TempData["Error_type"] = "alert-warning";
+                    TempData["Error_msg"] = "Delete Unsuccessful";
+                    return RedirectToAction("Users");
                 }
+            }
+        }
 
-                return View("Users");
+        [Authorize(Roles = "SU")]
+        [HttpGet]
+        //Create User Button
+        public IActionResult CreateUser()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "SU")]
+        [HttpPost]
+        //Create User Button
+        public IActionResult CreateUser(Users user)
+        {
+            if (LoadUsersAndRoles.FindUser(user.Id) != null)
+            {
+                TempData["Error_type"] = "alert-danger";
+                TempData["Error_msg"] = string.Format("User ID must be unique", user.Id);
+                return RedirectToAction("Users");
+            }
+            else
+            {
+                bool success = RoleAndUser_Create.createUser(user.Id, user.Email, user.Password, user.UserName);
+
+                if (success)
+                {
+                    TempData["Error_type"] = "alert-info";
+                    TempData["Error_msg"] = "User Added";
+                    return RedirectToAction("Users");
+                }
+                else
+                {
+                    TempData["Error_type"] = "alert-warning";
+                    TempData["Error_msg"] = "Create Unsuccessful";
+                    return RedirectToAction("Users");
+                }
             }
         }
     }
