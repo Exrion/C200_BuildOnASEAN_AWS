@@ -3,6 +3,7 @@ using C200_Web_Application___Identity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -186,6 +187,12 @@ namespace C200_Web_Application___Identity.Controllers
                 }
             }
         }
+        #endregion
+
+        #region Deserialise Camera
+
+        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+        
         #endregion
     }
 }
