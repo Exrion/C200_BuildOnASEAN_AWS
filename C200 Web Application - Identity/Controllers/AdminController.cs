@@ -14,6 +14,7 @@ namespace C200_Web_Application___Identity.Controllers
     [Authorize]
     public class AdminController : Controller
     {
+        #region Homepage/Index - VIEW
         public IActionResult Index()
         {
             return View("Dashboard");
@@ -22,24 +23,37 @@ namespace C200_Web_Application___Identity.Controllers
         {
             return View();
         }
+        #endregion
+
+        #region Cameras - VIEW
         public IActionResult Cameras()
         {
             return View();
         }
+        #endregion
+
+        #region Contacts - VIEW
         public IActionResult Contacts()
         {
             return View();
         }
+        #endregion
+
+        #region Analytics - VIEW
         public IActionResult Analytics()
         {
             return View();
         }
+        #endregion
+
+        #region FileDirectory
         public IActionResult FileDirectory()
         {
             return View();
         }
-        [Authorize(Roles = "SU")]
+        #endregion
 
+        #region Display Users - VIEW
         //Super User
         [Authorize(Roles = "SU")]
         public IActionResult Users()
@@ -47,6 +61,9 @@ namespace C200_Web_Application___Identity.Controllers
             List<Users> usersList = LoadUsersAndRoles.GenUsersAndRoles();
             return View(usersList);
         }
+        #endregion
+
+        #region Edit User
         [Authorize(Roles = "SU")]
         [HttpGet]
         public IActionResult EditUser(string id)
@@ -95,7 +112,9 @@ namespace C200_Web_Application___Identity.Controllers
                 }
             }
         }
+#endregion
 
+        #region Delete User
         [Authorize(Roles = "SU")]
         //Delete User Button
         public IActionResult DeleteUser(string id)
@@ -127,7 +146,9 @@ namespace C200_Web_Application___Identity.Controllers
                 }
             }
         }
+        #endregion
 
+        #region Create User
         [Authorize(Roles = "SU")]
         [HttpGet]
         //Create User Button
@@ -160,10 +181,11 @@ namespace C200_Web_Application___Identity.Controllers
                 else
                 {
                     TempData["Error_type"] = "alert-warning";
-                    TempData["Error_msg"] = "Create Unsuccessful";
+                    TempData["Error_msg"] = "Create Unsuccessful, there may be a duplicate User ID!";
                     return RedirectToAction("Users");
                 }
             }
         }
+        #endregion
     }
 }
