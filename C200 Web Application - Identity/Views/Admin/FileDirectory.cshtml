@@ -1,6 +1,9 @@
 ﻿@{
     ViewData["Title"] = "File Directory | Admin";
 }
+
+@model FileDirectoryViewModel
+
 <head>
     <style>
         /* Remove default bullets */
@@ -17,6 +20,8 @@
         /* Style the caret/arrow */
         .caret {
             cursor: pointer;
+            color:blue;
+            font-weight:700;
             user-select: none; /* Prevent text selection */
         }
 
@@ -93,4 +98,5 @@
             </li>
         </ul>
     </class>
+
 </body>
