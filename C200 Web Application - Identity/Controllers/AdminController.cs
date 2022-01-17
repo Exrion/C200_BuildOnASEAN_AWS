@@ -1,4 +1,8 @@
-﻿using C200_Web_Application___Identity.Models;
+﻿using Amazon.KinesisVideoSignalingChannels;
+using Amazon.KinesisVideoSignalingChannels.Model;
+using Amazon.Runtime;
+using Amazon.Runtime.Internal.Auth;
+using C200_Web_Application___Identity.Models;
 using C200_Web_Application___Identity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace C200_Web_Application___Identity.Controllers
@@ -189,10 +194,5 @@ namespace C200_Web_Application___Identity.Controllers
         }
         #endregion
 
-        #region Deserialise Camera
-
-        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
-        
-        #endregion
     }
 }
