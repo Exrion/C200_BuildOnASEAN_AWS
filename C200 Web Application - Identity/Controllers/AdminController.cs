@@ -47,7 +47,7 @@ namespace C200_Web_Application___Identity.Controllers
         }
         #endregion
 
-        #region FileDirectory
+        #region FileDirectory - VIEW
         public IActionResult FileDirectory()
         {
             return View();
@@ -192,7 +192,94 @@ namespace C200_Web_Application___Identity.Controllers
         #region Deserialise Camera
 
         // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
-        
+
+        #endregion
+
+        #region Display Organisation (Partners) -VIEW
+        //Load Organisation
+        //public static List<Organisation> GenOrganisations()
+        //{
+        //    string sql = "SELECT * FROM organisation";
+        //    List<Organisation> OrganisationList = DBUtl.GetList<Organisation>(sql);
+        //    return OrganisationList;
+        //}
+
+        //public static Organisation FindOrganisation(string organisation_id)
+        //{
+        //    List<Organisation> OrganisationList = GenOrganisations();
+        //    foreach (Organisation organisation in OrganisationList)
+        //    {
+        //        if (user.Id == id)
+        //        {
+        //            return user;
+        //        }
+        //    }
+        //    return null;
+        //}
+
+        //public static bool FindOrganisation()
+        //{
+        //    List<Organisation> OrganisationList = GenOrganisations();
+        //    foreach (Organisation organisation in OrganisationList)
+        //    {
+        //        if (user.Role.Equals("SU"))
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return false;
+        //}
+        ////Super User
+        //[Authorize(Roles = "SU")]
+        //public IActionResult Organisaiton()
+        //{
+        //    List<Organisation> OrganisationList = GenOrganisations();
+        //    return View(OrganisationList);
+        //}
+        #endregion
+
+        #region Create Organisation (Partners)
+        //[Authorize(Roles = "SU")]
+        //[HttpGet]
+        ////Create Organisation Button
+        //public IActionResult CreateOrganisation()
+        //{
+        //    return View();
+        //}
+
+        //[Authorize(Roles = "SU")]
+        //[HttpPost]
+        ////Create Organisation Button
+        //public IActionResult CreateOrganisation(Organisation organisation)
+        //{
+        //    if (FindOrganisation(organisation.organisation_id) != null)
+        //    {
+        //        TempData["Error_type"] = "alert-danger";
+        //        TempData["Error_msg"] = string.Format("User ID must be unique", user.Id);
+        //        return RedirectToAction("Users");
+        //    }
+        //    else
+        //    {
+        //        bool success = RoleAndUser_Create.createUser(user.Id, user.Email, user.Password, user.UserName);
+
+        //        if (success)
+        //        {
+        //            TempData["Error_type"] = "alert-info";
+        //            TempData["Error_msg"] = "User Added";
+        //            return RedirectToAction("Users");
+        //        }
+        //        else
+        //        {
+        //            TempData["Error_type"] = "alert-warning";
+        //            TempData["Error_msg"] = "Create Unsuccessful, there may be a duplicate User ID!";
+        //            return RedirectToAction("Users");
+        //        }
+        //    }
+        //}
         #endregion
     }
 }

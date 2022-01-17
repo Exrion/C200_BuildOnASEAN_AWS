@@ -1,0 +1,61 @@
+﻿@model List<Organisation>
+
+@{
+    ViewData["Title"] = "Our Partners List | Admin";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <section>
+            @{
+                if (TempData["Error_msg"] != null)
+                {
+                    <p class="alert @TempData["Error_type"]">@TempData["Error_msg"]</p>
+                }
+            }
+            @{
+                if (@Model == null)
+                {
+                    <div class="col-md-6">
+                        <p class="alert alert-danger">Database is either empty or cannot be reached!</p>
+                    </div>
+                }
+                else
+                {
+                    <h1>Our Partner List</h1>
+                    <a class="btn btn-primary" asp-controller="Admin" asp-action="CreateOrganisation">Add new Partner</a>
+                    <hr />
+
+                    foreach (var organisation in Model)
+                    {
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                Organisation Id : @organisation.organisation_id
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <label>Company Name:</label>
+                                    <h5 class="card-title">@organisation.company_name</h5>
+                                </div>
+                                <div>
+                                    <label>Email Address:</label>
+                                    <h5 class="card-title">@organisation.email_address</h5>
+                                </div>
+                                <div>
+                                    <label>Email Address:</label>
+                                    <h5 class="card-title">@organisation.description</h5>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <form asp-action="DeleteUser" asp-route-id="@organisation.organisation_id" method="post">
+                                    <a asp-action="EditUser" asp-route-id="@organisation.organisation_id" class="btn btn-primary">Edit</a>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete user : [@organisation.organisation_id] @organisation.company_name')">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </section>
+    </div>
+</div>
