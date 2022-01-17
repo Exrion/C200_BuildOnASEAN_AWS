@@ -1,0 +1,67 @@
+﻿@model Organisation
+
+@{
+    ViewData["Title"] = "Our Partners | Admin";
+}
+
+<h1>Create Partners</h1>
+<form method="post"
+      asp-controller="Admin"
+      asp-action="CreateOrganisation"
+      enctype="multipart/form-data">
+
+    <div class="form-group row">
+        <!--organisation_id-->
+        <label asp-for="organisation_id" name="organisaiton_id" class="col-md-2 col-form-label">Organisation ID :</label>
+        <div class="col-md-8">
+            <input asp-for="organisation_id" class="form-control" />
+        </div>
+        <div class="col-sm-3">
+            <span asp-validation-for="organisation_id" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <!--company_name-->
+        <label asp-for="company_name" name="company_name" class="col-md-2 col-form-label">Company Name :</label>
+        <div class="col-md-8">
+            <input asp-for="company_name" class="form-control" />
+        </div>
+        <div class="col-sm-3">
+            <span asp-validation-for="company_name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <!--email_address-->
+        <label asp-for="email_address" name="email_address" class="col-md-2 col-form-label">Email Address :</label>
+        <div class="col-md-8">
+            <input asp-for="email_address" class="form-control" />
+        </div>
+        <div class="col-sm-3">
+            <span asp-validation-for="email_address" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <!--description-->
+        <label asp-for="description" name="description" class="col-md-2 col-form-label">Description :</label>
+        <div class="col-md-8">
+            <textarea asp-for="description" class="form-control" />
+        </div>
+        <div class="col-sm-3">
+            <span asp-validation-for="description" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row btn-toolbar">
+        <div class="col-md-1 btn-group">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+        <div class="col-md-1 btn-group">
+            <a href="/Admin/Organisations" class="btn-primary btn">Cancel</a>
+        </div>
+    </div>
+
+</form>

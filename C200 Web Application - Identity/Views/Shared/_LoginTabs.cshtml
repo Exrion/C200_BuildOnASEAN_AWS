@@ -19,5 +19,6 @@
     else if (User.Identity.IsAuthenticated && this.User.IsInRole("SU"))
     {
         <a class="nav-item nav-link" href="@Url.Action("Users", "Admin")">Users</a>
+        <a class="nav-item nav-link" href="@Url.Action("Organisations", "Admin")">Partners</a>
     }
 </div>
