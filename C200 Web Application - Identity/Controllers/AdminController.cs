@@ -196,90 +196,53 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Display Organisation (Partners) -VIEW
-        //Load Organisation
-        //public static List<Organisation> GenOrganisations()
-        //{
-        //    string sql = "SELECT * FROM organisation";
-        //    List<Organisation> OrganisationList = DBUtl.GetList<Organisation>(sql);
-        //    return OrganisationList;
-        //}
-
-        //public static Organisation FindOrganisation(string organisation_id)
-        //{
-        //    List<Organisation> OrganisationList = GenOrganisations();
-        //    foreach (Organisation organisation in OrganisationList)
-        //    {
-        //        if (user.Id == id)
-        //        {
-        //            return user;
-        //        }
-        //    }
-        //    return null;
-        //}
-
-        //public static bool FindOrganisation()
-        //{
-        //    List<Organisation> OrganisationList = GenOrganisations();
-        //    foreach (Organisation organisation in OrganisationList)
-        //    {
-        //        if (user.Role.Equals("SU"))
-        //        {
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    return false;
-        //}
-        ////Super User
-        //[Authorize(Roles = "SU")]
-        //public IActionResult Organisaiton()
-        //{
-        //    List<Organisation> OrganisationList = GenOrganisations();
-        //    return View(OrganisationList);
-        //}
+        //Super User
+        [Authorize(Roles = "SU")]
+        public IActionResult Organisations()
+        {
+            List<Organisation> organisationList = DBUtl.GetList<Organisation>("SELECT Organisation_id, Company_name, Email_address, Description FROM Organisation");
+            return View("Organisations", organisationList);
+        }
         #endregion
 
         #region Create Organisation (Partners)
-        //[Authorize(Roles = "SU")]
-        //[HttpGet]
-        ////Create Organisation Button
-        //public IActionResult CreateOrganisation()
-        //{
-        //    return View();
-        //}
+        [Authorize(Roles = "SU")]
+        [HttpGet]
+        //Create Organisation Button
+        public IActionResult CreateOrganisation()
+        {
+            return View();
+        }
 
-        //[Authorize(Roles = "SU")]
-        //[HttpPost]
-        ////Create Organisation Button
-        //public IActionResult CreateOrganisation(Organisation organisation)
-        //{
-        //    if (FindOrganisation(organisation.organisation_id) != null)
-        //    {
-        //        TempData["Error_type"] = "alert-danger";
-        //        TempData["Error_msg"] = string.Format("User ID must be unique", user.Id);
-        //        return RedirectToAction("Users");
-        //    }
-        //    else
-        //    {
-        //        bool success = RoleAndUser_Create.createUser(user.Id, user.Email, user.Password, user.UserName);
+        [Authorize(Roles = "SU")]
+        [HttpPost]
+        //Create Organisation Button
+        public IActionResult CreateOrganisation(Organisation organisation)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Message"] = "Invalid Input";
+                ViewData["MsgType"] = "warning";
+                return View("CreateOrganisation");
+            }
+            else
+            {
+                string insertSQL = @"INSERT INTO Organisation(Organisation_id, Company_name, Description, Email_address)
+                                    VALUES ({0},'{1}','{2}','{3}')";
 
-        //        if (success)
-        //        {
-        //            TempData["Error_type"] = "alert-info";
-        //            TempData["Error_msg"] = "User Added";
-        //            return RedirectToAction("Users");
-        //        }
-        //        else
-        //        {
-        //            TempData["Error_type"] = "alert-warning";
-        //            TempData["Error_msg"] = "Create Unsuccessful, there may be a duplicate User ID!";
-        //            return RedirectToAction("Users");
-        //        }
-        //    }
-        //}
+                if (DBUtl.ExecSQL(insertSQL, organisation.Organisation_id, organisation.Company_name, organisation.Description, organisation.Email_address ) == 1)
+                {
+                    TempData["Message"] = "New Partner Created";
+                    TempData["MsgType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                }
+                return RedirectToAction("Organisations");
+            }
+        }
         #endregion
     }
 }

@@ -8,17 +8,17 @@ namespace C200_Web_Application___Identity.Models
 {
     public class Organisation
     {
-        public int organisation_id { get; set; }
+        public int Organisation_id { get; set; }
 
         [Required] 
         [StringLength(150, ErrorMessage = "Maximum 150 characters long")]
-        public string company_name { get; set; }
+        public string Company_name { get; set; }
 
         [StringLength(250, ErrorMessage = "Maximum 250 characters long")]
-        public string description { get; set; }
+        public string Description { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress, ErrorMessage = "Invalid email input")]
-        public string email_address { get; set; }
+        public string Email_address { get; set; }
     }
 }

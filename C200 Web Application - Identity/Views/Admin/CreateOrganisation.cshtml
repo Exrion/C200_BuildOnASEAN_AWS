@@ -12,54 +12,53 @@
 
     <div class="form-group row">
         <!--organisation_id-->
-        <label asp-for="organisation_id" name="organisaiton_id" class="col-md-2 col-form-label">Organisation ID :</label>
+        <label asp-for="Organisation_id" name="organisaiton_id" class="col-md-2 col-form-label">Organisation ID :</label>
         <div class="col-md-8">
-            <input asp-for="organisation_id" class="form-control" />
+            <input asp-for="Organisation_id" class="form-control" />
         </div>
-        <div class="col-sm-3">
-            <span asp-validation-for="organisation_id" class="text-danger"></span>
+        <div class="col-sm-8">
+            <span asp-validation-for="Organisation_id" class="text-danger"></span>
         </div>
     </div>
 
     <div class="form-group row">
         <!--company_name-->
-        <label asp-for="company_name" name="company_name" class="col-md-2 col-form-label">Company Name :</label>
+        <label asp-for="Company_name" name="company_name" class="col-md-2 col-form-label">Company Name :</label>
         <div class="col-md-8">
-            <input asp-for="company_name" class="form-control" />
+            <input asp-for="Company_name" class="form-control" />
         </div>
-        <div class="col-sm-3">
-            <span asp-validation-for="company_name" class="text-danger"></span>
+        <div class="col-sm-8">
+            <span asp-validation-for="Company_name" class="text-danger"></span>
         </div>
     </div>
 
     <div class="form-group row">
         <!--email_address-->
-        <label asp-for="email_address" name="email_address" class="col-md-2 col-form-label">Email Address :</label>
+        <label asp-for="Email_address" name="email_address" class="col-md-2 col-form-label">Email Address :</label>
         <div class="col-md-8">
-            <input asp-for="email_address" class="form-control" />
+            <input asp-for="Email_address" class="form-control" />
         </div>
-        <div class="col-sm-3">
-            <span asp-validation-for="email_address" class="text-danger"></span>
+        <div class="col-sm-8">
+            <span asp-validation-for="Email_address" class="text-danger"></span>
         </div>
     </div>
 
     <div class="form-group row">
         <!--description-->
-        <label asp-for="description" name="description" class="col-md-2 col-form-label">Description :</label>
+        <label asp-for="Description" name="description" class="col-md-2 col-form-label">Description :</label>
         <div class="col-md-8">
-            <textarea asp-for="description" class="form-control" />
+            <textarea asp-for="Description" class="form-control"> </textarea>
         </div>
-        <div class="col-sm-3">
-            <span asp-validation-for="description" class="text-danger"></span>
+        <div class="col-sm-8">
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
     </div>
 
-    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group row btn-toolbar">
-        <div class="col-md-1 btn-group">
+        <div class="offset-md-10 col-md-1 btn-group">
             <button type="submit" class="btn btn-primary">Create</button>
         </div>
-        <div class="col-md-1 btn-group">
+        <div class="offset-md-10 col-md-1 btn-group">
             <a href="/Admin/Organisations" class="btn-primary btn">Cancel</a>
         </div>
     </div>
