@@ -1,7 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Cameras | Admin";
 }
-@model List<ChannelInfo.ChannelInfoList>
 
 <head>
     <script src="https://unpkg.com/amazon-kinesis-video-streams-webrtc/dist/kvs-webrtc.min.js"></script>
@@ -25,19 +24,15 @@
                     <th scope="col">Location</th>
                     <th scope="col">Status</th>
                 </tr>
-                
-                @foreach (ChannelInfo.ChannelInfoList channel in Model)
-                {
-                    <tr class="clickable" onclick="window.location='https://console.aws.amazon.com/kinesisvideo/home?region=us-east-1#/signalingChannels/signalingChannelName/camera1'" style="cursor:pointer;">
+                <tr class="clickable" onclick="window.location='https://console.aws.amazon.com/kinesisvideo/home?region=us-east-1#/signalingChannels/signalingChannelName/camera1'" style="cursor:pointer;">
 
-                        <td></td>
-                        <td>channel.ChannelName</td>
-                        <td></td>
-                        <td></td>
-                        <td>channel.ChannelStatus</td>
-                        
-                    </tr>
-                }
+                    <td>001</td>
+                    <td>Camera 1</td>
+                    <td>Level 1</td>
+                    <td>CausewayPoint</td>
+                    <td>On</td>
+
+                </tr>
             </table>
         </div>
     </div>
