@@ -17,7 +17,7 @@ namespace C200_Web_Application___Identity.Services
         //Load Users and Roles
         public static List<Users> GenUsersAndRoles()
         {
-            string sql = "SELECT * FROM users";
+            string sql = "SELECT * FROM Users";
             List<Users> UsersAndRoles = DBUtl.GetList<Users>(sql);
             return UsersAndRoles;
         }

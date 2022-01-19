@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Contacts | Admin";
+}
+@model List<SDA>
+
+<main>
+    <div>
+        <h1 class="ms-auto">@string.Format("Contacts - " + TempData["Location"])</h1>
+        <input class="form-control me-auto col-md-4" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search SDAs">
+    </div>
+    <hr />
+    <table class="table table-responsive" id="mainTable">
+        @{
+            <tr>
+                <!--Table Head-->
+                <th>Officer ID</th>
+                <th>Name</th>
+                <th>Contact No.</th>
+                <th>DOB</th>
+            </tr>
+            foreach (SDA sda in Model)
+            {
+                <tr class="tab-content">
+                    <!--Table Content-->
+                    <td>@sda.officer_id</td>
+                    <td><a asp-controller="Admin" asp-action="Contacts" asp-route-id="" asp-route-id2=""></a>@sda.name</td>
+                    <td>@sda.contact_no</td>
+                    <td>@sda.dob</td>
+                </tr>
+            }
+        }
+
+    </table>
+</main>
+@User.Identity.Name
+@TempData["Location"]

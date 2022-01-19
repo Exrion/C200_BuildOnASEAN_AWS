@@ -62,7 +62,7 @@ namespace C200_Web_Application___Identity.Controllers
         {
             principal = null;
 
-            string sql = @"SELECT* FROM users WHERE Id = '{0}' AND Password = SHA2('{1}', 256)";
+            string sql = @"SELECT* FROM Users WHERE Id = '{0}' AND Password = SHA2('{1}', 256)";
 
             string select = String.Format(sql, uid, pw);
             DataTable ds = DBUtl.GetTable(select);
@@ -73,7 +73,7 @@ namespace C200_Web_Application___Identity.Controllers
                       new ClaimsIdentity(
                          new Claim[] {
                         new Claim(ClaimTypes.NameIdentifier, uid),
-                        new Claim(ClaimTypes.Name, ds.Rows[0]["UserName"].ToString()), 
+                        new Claim(ClaimTypes.Name, ds.Rows[0]["Id"].ToString()), 
                         new Claim(ClaimTypes.Role, ds.Rows[0]["Role"].ToString())
                          },
                          CookieAuthenticationDefaults.AuthenticationScheme));

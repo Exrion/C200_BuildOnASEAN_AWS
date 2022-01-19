@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace C200_Web_Application___Identity.Controllers
@@ -35,7 +36,30 @@ namespace C200_Web_Application___Identity.Controllers
         #region Contacts - VIEW
         public IActionResult Contacts()
         {
-            return View();
+            var sdaMain = GetSDAMain();
+            return View(sdaMain);
+        }
+        [HttpGet]
+        public IActionResult Contacts_Location(string location)
+        {
+            TempData["Location"] = location;
+            var sdaList = GetSDAList(location);
+            return View(sdaList);
+        }
+        private List<SDA> GetSDAList(string location)
+        {
+            string sql = @"SELECT OOF.Officer_id, OOF.Name, OOF.Contact_no, OOF.Dob, LO.Location_name AS Location, US.Id FROM Onsite_officers OOF INNER JOIN Location LO ON LO.Location_id = OOF.Location_Location_id INNER JOIN Users US ON US.Id = OOF.Users_Id WHERE US.Id = '{0}' AND LO.Location_name = '{1}'";
+            List<SDA> sdaList = DBUtl.GetList<SDA>(sql, User.Identity.Name, location);
+            //string sql = @"SELECT OOF.officer_id, OOF.name, OOF.contact_no, OOF.dob, LO.location_name AS location, US.Id FROM onsite_officers OOF INNER JOIN location LO ON LO.location_id = OOF.location_location_id INNER JOIN users US ON US.Id = OOF.users_Id WHERE US.Id = 'Normal_Admin' AND LO.location_name = 'CausewayPoint'";
+            //List<SDA> sdaList = DBUtl.GetList<SDA>(sql);
+            TempData["Location"] = location;
+            return sdaList;
+        }
+        private List<SDAMAIN> GetSDAMain()
+        {
+            string sql = @"SELECT DISTINCT COUNT(OOF.Officer_id) AS Officer_count, LO.Location_name AS Location, US.Id FROM Onsite_officers OOF INNER JOIN Location LO ON LO.Location_id = OOF.Location_Location_id INNER JOIN Users US ON US.Id = OOF.Users_Id WHERE US.Id = '{0}'";
+            List<SDAMAIN> sdaMain = DBUtl.GetList<SDAMAIN>(sql, User.Identity.Name);
+            return sdaMain;
         }
         #endregion
 
@@ -95,7 +119,7 @@ namespace C200_Web_Application___Identity.Controllers
                 user.Email = updateUser.Email;
                 user.UserName = updateUser.UserName;
 
-                string sql = @"UPDATE users SET username='{0}', email='{1}' WHERE Id='{2}'";
+                string sql = @"UPDATE Users SET Username='{0}', Email='{1}' WHERE Id='{2}'";
                 int rows = DBUtl.ExecSQL(string.Format(sql, DBUtl.EscQuote(user.UserName), DBUtl.EscQuote(user.Email), updateUser.Id));
 
                 if (rows == 1)
@@ -129,7 +153,7 @@ namespace C200_Web_Application___Identity.Controllers
             }
             else
             {
-                string sql = @"DELETE FROM users WHERE Id='{0}'";
+                string sql = @"DELETE FROM Users WHERE Id='{0}'";
                 int rows = DBUtl.ExecSQL(String.Format(sql, id));
 
                 if (rows == 1)

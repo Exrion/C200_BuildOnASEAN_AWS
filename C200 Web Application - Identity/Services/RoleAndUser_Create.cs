@@ -22,7 +22,7 @@ namespace C200_Web_Application___Identity.Services
             {
                 Console.WriteLine("Super User not found, seeding default super user...");
 
-                string sql = @"INSERT INTO users(Id, Email, Password, UserName, Role) VALUES('{0}', '{1}', SHA2('{2}', 256), '{3}', '{4}')";
+                string sql = @"INSERT INTO Users(Id, Email, Password, UserName, Role) VALUES('{0}', '{1}', SHA2('{2}', 256), '{3}', '{4}')";
                 int result = DBUtl.ExecSQL(String.Format(sql, ID, EMAIL, PASSWORD, USERNAME, role));
 
                 if (result == 1)
@@ -38,7 +38,7 @@ namespace C200_Web_Application___Identity.Services
 
         public static bool createUser(string id, string email, string password, string username)
         {
-            string sql = @"INSERT INTO users(Id, Email, Password, UserName, Role) VALUES('{0}', '{1}', SHA2('{2}', 256), '{3}', '{4}')";
+            string sql = @"INSERT INTO Users(Id, Email, Password, UserName, Role) VALUES('{0}', '{1}', SHA2('{2}', 256), '{3}', '{4}')";
             int result = DBUtl.ExecSQL(String.Format(sql, removeSpace(id), email, password, username, null));
 
             if (result == 1)
