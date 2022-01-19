@@ -3,6 +3,7 @@ using C200_Web_Application___Identity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -70,7 +71,7 @@ namespace C200_Web_Application___Identity.Controllers
         }
         #endregion
 
-        #region FileDirectory
+        #region FileDirectory - VIEW
         public IActionResult FileDirectory()
         {
             return View();
@@ -211,5 +212,62 @@ namespace C200_Web_Application___Identity.Controllers
             }
         }
         #endregion
+
+        #region Deserialise Camera
+
+        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+
+        #endregion
+
+        #region Display Organisation (Partners) -VIEW
+        //Super User
+        [Authorize(Roles = "SU")]
+        public IActionResult Organisations()
+        {
+            List<Organisation> organisationList = DBUtl.GetList<Organisation>("SELECT Organisation_id, Company_name, Email_address, Description FROM Organisation");
+            return View("Organisations", organisationList);
+        }
+        #endregion
+
+        #region Create Organisation (Partners)
+        [Authorize(Roles = "SU")]
+        [HttpGet]
+        //Create Organisation Button
+        public IActionResult CreateOrganisation()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "SU")]
+        [HttpPost]
+        //Create Organisation Button
+        public IActionResult CreateOrganisation(Organisation organisation)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Message"] = "Invalid Input";
+                ViewData["MsgType"] = "warning";
+                return View("CreateOrganisation");
+            }
+            else
+            {
+                string insertSQL = @"INSERT INTO Organisation(Organisation_id, Company_name, Description, Email_address)
+                                    VALUES ({0},'{1}','{2}','{3}')";
+
+                if (DBUtl.ExecSQL(insertSQL, organisation.Organisation_id, organisation.Company_name, organisation.Description, organisation.Email_address ) == 1)
+                {
+                    TempData["Message"] = "New Partner Created";
+                    TempData["MsgType"] = "success";
+                }
+                else
+                {
+                    TempData["Message"] = DBUtl.DB_Message;
+                    TempData["MsgType"] = "danger";
+                }
+                return RedirectToAction("Organisations");
+            }
+        }
+        #endregion
+
     }
 }
