@@ -7,18 +7,18 @@ namespace C200_Web_Application___Identity.Models
 {
     public class SDA
     {
-        public int officer_id { get; set; }
-        public string name { get; set; }
-        public int contact_no { get; set; }
-        public DateTime dob { get; set; }
-        public string location { get; set; }
-        public string users_Id { get; set; }
+        public int Officer_id { get; set; }
+        public string Name { get; set; }
+        public int Contact_no { get; set; }
+        public DateTime Dob { get; set; }
+        public string Location { get; set; }
+        public string Users_Id { get; set; }
     }
 
     public class SDAMAIN
     {
-        public int officer_count { get; set; }
-        public string location { get; set; }
-        public string users_Id { get; set; }
+        public int Officer_count { get; set; }
+        public string Location { get; set; }
+        public string Users_Id { get; set; }
     }
 }
