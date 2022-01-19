@@ -10,22 +10,22 @@ namespace C200_Web_Application___Identity.Models
     {
         [Required]
         [StringLength(5, ErrorMessage = "Maximum 5 characters long")]
-        public string location_id { get; set; }
+        public string Location_id { get; set; }
 
         [Required]
         [StringLength(150, ErrorMessage = "Maximum 150 characters long")]
-        public string location_name { get; set; }
+        public string Location_name { get; set; }
 
         [Required]
         [StringLength(250, ErrorMessage = "Maximum 250 characters long")]
-        public string address { get; set; }
+        public string Address { get; set; }
 
         [Required]
-        public int level_no { get; set; }
+        public int Level_no { get; set; }
 
-        public int organisation_organisation_id { get; set; }
+        public int Organisation_organisation_id { get; set; }
 
         [Required]
-        public string user_Id { get; set; }
+        public string User_Id { get; set; }
     }
 }

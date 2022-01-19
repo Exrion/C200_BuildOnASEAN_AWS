@@ -7,19 +7,18 @@ namespace C200_Web_Application___Identity.Models
 {
     public class SDA
     {
-        public int officer_id { get; set; }
-        public string name { get; set; }
-        public int contact_no { get; set; }
-        public DateTime dob { get; set; }
-        public string location_location_id { get; set; }
-        public int organisation_organisation_id { get; set; }
-        public string users_Id { get; set; }
-        public int notification_notification_id { get; set; }
-        public static List<SDA> GetSDAList()
-        {
-            string sql = @"SELECT * FROM onsite_officers";
-            List<SDA> sdaList = DBUtl.GetList<SDA>(sql);
-            return sdaList;
-        }
+        public int Officer_id { get; set; }
+        public string Name { get; set; }
+        public int Contact_no { get; set; }
+        public DateTime Dob { get; set; }
+        public string Location { get; set; }
+        public string Users_Id { get; set; }
+    }
+
+    public class SDAMAIN
+    {
+        public int Officer_count { get; set; }
+        public string Location { get; set; }
+        public string Users_Id { get; set; }
     }
 }
