@@ -1,5 +1,6 @@
 using C200_Web_Application___Identity.Models;
 using C200_Web_Application___Identity.Services;
+using IronPython.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace C200_Web_Application___Identity
@@ -18,6 +21,7 @@ namespace C200_Web_Application___Identity
     {
         public static void Main(string[] args)
         {
+
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
             {
@@ -34,6 +38,7 @@ namespace C200_Web_Application___Identity
 
             host.Run();
         }
+
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
