@@ -1,22 +1,25 @@
 ﻿@model Organisation
 
 @{
-    ViewData["Title"] = "Create Partners | Admin";
+    ViewData["Title"] = "Edit Partners | Admin";
 }
 
-<h1>Create Partners</h1>
+<h1>Edit Details</h1>
 <form method="post"
       asp-controller="Admin"
-      asp-action="CreateOrganisation"
-      enctype="multipart/form-data">
+      asp-action="EditOrganisation">
+
+    <div class="form-group row">
+        <div class="offset-sm-2"><h2>Edit Partner's Details' - @Model.Organisation_id</h2></div>
+    </div>
 
     <div class="form-group row">
         <!--organisation_id-->
         <label asp-for="Organisation_id" name="organisaiton_id" class="col-md-2 col-form-label">Organisation ID :</label>
-        <div class="col-md-8">
-            <input asp-for="Organisation_id" class="form-control" />
+        <div class="col-sm-5">
+            <input type="text" asp-for="Organisation_id" class="form-control" value="@Model.Organisation_id" readonly />
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-4">
             <span asp-validation-for="Organisation_id" class="text-danger"></span>
         </div>
     </div>
@@ -24,10 +27,10 @@
     <div class="form-group row">
         <!--company_name-->
         <label asp-for="Company_name" name="company_name" class="col-md-2 col-form-label">Company Name :</label>
-        <div class="col-md-8">
-            <input asp-for="Company_name" class="form-control" />
+        <div class="col-sm-5">
+            <input type="text" asp-for="Company_name" class="form-control" value="@Model.Company_name" />
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-4">
             <span asp-validation-for="Company_name" class="text-danger"></span>
         </div>
     </div>
@@ -35,10 +38,10 @@
     <div class="form-group row">
         <!--email_address-->
         <label asp-for="Email_address" name="email_address" class="col-md-2 col-form-label">Email Address :</label>
-        <div class="col-md-8">
-            <input asp-for="Email_address" class="form-control" />
+        <div class="col-sm-5">
+            <input type="text" asp-for="Email_address" class="form-control" value="@Model.Email_address" />
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-4">
             <span asp-validation-for="Email_address" class="text-danger"></span>
         </div>
     </div>
@@ -46,20 +49,17 @@
     <div class="form-group row">
         <!--description-->
         <label asp-for="Description" name="description" class="col-md-2 col-form-label">Description :</label>
-        <div class="col-md-8">
+        <div class="col-sm-5">
             <textarea asp-for="Description" class="form-control"></textarea>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-4">
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
     </div>
 
-    <div class="form-group row btn-toolbar">
-        <div class="offset-md-10 col-md-1 btn-group">
-            <button type="submit" class="btn btn-primary">Create</button>
-        </div>
-        <div class="offset-md-10 col-md-1 btn-group">
-            <a href="/Admin/Organisations" class="btn-primary btn">Cancel</a>
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-5">
+            <input type="submit" value="Update" class="btn btn-primary" /><br />
         </div>
     </div>
 

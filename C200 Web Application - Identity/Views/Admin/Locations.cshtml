@@ -1,0 +1,51 @@
+﻿@model List<Location>
+
+@{
+    ViewData["Title"] = "Locations | Admin";
+}
+
+<h1>Locations List</h1>
+<a class="btn btn-primary" asp-controller="Admin" asp-action="CreateLocation">Add New Location</a>
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>Location ID</th>
+        <th>Location Name</th>
+        <th>Address</th>
+        <th>Levels</th>
+        <th>Organisation</th>
+    </tr>
+
+    @foreach (Location location in Model)
+    {
+        <tr>
+            <td>@location.Location_id</td>
+            <td>@location.Location_name</td>
+            <td>@location.Address</td>
+            <td>@location.Level_no</td>
+            <td>@location.Organisation_organisation_id</td>
+
+            <td>
+                <a asp-controller="Admin"
+                   asp-action="EditLocation"
+                   asp-route-id="@location.Location_id">
+                    Edit
+                </a> |
+
+                <a asp-controller="Admin"
+                   asp-action="DeleteLocation"
+                   asp-route-id="@location.Location_id"
+                   onclick="return confirm('Delete Location [@location.Location_id - @location.Location_name]')">
+                    Delete
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+
+@if (TempData["Error_msg"] != null)
+{
+    <div class="alert alert-@TempData["Error_type"]">
+        @TempData["Error_msg"]
+    </div>
+}
