@@ -9,11 +9,13 @@
         <PackageReference Include="AWSSDK.KinesisVideo" Version="3.7.0.117" />
         <PackageReference Include="AWSSDK.KinesisVideoMedia" Version="3.7.0.117" />
         <PackageReference Include="AWSSDK.KinesisVideoSignalingChannels" Version="3.7.0.117" />
+        <PackageReference Include="IronPython" Version="2.7.11" />
         <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.21.0" />
         <PackageReference Include="MySql.Data" Version="8.0.27" />
         <PackageReference Include="MySqlConnector" Version="2.1.2" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.3" />
+        <PackageReference Include="python" Version="3.10.2" />
         <PackageReference Include="RestSharp" Version="107.0.3" />
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
         <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
@@ -31,6 +33,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="SendGrid" Version="9.25.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Screenshot\" />
   </ItemGroup>
 
 </Project>
