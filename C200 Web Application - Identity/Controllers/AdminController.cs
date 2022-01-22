@@ -30,6 +30,13 @@ namespace C200_Web_Application___Identity.Controllers
         #region Cameras - VIEW
         public IActionResult Cameras()
         {
+            string sql = "SELECT C.Camera_id, C.Serial_no, C.Location_has_camera_Level_no, L.Location_name, C.Status " +
+                "FROM Camera C " +
+                "INNER JOIN Location_has_camera LC ON C.Location_has_camera_Level_no = LC.Level_no " +
+                "INNER JOIN Location L ON LC.Location_Location_id = L.Location_id";
+
+
+
             return View();
         }
         #endregion
