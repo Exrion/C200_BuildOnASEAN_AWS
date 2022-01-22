@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Cameras | Admin";
+}
+
+<head>
+    <script src="https://unpkg.com/amazon-kinesis-video-streams-webrtc/dist/kvs-webrtc.min.js"></script>
+    <title>Access Camera Clusters</title>
+    <style>
+        .hover tr:hover {
+            background-color: darkseagreen;
+        }
+    </style>
+</head>
+<main>
+    <div class="container">
+        <div class="col-sm-8">
+            <h1>Camera Clusters</h1>
+            <label><a href="https://awslabs.github.io/amazon-kinesis-video-streams-webrtc-sdk-js/examples/index.html">Click here for test setup</a></label>
+            <a href="../Python/detect_mask_video.py">Click here for python test</a>
+            <table class="table table-condensed hover">
+                <tr style="background-color:transparent">
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Level</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Status</th>
+                </tr>
+                <tr class="clickable" onclick="window.location='https://console.aws.amazon.com/kinesisvideo/home?region=us-east-1#/signalingChannels/signalingChannelName/camera1'" style="cursor:pointer;">
+
+                    <td>001</td>
+                    <td>Camera 1</td>
+                    <td>Level 1</td>
+                    <td>CausewayPoint</td>
+                    <td>On</td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</main>

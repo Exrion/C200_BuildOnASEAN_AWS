@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Amazon.KinesisVideo.Model;
+using Amazon.KinesisVideo;
 using Newtonsoft.Json;
 
 namespace C200_Web_Application___Identity.Models
