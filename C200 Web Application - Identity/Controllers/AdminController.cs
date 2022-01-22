@@ -40,13 +40,35 @@ namespace C200_Web_Application___Identity.Controllers
             var sdaMain = GetSDAMain();
             return View(sdaMain);
         }
-        [HttpGet]
-        public IActionResult Contacts_Location(string location)
+        public IActionResult Contacts_Location(string id)
         {
-            TempData["Location"] = location;
-            var sdaList = GetSDAList(location);
+            TempData["Location"] = id;
+            var sdaList = GetSDAList(id);
             return View(sdaList);
         }
+
+        #region Edit Contact
+        public IActionResult EditContact()
+        {
+
+        }
+        #endregion
+
+        #region Delete Contact
+        public IActionResult DeleteContact(string id)
+        {
+
+        }
+        #endregion
+
+        #region Create Contact
+        public IActionResult CreateContact()
+        {
+            //TODO: Add button to go to location creation
+
+        }
+        #endregion
+
         private List<SDA> GetSDAList(string location)
         {
             string sql = @"SELECT OOF.Officer_id, OOF.Name, OOF.Contact_no, OOF.Dob, LO.Location_name AS Location, US.Id FROM Onsite_officers OOF INNER JOIN Location LO ON LO.Location_id = OOF.Location_Location_id INNER JOIN Users US ON US.Id = OOF.Users_Id WHERE US.Id = '{0}' AND LO.Location_name = '{1}'";
@@ -58,7 +80,7 @@ namespace C200_Web_Application___Identity.Controllers
         }
         private List<SDAMAIN> GetSDAMain()
         {
-            string sql = @"SELECT DISTINCT COUNT(OOF.Officer_id) AS Officer_count, LO.Location_name AS Location, US.Id FROM Onsite_officers OOF INNER JOIN Location LO ON LO.Location_id = OOF.Location_Location_id INNER JOIN Users US ON US.Id = OOF.Users_Id WHERE US.Id = '{0}'";
+            string sql = @"SELECT DISTINCT COUNT(OOF.Officer_id) AS Officer_count, LO.Location_name AS Location, OOF.Location_Location_id, US.Id FROM Onsite_officers OOF INNER JOIN Location LO ON LO.Location_id = OOF.Location_Location_id INNER JOIN Users US ON US.Id = OOF.Users_Id WHERE US.Id = '{0}'";
             List<SDAMAIN> sdaMain = DBUtl.GetList<SDAMAIN>(sql, User.Identity.Name);
             return sdaMain;
         }
@@ -86,7 +108,6 @@ namespace C200_Web_Application___Identity.Controllers
             List<Users> usersList = LoadUsersAndRoles.GenUsersAndRoles();
             return View(usersList);
         }
-        #endregion
 
         #region Edit User
         [Authorize(Roles = "SU")]
@@ -137,7 +158,7 @@ namespace C200_Web_Application___Identity.Controllers
                 }
             }
         }
-#endregion
+        #endregion
 
         #region Delete User
         [Authorize(Roles = "SU")]
@@ -211,6 +232,8 @@ namespace C200_Web_Application___Identity.Controllers
                 }
             }
         }
+        #endregion
+
         #endregion
 
         #region Deserialise Camera
