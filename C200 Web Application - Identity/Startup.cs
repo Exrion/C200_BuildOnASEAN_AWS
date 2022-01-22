@@ -4,15 +4,19 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Diagnostics;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace C200_Web_Application___Identity
 {
@@ -69,8 +73,41 @@ namespace C200_Web_Application___Identity
                     name: "Admin",
                     pattern: "Admin/Contacts/{id?}");
             });
-        }
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGet("/detectmaskrun", async context => 
+                {
+                    var webRoot = env.WebRootPath;
+                    var pythonPath = System.IO.Path.Combine(webRoot, @"..\..\venv\python.exe");
+                    var filePath = System.IO.Path.Combine(webRoot, @"..\Python\detect_mask_video.py");
 
+                    ProcessStartInfo p = new ProcessStartInfo();
+                    p.FileName = pythonPath;
+                    p.Arguments = "\"" + filePath + "\"";
+                    p.UseShellExecute = true;
+                    p.RedirectStandardOutput = false;
+                    Process.Start(p);
+                    await context.Response.WriteAsync($"opening detect...(takes a while)");
+
+                });
+                endpoints.MapGet("/trainmaskrun", async context =>
+                {
+                    var webRoot = env.WebRootPath;
+                    var pythonPath = System.IO.Path.Combine(webRoot, @"..\..\venv\python.exe");
+                    var filePath = System.IO.Path.Combine(webRoot, @"..\Python\train_mask_detector.py");
+
+                    ProcessStartInfo p = new ProcessStartInfo();
+                    p.FileName = pythonPath;
+                    p.Arguments = "\"" + filePath + "\"";
+                    p.UseShellExecute = true;
+                    p.RedirectStandardOutput = false;
+                    Process.Start(p);
+                    await context.Response.WriteAsync($"opening train...(takes a while)");
+
+                });
+            });
+        }
+        
         private void RunMethods()
         {
             //TODO Make this work on startup
