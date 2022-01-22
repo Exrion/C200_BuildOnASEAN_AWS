@@ -5,7 +5,7 @@
 
 <main>
     <div>
-        <h1 class="ms-auto">@string.Format("Contacts - " + TempData["Location"])</h1>
+        <h1 class="ms-auto"><a asp-controller="Admin" asp-action="Contacts">Contacts</a> - @TempData["Location"]</h1>
         <input class="form-control me-auto col-md-4" type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search SDAs">
     </div>
     <hr />
@@ -23,14 +23,12 @@
                 <tr class="tab-content">
                     <!--Table Content-->
                     <td>@sda.Officer_id</td>
-                    <td><a asp-controller="Admin" asp-action="Contacts" asp-route-id="" asp-route-id2=""></a>@sda.Name</td>
+                    <td><a asp-controller="Admin" asp-action="EditContact" asp-route-id="@sda.Officer_id"></a>@sda.Name</td>
                     <td>@sda.Contact_no</td>
-                    <td>@sda.Dob</td>
+                    <td>@string.Format("{0:dd-MM-yyyy}", @sda.Dob)</td>
                 </tr>
             }
         }
 
     </table>
 </main>
-@User.Identity.Name
-@TempData["Location"]

@@ -47,13 +47,35 @@ namespace C200_Web_Application___Identity.Controllers
             var sdaMain = GetSDAMain();
             return View(sdaMain);
         }
-        [HttpGet]
-        public IActionResult Contacts_Location(string location)
+        public IActionResult Contacts_Location(string id)
         {
-            TempData["Location"] = location;
-            var sdaList = GetSDAList(location);
+            TempData["Location"] = id;
+            var sdaList = GetSDAList(id);
             return View(sdaList);
         }
+
+        #region Edit Contact
+        public IActionResult EditContact()
+        {
+
+        }
+        #endregion
+
+        #region Delete Contact
+        public IActionResult DeleteContact(string id)
+        {
+
+        }
+        #endregion
+
+        #region Create Contact
+        public IActionResult CreateContact()
+        {
+            //TODO: Add button to go to location creation
+
+        }
+        #endregion
+
         private List<SDA> GetSDAList(string location)
         {
             string sql = @"SELECT OOF.Officer_id, OOF.Name, OOF.Contact_no, OOF.Dob, LO.Location_name AS Location, US.Id FROM Onsite_officers OOF INNER JOIN Location LO ON LO.Location_id = OOF.Location_Location_id INNER JOIN Users US ON US.Id = OOF.Users_Id WHERE US.Id = '{0}' AND LO.Location_name = '{1}'";
@@ -65,7 +87,7 @@ namespace C200_Web_Application___Identity.Controllers
         }
         private List<SDAMAIN> GetSDAMain()
         {
-            string sql = @"SELECT DISTINCT COUNT(OOF.Officer_id) AS Officer_count, LO.Location_name AS Location, US.Id FROM Onsite_officers OOF INNER JOIN Location LO ON LO.Location_id = OOF.Location_Location_id INNER JOIN Users US ON US.Id = OOF.Users_Id WHERE US.Id = '{0}'";
+            string sql = @"SELECT DISTINCT COUNT(OOF.Officer_id) AS Officer_count, LO.Location_name AS Location, OOF.Location_Location_id, US.Id FROM Onsite_officers OOF INNER JOIN Location LO ON LO.Location_id = OOF.Location_Location_id INNER JOIN Users US ON US.Id = OOF.Users_Id WHERE US.Id = '{0}'";
             List<SDAMAIN> sdaMain = DBUtl.GetList<SDAMAIN>(sql, User.Identity.Name);
             return sdaMain;
         }
@@ -93,7 +115,6 @@ namespace C200_Web_Application___Identity.Controllers
             List<Users> usersList = LoadUsersAndRoles.GenUsersAndRoles();
             return View(usersList);
         }
-        #endregion
 
         #region Edit User
         [Authorize(Roles = "SU")]
@@ -144,7 +165,7 @@ namespace C200_Web_Application___Identity.Controllers
                 }
             }
         }
-#endregion
+        #endregion
 
         #region Delete User
         [Authorize(Roles = "SU")]
@@ -220,13 +241,15 @@ namespace C200_Web_Application___Identity.Controllers
         }
         #endregion
 
+        #endregion
+
         #region Deserialise Camera
 
         // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
 
         #endregion
 
-        #region Display Organisation (Partners) -VIEW
+        #region Display Organisation (Partners) - VIEW
         //Super User
         [Authorize(Roles = "SU")]
         public IActionResult Organisations()
@@ -252,8 +275,8 @@ namespace C200_Web_Application___Identity.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData["Message"] = "Invalid Input";
-                ViewData["MsgType"] = "warning";
+                ViewData["Error_type"] = "Invalid Input";
+                ViewData["Error_msg"] = "warning";
                 return View("CreateOrganisation");
             }
             else
@@ -263,17 +286,125 @@ namespace C200_Web_Application___Identity.Controllers
 
                 if (DBUtl.ExecSQL(insertSQL, organisation.Organisation_id, organisation.Company_name, organisation.Description, organisation.Email_address ) == 1)
                 {
-                    TempData["Message"] = "New Partner Created";
-                    TempData["MsgType"] = "success";
+                    TempData["Error_msg"] = "New Partner Created";
+                    TempData["Error_type"] = "success";
                 }
                 else
                 {
-                    TempData["Message"] = DBUtl.DB_Message;
-                    TempData["MsgType"] = "danger";
+                    TempData["Error_msg"] = DBUtl.DB_Message;
+                    TempData["Error_type"] = "danger";
                 }
                 return RedirectToAction("Organisations");
             }
         }
+        #endregion
+
+        #region Edit Organisation (Partners)
+        [Authorize(Roles = "SU")]
+        [HttpGet]
+        //Edit Organisation
+        public IActionResult EditOrganisation(int organisation_id)
+        {
+            string sql = @"SELECT * FROM Organisation 
+                         WHERE Organisation_id={0}";
+
+            List<Organisation> organisationMatch = DBUtl.GetList<Organisation>(sql, organisation_id);
+            if (organisationMatch.Count == 1)
+            {
+               Organisation organisation = organisationMatch[0];
+               return View(organisation);
+            }
+            else
+            {
+                TempData["Error_msg"] = DBUtl.DB_Message;
+                //Organisation Record does not exist
+                TempData["Error_type"] = "warning";
+                return RedirectToAction("Organisations");
+            }
+        }
+
+        [Authorize(Roles = "SU")]
+        [HttpPost]
+        public IActionResult EditOrganisation(Organisation organisation)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Error_type"] = "Invalid Input";
+                ViewData["Error_msg"] = "danger";
+                return View("EditOrganisation", organisation);
+            }
+            else
+            {
+                string updateSQL = @"UPDATE Organisation  
+                              SET Company_name='{1}', Email_address='{2}', Description='{3}',
+                              WHERE Organisation_id={0}";
+
+                if (DBUtl.ExecSQL(updateSQL, organisation.Organisation_id, 
+                                       organisation.Company_name, 
+                                       organisation.Email_address, 
+                                       organisation.Description) == 1)
+                {
+                    TempData["Error_msg"] = "Partner Details Updated";
+                    TempData["Error_type"] = "success";
+                }
+                else
+                {
+                    TempData["Error_msg"] = DBUtl.DB_Message;
+                    TempData["Error_type"] = "danger";
+                }
+                return RedirectToAction("Organisations");
+            }
+        }
+        #endregion
+
+        #region Delete Organisation
+        [Authorize(Roles = "SU")]
+        //Delete Organisation
+        public IActionResult DeleteOrganisation(int organisation_id)
+        {
+            string deleteSQL = @"DELETE FROM Organisation WHERE Organisation_id={0}";
+            int rowsAffected = DBUtl.ExecSQL(String.Format(deleteSQL, organisation_id));
+            if (rowsAffected == 1)
+            {
+                TempData["Error_type"] = "info";
+                TempData["Error_msg"] = "Organisation deleted";
+            }
+            else
+            {
+                TempData["Error_type"] = "warning";
+                TempData["Error_msg"] = DBUtl.DB_Message;
+                //
+                //Delete Unsuccessful
+            }
+            return RedirectToAction("Organisations");
+
+        }
+        #endregion
+
+        #region Display Location - VIEW
+        [Authorize(Roles = "SU")]
+        public IActionResult Locations()
+        {
+            string insertSQL = @"SELECT Location.Location_id, Location.Location_name, Location.Address, 
+                                MAX(Location_has_camera.Level_no), Location.Organisation_Organisation_id
+								FROM Location_has_camera
+                                INNER JOIN Location
+                                ON Location.Location_id = Location_has_camera.Location_Location_id
+                                GROUP BY Location_has_camera.Location_Location_id
+                                ORDER BY MAX(Location_has_camera.Level_no);";
+
+            List<Location> locationList = DBUtl.GetList<Location>(insertSQL);
+            return View("Locations", locationList);
+        }
+        #endregion
+
+        #region Create Location
+        #endregion
+
+        #region Edit Location
+        #endregion
+
+        #region Delete Location
         #endregion
 
     }

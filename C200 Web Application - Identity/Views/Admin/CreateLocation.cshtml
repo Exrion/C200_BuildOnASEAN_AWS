@@ -1,0 +1,107 @@
+﻿@model Location
+
+@{
+    ViewData["Title"] = "Create Location | Admin";
+}
+
+<h1>Create Location</h1>
+<form method="post"
+      asp-controller="Admin"
+      asp-action="CreateLocation"
+      enctype="multipart/form-data">
+
+    <div class="form-group row">
+        <!--location_id-->
+        <label asp-for="Location_id" name="location_id" class="col-md-2 col-form-label">Location ID :</label>
+        <div class="col-md-8">
+            <input asp-for="Location_id" class="form-control" />
+        </div>
+        <div class="col-sm-8">
+            <span asp-validation-for="Location_id" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <!--location_name-->
+        <label asp-for="Location_name" name="location_name" class="col-md-2 col-form-label">Location Name :</label>
+        <div class="col-md-8">
+            <input asp-for="Location_name" class="form-control" />
+        </div>
+        <div class="col-sm-8">
+            <span asp-validation-for="Location_name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <!--address-->
+        <label asp-for="Address" name="address" class="col-md-2 col-form-label">Address :</label>
+        <div class="col-md-8">
+            <input asp-for="Address" class="form-control" />
+        </div>
+        <div class="col-sm-8">
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <!--level_no-->
+        <label asp-for="Level_no" name="level_no" class="col-md-2 col-form-label">Max. Levels :</label>
+        <div class="col-md-8">
+            <input asp-for="Level_no" class="form-control">
+        </div>
+        <div class="col-sm-8">
+            <span asp-validation-for="Level_no" class="text-danger"></span>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <!--level_no-->
+        <label asp-for="Level_no" name="level_no" class="col-md-2 col-form-label">Max. Levels :</label>
+        <div class="col-md-8">
+            <input asp-for="Level_no" class="form-control">
+        </div>
+        <div class="col-sm-8">
+            <span asp-validation-for="Level_no" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <!--organisation_id-->
+        <label asp-for="Organisation_organisation_id" name="organisation_id" class="col-md-2 col-form-label">Organisation ID :</label>
+        <div class="col-md-8">
+            <select class="form-control dropdown" name="organisation_id" id="subr">
+                <option class="col-sm-3" value="">-- SELECT ORGANISATION ID --</option>
+                @foreach (DataRow row in (DataRowCollection)ViewData["Organisations"])
+                {
+                    <option value="@row["organisation_id"]">
+                        @row["organisation_id"].ToString().ToUpper()
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-sm-8">
+            <span asp-validation-for="Organisation_organisation_id" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row btn-toolbar">
+        <div class="offset-md-10 col-md-1 btn-group">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+        <div class="offset-md-10 col-md-1 btn-group">
+            <a href="/Admin/Locations" class="btn-primary btn">Cancel</a>
+        </div>
+    </div>
+
+    @if (ViewData["Error_msg"] != null)
+    {
+        <div class="form-group row">
+            <div class="offset-sm-2 col-sm-5">
+                <div class="alert alert-@ViewData["Error_type"]">
+                    @ViewData["Error_msg"]
+                </div>
+            </div>
+        </div>
+    }
+
+</form>

@@ -4,25 +4,18 @@
     ViewData["Title"] = "Our Partners List | Admin";
 }
 
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-@TempData["MsgType"]">
-        @TempData["Message"]
-    </div>
-}
-
 <h1>Our Partner List</h1>
 <a class="btn btn-primary" asp-controller="Admin" asp-action="CreateOrganisation">Add New Partner</a>
-<hr />
 
 <table class="table table-condensed table-hover">
     <tr>
-        <th scope="col">Organisation ID:</th>
-        <th scope="col">Company Name:</th>
-        <th scope="col">Email Address:</th>
-        <th scope="col">Description:</th>
-        <th scope="col">&nbsp;</th>
+        <th>Organisation ID</th>
+        <th>Company Name</th>
+        <th>Email Address</th>
+        <th>Description</th>
+        <th>Actions</th>
     </tr>
+
     @foreach (Organisation organisation in Model)
     {
         <tr>
@@ -33,10 +26,25 @@
 
             <td>
                 <a asp-controller="Admin"
-                   asp-action="Delete"
+                   asp-action="EditOrganisation"
+                   asp-route-id="@organisation.Organisation_id">
+                    Edit
+                </a> |
+
+                <a asp-controller="Admin"
+                   asp-action="DeleteOrganisation"
                    asp-route-id="@organisation.Organisation_id"
-                   onclick="return confirm('Delete Partner [@organisation.Organisation_id - @organisation.Company_name]')">Delete</a>
+                   onclick="return confirm('Delete Partner [@organisation.Organisation_id - @organisation.Company_name]')">
+                    Delete
+                </a>
             </td>
         </tr>
     }
 </table>
+
+@if (TempData["Error_msg"] != null)
+{
+    <div class="alert alert-@TempData["Error_type"]">
+        @TempData["Error_msg"]
+    </div>
+}
