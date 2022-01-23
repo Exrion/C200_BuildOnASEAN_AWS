@@ -1,0 +1,65 @@
+﻿@model SDA
+
+@{
+    ViewData["Title"] = "Edit Contact | Admin";
+}
+
+<h1>Edit User</h1>
+<form method="post">
+    <div class="form-group row">
+        <!--ID Input - Disabled-->
+        <label asp-for="Officer_id" name="Id" class="col-md-2 col-form-label">Officer ID :</label>
+        <div class="col-md-8">
+            <input asp-for="Officer_id" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <!--Name Input-->
+        <label asp-for="Name" name="Name" class="col-md-2 col-form-label">Email :</label>
+        <div class="col-md-8">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <!--UserName Input-->
+        <label asp-for="UserName" name="UserName" class="col-md-2 col-form-label">UserName :</label>
+        <div class="col-md-8">
+            <input asp-for="UserName" class="form-control" />
+        </div>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row btn-toolbar">
+        <div class="col-md-1 btn-group">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+        <div class="col-md-1 btn-group">
+            <a href="/Admin/Users" class="btn-primary btn">Cancel</a>
+        </div>
+    </div>
+
+    <!--TODO Roles Editor-->
+    <!--Roles 
+    <div class="card">
+        <div class="card-header">
+            <h4>User Roles</h4>
+        </div>
+        <div class="card-body">
+            if (Model.Roles.Any())
+            {
+                foreach (var role in Model.Roles)
+                {
+                    <h6 class="card-title">role</h6>
+                }
+            }
+            else
+            {
+                <h6 class="card-title">None at the moment</h6>
+            }
+        </div>
+        <div class="card-footer">
+            <a href="#" class="btn btn-primary disabled">Manage Roles</a>
+        </div>
+    </div>
+    -->
+</form>

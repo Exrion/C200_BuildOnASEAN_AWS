@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,6 +20,7 @@ namespace C200_Web_Application___Identity.Models
     {
         public int Officer_count { get; set; }
         public string Location { get; set; }
+        public string Location_Location_id { get; set; }
         public string Users_Id { get; set; }
     }
 }

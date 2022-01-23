@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Contacts | Admin";
+}
+@model List<SDAMAIN>
+
+<main>
+    <h1>Contacts</h1>
+    <hr />
+    <table class="table table-responsive">
+        @{
+            <tr>
+                <!--Table Head-->
+                <th>Location ID</th>
+                <th>Location</th>
+                <th>SDA Count</th>
+            </tr>
+            foreach (SDAMAIN location in Model)
+            {
+            <tr class="tab-content">
+                <!--Table Content-->
+                <td>@location.Location_Location_id</td>
+                <td><a asp-controller="Admin" asp-action="Contacts_Location" asp-route-id="@location.Location">@location.Location</a></td>                
+                <td>@location.Officer_count</td>
+            </tr>
+            }
+        }
+    </table>
+</main>
