@@ -22,6 +22,12 @@ import numpy as np
 import os
 
 
+# ensures file's working directory is where the file is located
+abspath = os.path.abspath(__file__)
+dirName = os.path.dirname(abspath)
+os.chdir(dirName)
+
+
 # initialize the initial learning rate, number of epochs to train for,
 # and batch size
 INIT_LR = 1e-4

@@ -23,21 +23,14 @@ os.chdir(dirName)
 
 
 client = boto3.client('sns','us-east-1')
-# client.publish(PhoneNumber='+6597730754', Message="Test from python app") ## Add if statement to only send when no mask detected
+clientS3 = boto3.client('s3')
 
 
 
 def printit():
 	print(face_count)
-#timer = threading.Timer(10.0, printit)
 
-#def screenshot():
-#		img_name = "screenshot{}.png".format(img_counter)
-#		cv2.imwrite(img_name,frame)
-#		print("Screenshot Taken " + str(img_name))
-#		img_counter += 1
-
-save_path = 'D:\data\screenshot'
+save_path = "D:\data\screenshot"
 
 
 def detect_and_predict_mask(frame, faceNet, maskNet):
@@ -180,6 +173,7 @@ while True:
 		complete_name = os.path.join(save_path, img_name)
 		cv2.imwrite(complete_name,frame)
 		print("Screenshot Taken " + str(img_name))
+		clientS3.put_object(ContentType = "image/png", Body = img_name, Bucket="retrainbucket", Key=img_name); #Unable to open image in S3, but can upload to S3
 		img_counter += 1
 
 	if withoutMaskP > 95:
