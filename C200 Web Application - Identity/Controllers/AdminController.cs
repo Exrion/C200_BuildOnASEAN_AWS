@@ -31,6 +31,13 @@ namespace C200_Web_Application___Identity.Controllers
         #region Cameras - VIEW
         public IActionResult Cameras()
         {
+            string sql = "SELECT C.Camera_id, C.Serial_no, C.Location_has_camera_Level_no, L.Location_name, C.Status " +
+                "FROM Camera C " +
+                "INNER JOIN Location_has_camera LC ON C.Location_has_camera_Level_no = LC.Level_no " +
+                "INNER JOIN Location L ON LC.Location_Location_id = L.Location_id";
+
+
+
             return View();
         }
         #endregion
@@ -365,12 +372,15 @@ namespace C200_Web_Application___Identity.Controllers
         [Authorize(Roles = "SU")]
         [HttpGet]
         //Edit Organisation
-        public IActionResult EditOrganisation(int organisation_id)
+        public IActionResult EditOrganisation(string organisation_id)
         {
-            string sql = @"SELECT * FROM Organisation 
-                         WHERE Organisation_id={0}";
+            string sql = @"SELECT * FROM Organisation WHERE Organisation_id='{0}'";
+            //SELECT * FROM Organisation
 
-            List<Organisation> organisationMatch = DBUtl.GetList<Organisation>(sql, organisation_id);
+            string selectSQL = String.Format(sql, organisation_id);
+            //string selectSQL = String.Format(sql);
+
+            List<Organisation> organisationMatch = DBUtl.GetList<Organisation>(selectSQL);
             if (organisationMatch.Count == 1)
             {
                Organisation organisation = organisationMatch[0];
@@ -398,7 +408,7 @@ namespace C200_Web_Application___Identity.Controllers
             else
             {
                 string updateSQL = @"UPDATE Organisation  
-                              SET Company_name='{1}', Email_address='{2}', Description='{3}',
+                              SET Company_name='{1}', Email_address='{2}', Description='{3}'
                               WHERE Organisation_id={0}";
 
                 if (DBUtl.ExecSQL(updateSQL, organisation.Organisation_id, 
@@ -452,8 +462,7 @@ namespace C200_Web_Application___Identity.Controllers
 								FROM Location_has_camera
                                 INNER JOIN Location
                                 ON Location.Location_id = Location_has_camera.Location_Location_id
-                                GROUP BY Location_has_camera.Location_Location_id
-                                ORDER BY MAX(Location_has_camera.Level_no);";
+                                GROUP BY Location_has_camera.Location_Location_id;";
 
             List<Location> locationList = DBUtl.GetList<Location>(insertSQL);
             return View("Locations", locationList);
@@ -461,6 +470,50 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Create Location
+        private void PopulateViewData()
+        {
+            DataTable organisationTable = DBUtl.GetTable("SELECT * FROM Organisation");
+            ViewData["Organisations"] = organisationTable.Rows;
+
+        }
+
+        [Authorize(Roles = "SU")]
+        [HttpGet]
+        //Create Location
+        public IActionResult CreateLocation()
+        {
+            return View();
+        }
+
+        //[Authorize(Roles = "SU")]
+        //[HttpPost]
+        ////Create Location
+        //public IActionResult CreateLocation(Location location)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        ViewData["Error_type"] = "Invalid Input";
+        //        ViewData["Error_msg"] = "warning";
+        //        return View("CreateLocation");
+        //    }
+        //    else
+        //    {
+        //        string insertSQL = @"INSERT INTO Location()
+        //                            VALUES ({0},'{1}','{2}','{3}')";
+
+        //        if (DBUtl.ExecSQL(insertSQL, ) == 1)
+        //        {
+        //            TempData["Error_msg"] = "New Partner Created";
+        //            TempData["Error_type"] = "success";
+        //        }
+        //        else
+        //        {
+        //            TempData["Error_msg"] = DBUtl.DB_Message;
+        //            TempData["Error_type"] = "danger";
+        //        }
+        //        return RedirectToAction("Locations");
+        //    }
+        //}
         #endregion
 
         #region Edit Location
