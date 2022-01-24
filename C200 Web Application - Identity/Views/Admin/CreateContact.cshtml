@@ -1,72 +1,71 @@
-﻿@model Users
+﻿@model Contact_Package
 
 @{
-    ViewData["Title"] = "Edit Contact | Admin";
+    ViewData["Title"] = "Create Contact | Admin";
 }
+
+<script src="~/lib/moment/moment.min.js"></script>
+<link href="~/lib/dtpicker/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+<script src="~/lib/dtpicker/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<script language="javascript">
+    $(document).ready(function () {
+        //Date Picker
+        $('#DatePicker')
+            .datetimepicker({ format: 'YYYY-MM-DD' });
+    });
+</script>
 
 <h1>Create User</h1>
 <form method="post">
     <div class="form-group row">
         <!--ID Input - Disabled-->
-        <label asp-for="Id" name="Id" class="col-md-2 col-form-label">User ID :</label>
+        <label asp-for="contact.Officer_id" name="Id" class="col-md-2 col-form-label">Officer ID :</label>
         <div class="col-md-8">
-            <input asp-for="Id" class="form-control" />
+            <input asp-for="contact.Officer_id" class="form-control" />
         </div>
     </div>
     <div class="form-group row">
-        <!--Email Input-->
-        <label asp-for="Email" name="Email" class="col-md-2 col-form-label">Email :</label>
+        <!--Name Input-->
+        <label asp-for="contact.Name" name="Name" class="col-md-2 col-form-label">Name :</label>
         <div class="col-md-8">
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <input asp-for="contact.Name" class="form-control" />
+            <span asp-validation-for="contact.Name" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
-        <!--UserName Input-->
-        <label asp-for="UserName" name="UserName" class="col-md-2 col-form-label">UserName :</label>
+        <!--Contact No. Input-->
+        <label asp-for="contact.Contact_no" name="Contact_no" class="col-md-2 col-form-label">Contact No. :</label>
         <div class="col-md-8">
-            <input asp-for="UserName" class="form-control" />
+            <input asp-for="contact.Contact_no" class="form-control" />
         </div>
     </div>
     <div class="form-group row">
-        <!--Password Input-->
-        <label asp-for="Password" name="Password" class="col-md-2 col-form-label">Password :</label>
-        <div class="col-md-8">
-            <input asp-for="Password" class="form-control" />
+        <!--Contact No. Input-->
+        <label class="control-label col-sm-2" asp-for="contact.Dob">Date of Birth :</label>
+        <div class="col-sm-5">
+            <div class="input-group date" id="DatePicker" data-target-input="nearest">
+                <input type="text" asp-for="contact.Dob" class="form-control" />
+                <div class="input-group-append"
+                     data-target="#DatePicker" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!--TODO: Add Location, Organisation and Notification choosers via dropdown menus.-->
+    
+
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group row btn-toolbar">
         <div class="col-md-1 btn-group">
             <button type="submit" class="btn btn-primary">Create</button>
         </div>
         <div class="col-md-1 btn-group">
-            <a href="/Admin/Users" class="btn-primary btn">Cancel</a>
+            <a asp-controller="Admin" asp-action="Contacts" class="btn-primary btn">Cancel</a>
         </div>
     </div>
 
-    <!--TODO Roles Editor-->
-    <!--Roles
-    <div class="card">
-        <div class="card-header">
-            <h4>User Roles</h4>
-        </div>
-        <div class="card-body">
-            if (Model.Roles.Any())
-            {
-                foreach (var role in Model.Roles)
-                {
-                    <h6 class="card-title">role</h6>
-                }
-            }
-            else
-            {
-                <h6 class="card-title">None at the moment</h6>
-            }
-        </div>
-        <div class="card-footer">
-            <a href="#" class="btn btn-primary disabled">Manage Roles</a>
-        </div>
-    </div>
-    -->
+
 </form>

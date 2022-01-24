@@ -7,6 +7,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Dynamic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -48,35 +49,103 @@ namespace C200_Web_Application___Identity.Controllers
         }
 
         #region Edit Contact
-        public IActionResult EditContact()
+        [HttpGet]
+        public IActionResult EditContact(int id)
         {
+            Contact contact = GetContact(id);
+            Contact_Data contactData = Contact_Package.GetContactData();
+            Contact_Package conPack = new Contact_Package(contact, contactData);
+            return View(conPack);
+        }
+        [HttpPost]
+        public IActionResult EditContact(Contact contact)
+        {
+            string sql = @"UPDATE Onsite_officers SET Name = '{1}', Contact_no = {2}, Dob = '{3:yyyy-MM-dd}' WHERE Officer_id = '{0}'";
+            int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob);
 
+            if (result == 1)
+            {
+                TempData["Error_type"] = "alert-info";
+                TempData["Error_msg"] = "Contact data updated";
+                return RedirectToAction("Contacts");
+            }
+            else
+            {
+                TempData["Error_type"] = "alert-warning";
+                TempData["Error_msg"] = DBUtl.DB_Message;
+                return RedirectToAction("Contacts");
+            }
         }
         #endregion
 
         #region Delete Contact
-        public IActionResult DeleteContact(string id)
+        public IActionResult DeleteContact(int id)
         {
+            string sql = @"DELETE FROM Onsite_officers WHERE Officer_id = {0}";
+            int result = DBUtl.ExecSQL(String.Format(sql, id));
 
+            if (result == 1)
+            {
+                TempData["Error_type"] = "alert-info";
+                TempData["Error_msg"] = "Contact deleted";
+                return RedirectToAction("Contacts");
+            }
+            else
+            {
+                TempData["Error_type"] = "alert-warning";
+                TempData["Error_msg"] = DBUtl.DB_Message;
+                return RedirectToAction("Contacts");
+            }
         }
         #endregion
 
         #region Create Contact
+        [HttpGet]
         public IActionResult CreateContact()
         {
-            //TODO: Add button to go to location creation
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateContact(Contact contact)
+        {
+            string sql = @"UPDATE Onsite_officers SET Officer_id = {0}, Name = '{1}', Contact_no = {2}, Dob = '{3:yyyy-MM-dd}', Location_Location_id = '{4}', Organisation_Organisation_id = {5}, Notification_Notification_id = {6}";
+            int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob, contact.Location_Location_id, contact.Organisation_Organisation_id, contact.Notification_Notification_id);
 
+            if (result == 1)
+            {
+                TempData["Error_type"] = "alert-info";
+                TempData["Error_msg"] = "Contact added";
+                return RedirectToAction("Contacts");
+            }
+            else
+            {
+                TempData["Error_type"] = "alert-warning";
+                TempData["Error_msg"] = DBUtl.DB_Message;
+                return RedirectToAction("Contacts");
+            }
         }
         #endregion
-
         private List<SDA> GetSDAList(string location)
         {
             string sql = @"SELECT OOF.Officer_id, OOF.Name, OOF.Contact_no, OOF.Dob, LO.Location_name AS Location, US.Id FROM Onsite_officers OOF INNER JOIN Location LO ON LO.Location_id = OOF.Location_Location_id INNER JOIN Users US ON US.Id = OOF.Users_Id WHERE US.Id = '{0}' AND LO.Location_name = '{1}'";
             List<SDA> sdaList = DBUtl.GetList<SDA>(sql, User.Identity.Name, location);
-            //string sql = @"SELECT OOF.officer_id, OOF.name, OOF.contact_no, OOF.dob, LO.location_name AS location, US.Id FROM onsite_officers OOF INNER JOIN location LO ON LO.location_id = OOF.location_location_id INNER JOIN users US ON US.Id = OOF.users_Id WHERE US.Id = 'Normal_Admin' AND LO.location_name = 'CausewayPoint'";
-            //List<SDA> sdaList = DBUtl.GetList<SDA>(sql);
             TempData["Location"] = location;
             return sdaList;
+        }
+        private Contact GetContact(int id)
+        {
+            Contact contact = null;
+            string sql = @"SELECT OOF.Officer_id, OOF.Name, OOF.Contact_no, OOF.Dob, LO.Location_id, LO.Location_name, OG.Organisation_id, OG.Company_name, NT.Notification_id FROM Onsite_officers OOF INNER JOIN Location LO ON LO.Location_id = OOF.Location_Location_id INNER JOIN Organisation OG ON OG.Organisation_id = OOF.Organisation_Organisation_id INNER JOIN Notification NT ON NT.Notification_id WHERE OOF.Users_Id = '{0}' AND OOF.Officer_id = {1}";
+            List<Contact> contactList = DBUtl.GetList<Contact>(sql, User.Identity.Name, id);
+            if (contactList.Count != 1)
+            {
+                return contact;
+            }
+            else
+            {
+                contact = contactList[0];
+                return contact;
+            }
         }
         private List<SDAMAIN> GetSDAMain()
         {
