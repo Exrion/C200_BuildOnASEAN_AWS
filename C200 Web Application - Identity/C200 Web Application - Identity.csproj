@@ -9,6 +9,7 @@
         <PackageReference Include="AWSSDK.KinesisVideo" Version="3.7.0.117" />
         <PackageReference Include="AWSSDK.KinesisVideoMedia" Version="3.7.0.117" />
         <PackageReference Include="AWSSDK.KinesisVideoSignalingChannels" Version="3.7.0.117" />
+        <PackageReference Include="FontAwesome" Version="4.7.0" />
         <PackageReference Include="IronPython" Version="2.7.11" />
         <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.21.0" />
         <PackageReference Include="MySql.Data" Version="8.0.27" />

@@ -23,7 +23,7 @@
                 <tr class="tab-content">
                     <!--Table Content-->
                     <td>@sda.Officer_id</td>
-                    <td><a asp-controller="Admin" asp-action="EditContact" asp-route-id="@sda.Officer_id"></a>@sda.Name</td>
+                    <td><a asp-controller="Admin" asp-action="EditContact" asp-route-id="@sda.Officer_id">@sda.Name</a></td>
                     <td>@sda.Contact_no</td>
                     <td>@string.Format("{0:dd-MM-yyyy}", @sda.Dob)</td>
                 </tr>

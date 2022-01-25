@@ -4,7 +4,14 @@
 @model List<SDAMAIN>
 
 <main>
+    @{
+        if (TempData["Error_msg"] != null)
+        {
+            <p class="alert @TempData["Error_type"]">@TempData["Error_msg"]</p>
+        }
+    }
     <h1>Contacts</h1>
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="CreateContact">Create New Contact</a>
     <hr />
     <table class="table table-responsive">
         @{
@@ -16,12 +23,12 @@
             </tr>
             foreach (SDAMAIN location in Model)
             {
-            <tr class="tab-content">
-                <!--Table Content-->
-                <td>@location.Location_Location_id</td>
-                <td><a asp-controller="Admin" asp-action="Contacts_Location" asp-route-id="@location.Location">@location.Location</a></td>                
-                <td>@location.Officer_count</td>
-            </tr>
+                <tr class="tab-content">
+                    <!--Table Content-->
+                    <td>@location.Location_Location_id</td>
+                    <td><a asp-controller="Admin" asp-action="Contacts_Location" asp-route-id="@location.Location">@location.Location</a></td>
+                    <td>@location.Officer_count</td>
+                </tr>
             }
         }
     </table>
