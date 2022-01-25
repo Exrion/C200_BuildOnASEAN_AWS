@@ -19,6 +19,7 @@ from sklearn.metrics import classification_report
 from imutils import paths
 import matplotlib.pyplot as plt
 import numpy as np
+import csv
 import os
 
 
@@ -31,8 +32,8 @@ os.chdir(dirName)
 # initialize the initial learning rate, number of epochs to train for,
 # and batch size
 INIT_LR = 1e-4
-EPOCHS = 20 
-BS = 32 
+EPOCHS = 20  #20
+BS = 32      #32
 
 DIRECTORY = r"D:\data"
 CATEGORIES = ["with_mask", "without_mask"]  #Added incorrect_mask
@@ -145,19 +146,31 @@ plt.style.use("ggplot")
 plt.figure()
 plt.plot(np.arange(0, N), H.history["loss"], label="train_loss")
 plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
-plt.plot(np.arange(0, N), H.history["acc"], label="train_acc")     #H.history["accuracy"]
-plt.plot(np.arange(0, N), H.history["val_acc"], label="val_acc") #H.history["val_accuracy"]
+plt.plot(np.arange(0, N), H.history["accuracy"], label="train_acc")     #H.history["accuracy"]
+plt.plot(np.arange(0, N), H.history["val_accuracy"], label="val_acc") #H.history["val_accuracy"]
 plt.title("Training Loss and Accuracy")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend(loc="lower left")
 plt.savefig("plot.png") #plot.png
 
+loss = str(H.history["loss"][-1])
+valid_loss = str(H.history["val_loss"][-1])
+acc = str(H.history["accuracy"][-1])
+valid_acc = str(H.history["val_accuracy"][-1])
 
+
+file = open("Statistics.csv", "a", newline="")
+tup1 = ("Loss", "Valid Loss", "Acc", "Valid Loss")
+tup2 = (loss, valid_loss, acc, valid_acc)
+writer = csv.writer(file)
+writer.writerow(tup1)
+writer.writerow(tup2)
+file.close()
 
 # Printing statistics
 print("[INFO] Training Statistics")
 print("Loss: " + str(H.history["loss"][-1]))
 print("Validation Loss: " + str(H.history["val_loss"][-1]))
-print("Accuracy: " + str(H.history["acc"][-1]))
-print("Validation Accuracy: " + str(H.history["val_acc"][-1]))
+print("Accuracy: " + str(H.history["accuracy"][-1]))
+print("Validation Accuracy: " + str(H.history["val_accuracy"][-1]))

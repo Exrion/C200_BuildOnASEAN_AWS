@@ -30,7 +30,7 @@ clientS3 = boto3.client('s3')
 def printit():
 	print(face_count)
 
-save_path = "D:\data\screenshot"
+save_path = "../wwwroot/Images/Screenshot/"
 
 
 def detect_and_predict_mask(frame, faceNet, maskNet):
