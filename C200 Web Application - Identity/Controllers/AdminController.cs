@@ -453,5 +453,17 @@ namespace C200_Web_Application___Identity.Controllers
         #region Delete Location
         #endregion
 
+        #region Display Camera - VIEW
+        #endregion
+
+        #region Create Camera
+        #endregion
+
+        #region Edit Camera
+        #endregion
+
+        #region Delete Camera
+        #endregion
+
     }
 }
