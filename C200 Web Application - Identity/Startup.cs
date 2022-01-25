@@ -51,7 +51,6 @@ namespace C200_Web_Application___Identity
 
             if (env.IsProduction())
             {
-                RunMethods();
             }
 
             app.UseHttpsRedirection();
@@ -66,12 +65,6 @@ namespace C200_Web_Application___Identity
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-        }
-
-        private void RunMethods()
-        {
-            //TODO Make this work on startup
-            RoleAndUser_Create.createDefaultSuper();
         }
     }
 }
