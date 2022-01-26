@@ -373,24 +373,18 @@ namespace C200_Web_Application___Identity.Controllers
         [Authorize(Roles = "SU")]
         [HttpGet]
         //Edit Organisation
-        public IActionResult EditOrganisation(string organisation_id)
+        public IActionResult EditOrganisation(int id)
         {
-            string sql = @"SELECT * FROM Organisation ";
-            //SELECT * FROM Organisation
+            string selectSQL = @"SELECT * FROM Organisation WHERE Organisation_id = {0}";
 
-            string selectSQL = String.Format(sql, organisation_id);
-            //string selectSQL = String.Format(sql);
-
-            List<Organisation> organisationMatch = DBUtl.GetList<Organisation>(selectSQL);
-            if (organisationMatch.Count == 1)
+            List<Organisation> organisationList = DBUtl.GetList<Organisation>(selectSQL, id);
+            if (organisationList.Count == 1)
             {
-               Organisation organisation = organisationMatch[0];
-               return View(organisation);
+               return View("EditOrganisation", organisationList[0]);
             }
             else
             {
-                TempData["Error_msg"] = DBUtl.DB_Message;
-                //Organisation Record does not exist
+                TempData["Error_msg"] = DBUtl.DB_Message; //Organisation Record does not exist
                 TempData["Error_type"] = "warning";
                 return RedirectToAction("Organisations");
             }
@@ -402,15 +396,15 @@ namespace C200_Web_Application___Identity.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData["Error_type"] = "Invalid Input";
-                ViewData["Error_msg"] = "danger";
-                return View("EditOrganisation", organisation);
+                ViewData["Error_msg"] = "Invalid Input";
+                ViewData["Error_type"] = "danger";
+                return View("EditOrganisation");
             }
             else
             {
                 string updateSQL = @"UPDATE Organisation  
-                              SET Company_name='{1}', Email_address='{2}', Description='{3}'
-                              WHERE Organisation_id={0}";
+                                    SET Company_name='{1}', Email_address='{2}', Description='{3}'
+                                    WHERE Organisation_id={0}";
 
                 if (DBUtl.ExecSQL(updateSQL, organisation.Organisation_id, 
                                        organisation.Company_name, 
@@ -419,13 +413,14 @@ namespace C200_Web_Application___Identity.Controllers
                 {
                     TempData["Error_msg"] = "Partner Details Updated";
                     TempData["Error_type"] = "success";
+                    return RedirectToAction("Organisations");
                 }
                 else
                 {
                     TempData["Error_msg"] = DBUtl.DB_Message;
                     TempData["Error_type"] = "danger";
-                }
-                return RedirectToAction("Organisations");
+                    return RedirectToAction("Organisations");
+                } 
             }
         }
         #endregion
@@ -433,24 +428,22 @@ namespace C200_Web_Application___Identity.Controllers
         #region Delete Organisation
         [Authorize(Roles = "SU")]
         //Delete Organisation
-        public IActionResult DeleteOrganisation(int organisation_id)
+        public IActionResult DeleteOrganisation(int id)
         {
             string deleteSQL = @"DELETE FROM Organisation WHERE Organisation_id={0}";
-            int rowsAffected = DBUtl.ExecSQL(String.Format(deleteSQL, organisation_id));
+            int rowsAffected = DBUtl.ExecSQL(String.Format(deleteSQL, id));
             if (rowsAffected == 1)
             {
-                TempData["Error_type"] = "info";
                 TempData["Error_msg"] = "Organisation deleted";
+                TempData["Error_type"] = "info";
+                return RedirectToAction("Organisations");
             }
             else
             {
+                TempData["Error_msg"] = DBUtl.DB_Message; //Delete Unsuccessful
                 TempData["Error_type"] = "warning";
-                TempData["Error_msg"] = DBUtl.DB_Message;
-                //
-                //Delete Unsuccessful
+                return RedirectToAction("Organisations");
             }
-            return RedirectToAction("Organisations");
-
         }
         #endregion
 
@@ -471,7 +464,7 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Create Location
-        private void PopulateViewData()
+        private void PopulateViewData() 
         {
             DataTable organisationTable = DBUtl.GetTable("SELECT * FROM Organisation");
             ViewData["Organisations"] = organisationTable.Rows;

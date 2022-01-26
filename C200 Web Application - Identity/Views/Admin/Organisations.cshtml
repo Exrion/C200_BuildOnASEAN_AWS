@@ -5,15 +5,19 @@
 }
 
 <h1>Our Partner List</h1>
-<a class="btn btn-primary" asp-controller="Admin" asp-action="CreateOrganisation">Add New Partner</a>
+<a class="btn btn-primary" 
+   asp-controller="Admin" 
+   asp-action="CreateOrganisation">
+   Add New Partner
+</a>
 
 <table class="table table-condensed table-hover">
     <tr>
-        <th>Organisation ID</th>
-        <th>Company Name</th>
-        <th>Email Address</th>
-        <th>Description</th>
-        <th>Actions</th>
+        <th scope="col">Organisation ID</th>
+        <th scope="col">Company Name</th>
+        <th scope="col">Email Address</th>
+        <th scope="col">Description</th>
+        <th scope="col">Actions</th>
     </tr>
 
     @foreach (Organisation organisation in Model)
@@ -28,7 +32,7 @@
                 <a asp-controller="Admin"
                    asp-action="EditOrganisation"
                    asp-route-id="@organisation.Organisation_id">
-                    Edit
+                   Edit
                 </a> |
 
                 <a asp-controller="Admin"
