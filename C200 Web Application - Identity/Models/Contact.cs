@@ -18,11 +18,13 @@ namespace C200_Web_Application___Identity.Models
         [Required]
         [DataType(DataType.Date, ErrorMessage = "Invalid date")]
         public DateTime Dob { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Select a location")]
         public string Location_Location_id { get; set; }
         public string Location_name { get; set; }
+        [Required(ErrorMessage = "Select an organisation")]
         public int Organisation_Organisation_id { get; set; }
         public string Company_name { get; set; }
+        [Required(ErrorMessage = "Select a notification id")]
         public int Notification_Notification_id { get; set; }
     }
 
@@ -30,19 +32,26 @@ namespace C200_Web_Application___Identity.Models
     {
         public List<Location_Data> locationData { get; set; }
         public List<Organisation_Data> orgData { get; set; }
-        public List<int> notiData { get; set; }
+        public List<Notification_Data> notiData { get; set; }
     }
 
     public class Location_Data
     {
         public string Location_id { get; set; }
         public string Location_name { get; set; }
+        public int Organisation_id { get; set; }
+        public string Company_name { get; set; }
     }
 
     public class Organisation_Data
     {
         public int Organisation_id { get; set; }
         public string Company_name { get; set; }
+    }
+
+    public class Notification_Data
+    {
+        public int Notification_id { get; set; }
     }
 
     public class Contact_Package
@@ -67,7 +76,7 @@ namespace C200_Web_Application___Identity.Models
 
         private static List<Location_Data> GetLocationData()
         {
-            string sql = "SELECT Location_id, Location_name FROM Location";
+            string sql = "SELECT LO.Location_id, LO.Location_name, OG.Organisation_id, OG.Company_name FROM Location LO INNER JOIN Organisation OG ON OG.Organisation_id = LO.Organisation_Organisation_id";
             List<Location_Data> dataList = DBUtl.GetList<Location_Data>(sql);
             return dataList;
         }
@@ -79,10 +88,10 @@ namespace C200_Web_Application___Identity.Models
             return dataList;
         }
 
-        private static List<int> GetNotiData()
+        private static List<Notification_Data> GetNotiData()
         {
             string sql = "SELECT Notification_id FROM Notification";
-            List<int> dataList = DBUtl.GetList<int>(sql);
+            List<Notification_Data> dataList = DBUtl.GetList<Notification_Data>(sql);
             return dataList;
         }
     }
