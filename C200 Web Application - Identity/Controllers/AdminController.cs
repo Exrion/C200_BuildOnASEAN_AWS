@@ -375,7 +375,7 @@ namespace C200_Web_Application___Identity.Controllers
         //Edit Organisation
         public IActionResult EditOrganisation(string organisation_id)
         {
-            string sql = @"SELECT * FROM Organisation WHERE Organisation_id='{0}'";
+            string sql = @"SELECT * FROM Organisation ";
             //SELECT * FROM Organisation
 
             string selectSQL = String.Format(sql, organisation_id);
@@ -486,35 +486,35 @@ namespace C200_Web_Application___Identity.Controllers
             return View();
         }
 
-        [Authorize(Roles = "SU")]
-        [HttpPost]
-        //Create Location
-        public IActionResult CreateLocation(Location location)
-        {
-            if (!ModelState.IsValid)
-            {
-                ViewData["Error_type"] = "Invalid Input";
-                ViewData["Error_msg"] = "warning";
-                return View("CreateLocation");
-            }
-            else
-            {
-                string insertSQL = @"INSERT INTO Location(Location_id, Location_name, Address, Organisation_Organisation_id, Users_Id)
-                                    VALUES ('{0}','{1}','{2}','{3}')";
+        //[Authorize(Roles = "SU")]
+        //[HttpPost]
+        ////Create Location
+        //public IActionResult CreateLocation(Location location)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        ViewData["Error_type"] = "Invalid Input";
+        //        ViewData["Error_msg"] = "warning";
+        //        return View("CreateLocation");
+        //    }
+        //    else
+        //    {
+        //        string insertSQL = @"INSERT INTO Location(Location_id, Location_name, Address, Organisation_Organisation_id, Users_Id)
+        //                            VALUES ('{0}','{1}','{2}','{3}')";
 
-                if (DBUtl.ExecSQL(insertSQL, ) == 1)
-                {
-                    TempData["Error_msg"] = "New Partner Created";
-                    TempData["Error_type"] = "success";
-                }
-                else
-                {
-                    TempData["Error_msg"] = DBUtl.DB_Message;
-                    TempData["Error_type"] = "danger";
-                }
-                return RedirectToAction("Locations");
-            }
-        }
+        //        if (DBUtl.ExecSQL(insertSQL, ) == 1)
+        //        {
+        //            TempData["Error_msg"] = "New Partner Created";
+        //            TempData["Error_type"] = "success";
+        //        }
+        //        else
+        //        {
+        //            TempData["Error_msg"] = DBUtl.DB_Message;
+        //            TempData["Error_type"] = "danger";
+        //        }
+        //        return RedirectToAction("Locations");
+        //    }
+        //}
         #endregion
 
         #region Edit Location
