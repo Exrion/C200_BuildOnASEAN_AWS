@@ -31,13 +31,10 @@ namespace C200_Web_Application___Identity.Controllers
         #region Cameras - VIEW
         public IActionResult Cameras()
         {
-            string sql = "SELECT C.Camera_id, C.Serial_no, C.Location_has_camera_Level_no, L.Location_name, C.Status " +
-                "FROM Camera C " +
-                "INNER JOIN Location_has_camera LC ON C.Location_has_camera_Level_no = LC.Level_no " +
-                "INNER JOIN Location L ON LC.Location_Location_id = L.Location_id";
-            DataTable dt = DBUtl.GetTable(sql);
-
-
+            string sql = @"SELECT C.Camera_id, C.Serial_no, C.Location_has_camera_Level_no, L.Location_name, C.Status 
+                        FROM Camera C
+                        INNER JOIN Location_has_camera LC ON C.Location_has_camera_Level_no = LC.Level_no 
+                        INNER JOIN Location L ON LC.Location_Location_id = L.Location_id";
 
             return View();
         }
@@ -68,19 +65,27 @@ namespace C200_Web_Application___Identity.Controllers
         [HttpPost]
         public IActionResult EditContact(Contact contact)
         {
-            string sql = @"UPDATE Onsite_officers SET Name = '{1}', Contact_no = {2}, Dob = '{3:yyyy-MM-dd}' WHERE Officer_id = '{0}'";
-            int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob);
-
-            if (result == 1)
+            if (!ModelState.IsValid)
             {
-                TempData["Error_type"] = "alert-info";
-                TempData["Error_msg"] = "Contact data updated";
+                TempData["Error_msg"] = "Invalid Input";
+                TempData["Error_type"] = "alert-danger";
                 return RedirectToAction("Contacts");
             }
             else
             {
-                TempData["Error_type"] = "alert-warning";
-                TempData["Error_msg"] = DBUtl.DB_Message;
+                string sql = @"UPDATE Onsite_officers SET Name = '{1}', Contact_no = {2}, Dob = '{3:yyyy-MM-dd}' WHERE Officer_id = {0}";
+                int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob);
+
+                if (result == 1)
+                {
+                    TempData["Error_type"] = "alert-info";
+                    TempData["Error_msg"] = "Contact data updated";
+                }
+                else
+                {
+                    TempData["Error_type"] = "alert-warning";
+                    TempData["Error_msg"] = DBUtl.DB_Message;
+                }
                 return RedirectToAction("Contacts");
             }
         }
@@ -96,14 +101,13 @@ namespace C200_Web_Application___Identity.Controllers
             {
                 TempData["Error_type"] = "alert-info";
                 TempData["Error_msg"] = "Contact deleted";
-                return RedirectToAction("Contacts");
             }
             else
             {
                 TempData["Error_type"] = "alert-warning";
                 TempData["Error_msg"] = DBUtl.DB_Message;
-                return RedirectToAction("Contacts");
             }
+            return RedirectToAction("Contacts");
         }
         #endregion
 
@@ -111,13 +115,16 @@ namespace C200_Web_Application___Identity.Controllers
         [HttpGet]
         public IActionResult CreateContact()
         {
-            return View();
+            Contact contact = null;
+            Contact_Data contactData = Contact_Package.GetContactData();
+            Contact_Package conPack = new Contact_Package(contact, contactData);
+            return View(conPack);
         }
         [HttpPost]
         public IActionResult CreateContact(Contact contact)
         {
-            string sql = @"UPDATE Onsite_officers SET Officer_id = {0}, Name = '{1}', Contact_no = {2}, Dob = '{3:yyyy-MM-dd}', Location_Location_id = '{4}', Organisation_Organisation_id = {5}, Notification_Notification_id = {6}";
-            int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob, contact.Location_Location_id, contact.Organisation_Organisation_id, contact.Notification_Notification_id);
+            string sql = @"INSERT INTO Onsite_officers(Officer_id, Name, Contact_no, Dob, Location_Location_id, Organisation_Organisation_id, Users_Id, Notification_Notification_id) VALUES({0}, '{1}', {2}, '{3:yyyy-MM-dd}', '{4}', {5}, '{6}', {7})";
+            int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob, contact.Location_Location_id, contact.Organisation_Organisation_id, User.Identity.Name, contact.Notification_Notification_id);
 
             if (result == 1)
             {
@@ -479,35 +486,35 @@ namespace C200_Web_Application___Identity.Controllers
             return View();
         }
 
-        //[Authorize(Roles = "SU")]
-        //[HttpPost]
-        ////Create Location
-        //public IActionResult CreateLocation(Location location)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        ViewData["Error_type"] = "Invalid Input";
-        //        ViewData["Error_msg"] = "warning";
-        //        return View("CreateLocation");
-        //    }
-        //    else
-        //    {
-        //        string insertSQL = @"INSERT INTO Location(Location_id, Location_name, Address, Organisation_Organisation_id, Users_Id)
-        //                            VALUES ('{0}','{1}','{2}','{3}')";
+        [Authorize(Roles = "SU")]
+        [HttpPost]
+        //Create Location
+        public IActionResult CreateLocation(Location location)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Error_type"] = "Invalid Input";
+                ViewData["Error_msg"] = "warning";
+                return View("CreateLocation");
+            }
+            else
+            {
+                string insertSQL = @"INSERT INTO Location(Location_id, Location_name, Address, Organisation_Organisation_id, Users_Id)
+                                    VALUES ('{0}','{1}','{2}','{3}')";
 
-        //        if (DBUtl.ExecSQL(insertSQL, ) == 1)
-        //        {
-        //            TempData["Error_msg"] = "New Partner Created";
-        //            TempData["Error_type"] = "success";
-        //        }
-        //        else
-        //        {
-        //            TempData["Error_msg"] = DBUtl.DB_Message;
-        //            TempData["Error_type"] = "danger";
-        //        }
-        //        return RedirectToAction("Locations");
-        //    }
-        //}
+                if (DBUtl.ExecSQL(insertSQL) == 1)
+                {
+                    TempData["Error_msg"] = "New Partner Created";
+                    TempData["Error_type"] = "success";
+                }
+                else
+                {
+                    TempData["Error_msg"] = DBUtl.DB_Message;
+                    TempData["Error_type"] = "danger";
+                }
+                return RedirectToAction("Locations");
+            }
+        }
         #endregion
 
         #region Edit Location
