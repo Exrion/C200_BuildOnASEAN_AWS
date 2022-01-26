@@ -154,13 +154,13 @@ plt.ylabel("Loss/Accuracy")
 plt.legend(loc="lower left")
 plt.savefig("plot.png") #plot.png
 
-loss = str("{:.2f}".format(H.history["loss"][-1]))
+loss = str("{:.2f%}".format(H.history["loss"][-1]))
 
-valid_loss = str("{:.2f}".format(H.history["val_loss"][-1]))
+valid_loss = str("{:.2f%}".format(H.history["val_loss"][-1]))
 
-acc = str("{:.2f}".format(H.history["accuracy"][-1]))
+acc = str("{:.2f%}".format(H.history["accuracy"][-1]))
 
-valid_acc = str("{:.2f}".format(H.history["val_accuracy"][-1]))
+valid_acc = str("{:.2f%}".format(H.history["val_accuracy"][-1]))
 
 
 with open('Statistics.csv', mode='w') as csv_file:
