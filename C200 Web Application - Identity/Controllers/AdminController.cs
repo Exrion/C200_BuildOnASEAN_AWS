@@ -118,8 +118,8 @@ namespace C200_Web_Application___Identity.Controllers
         [HttpPost]
         public IActionResult CreateContact(Contact contact)
         {
-            string sql = @"INSERT INTO Onsite_officers (Name, Contact_no, Dob, Location_Location_id, Organisation_Organisation_id, Notification_Notification_id) VALUES('{0}', {1}, '{2:yyyy-MM-dd}', '{3}', {4}, {5})";
-            int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob, contact.Location_Location_id, contact.Organisation_Organisation_id, contact.Notification_Notification_id);
+            string sql = @"INSERT INTO Onsite_officers(Officer_id, Name, Contact_no, Dob, Location_Location_id, Organisation_Organisation_id, Users_Id, Notification_Notification_id) VALUES({0}, '{1}', {2}, '{3:yyyy-MM-dd}', '{4}', {5}, '{6}', {7})";
+            int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob, contact.Location_Location_id, contact.Organisation_Organisation_id, User.Identity.Name, contact.Notification_Notification_id);
 
             if (result == 1)
             {
