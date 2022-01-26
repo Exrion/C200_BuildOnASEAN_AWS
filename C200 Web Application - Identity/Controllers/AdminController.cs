@@ -502,7 +502,7 @@ namespace C200_Web_Application___Identity.Controllers
                 string insertSQL = @"INSERT INTO Location(Location_id, Location_name, Address, Organisation_Organisation_id, Users_Id)
                                     VALUES ('{0}','{1}','{2}','{3}')";
 
-                if (DBUtl.ExecSQL(insertSQL, ) == 1)
+                if (DBUtl.ExecSQL(insertSQL) == 1)
                 {
                     TempData["Error_msg"] = "New Partner Created";
                     TempData["Error_type"] = "success";
