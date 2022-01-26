@@ -35,6 +35,7 @@ namespace C200_Web_Application___Identity.Controllers
                 "FROM Camera C " +
                 "INNER JOIN Location_has_camera LC ON C.Location_has_camera_Level_no = LC.Level_no " +
                 "INNER JOIN Location L ON LC.Location_Location_id = L.Location_id";
+            DataTable dt = DBUtl.GetTable(sql);
 
 
 
