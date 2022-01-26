@@ -7,11 +7,16 @@
 <script language="javascript">
     $(document).ready(function () {
         //Date Picker
-        $('#DatePicker')
-            .datetimepicker({ format: 'YYYY-MM-DD' });
+        $('#DatePicker').datetimepicker({ format: 'YYYY-MM-DD' });
     });
 </script>
 
+@{
+    if (TempData["Error_msg"] != null)
+    {
+        <p class="alert @TempData["Error_type"]">@TempData["Error_msg"]</p>
+    }
+}
 <h1>Edit Contact</h1>
 <form method="post">
     <div class="form-group row">
@@ -51,18 +56,17 @@
     </div>
 
     <!--TODO: Add Location, Organisation and Notification choosers via dropdown menus.-->
-    
-    
+
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group row btn-toolbar">
         <div class="col-md-1 btn-group">
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </div>
         <div class="col-md-1 btn-group">
-            <a asp-controller="Admin" asp-action="Contacts_Location" asp-route-id="@Model.contact.Location_Location_id" class="btn-primary btn">Cancel</a>
+            <a asp-controller="Admin" asp-action="Contacts" class="btn-primary btn">Cancel</a>
         </div>
         <div class="col-md-1 btn-group">
-            <a asp-controller="Admin" asp-action="DeleteContact" asp-route-id="@Model.contact.Location_Location_id" class="btn-danger btn">Delete</a>
+            <a asp-controller="Admin" asp-action="DeleteContact" asp-route-id="@Model.contact.Officer_id" class="btn-danger btn">Delete</a>
         </div>
     </div>
 

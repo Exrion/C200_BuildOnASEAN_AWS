@@ -65,19 +65,27 @@ namespace C200_Web_Application___Identity.Controllers
         [HttpPost]
         public IActionResult EditContact(Contact contact)
         {
-            string sql = @"UPDATE Onsite_officers SET Name = '{1}', Contact_no = {2}, Dob = '{3:yyyy-MM-dd}' WHERE Officer_id = '{0}'";
-            int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob);
-
-            if (result == 1)
+            if (!ModelState.IsValid)
             {
-                TempData["Error_type"] = "alert-info";
-                TempData["Error_msg"] = "Contact data updated";
+                TempData["Error_msg"] = "Invalid Input";
+                TempData["Error_type"] = "alert-danger";
                 return RedirectToAction("Contacts");
             }
             else
             {
-                TempData["Error_type"] = "alert-warning";
-                TempData["Error_msg"] = DBUtl.DB_Message;
+                string sql = @"UPDATE Onsite_officers SET Name = '{1}', Contact_no = {2}, Dob = '{3:yyyy-MM-dd}' WHERE Officer_id = {0}";
+                int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob);
+
+                if (result == 1)
+                {
+                    TempData["Error_type"] = "alert-info";
+                    TempData["Error_msg"] = "Contact data updated";
+                }
+                else
+                {
+                    TempData["Error_type"] = "alert-warning";
+                    TempData["Error_msg"] = DBUtl.DB_Message;
+                }
                 return RedirectToAction("Contacts");
             }
         }
@@ -93,14 +101,13 @@ namespace C200_Web_Application___Identity.Controllers
             {
                 TempData["Error_type"] = "alert-info";
                 TempData["Error_msg"] = "Contact deleted";
-                return RedirectToAction("Contacts");
             }
             else
             {
                 TempData["Error_type"] = "alert-warning";
                 TempData["Error_msg"] = DBUtl.DB_Message;
-                return RedirectToAction("Contacts");
             }
+            return RedirectToAction("Contacts");
         }
         #endregion
 
