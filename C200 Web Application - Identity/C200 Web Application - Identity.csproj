@@ -5,6 +5,13 @@
     <RootNamespace>C200_Web_Application___Identity</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Temp\**" />
+    <Content Remove="Temp\**" />
+    <EmbeddedResource Remove="Temp\**" />
+    <None Remove="Temp\**" />
+  </ItemGroup>
+
 	<ItemGroup>
         <PackageReference Include="AWSSDK.KinesisVideo" Version="3.7.0.117" />
         <PackageReference Include="AWSSDK.KinesisVideoMedia" Version="3.7.0.117" />
@@ -38,7 +45,6 @@
 
 	
   <ItemGroup>
-    <Folder Include="Temp\" />
     <Folder Include="wwwroot\Images\Screenshot\" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<Camera>
+
+@{
     ViewData["Title"] = "Cameras | Admin";
 }
 
@@ -24,15 +26,23 @@
                     <th scope="col">Location</th>
                     <th scope="col">Status</th>
                 </tr>
-                <tr class="clickable" onclick="window.location='https://console.aws.amazon.com/kinesisvideo/home?region=us-east-1#/signalingChannels/signalingChannelName/camera1'" style="cursor:pointer;">
-
-                    <td>001</td>
-                    <td>Camera 1</td>
-                    <td>Level 1</td>
-                    <td>CausewayPoint</td>
-                    <td>On</td>
-
-                </tr>
+                @foreach (Camera camera in Model)
+                {
+                    <tr class="clickable" onclick="window.location='https://console.aws.amazon.com/kinesisvideo/home?region=us-east-1#/signalingChannels/signalingChannelName/camera1'" style="cursor:pointer;">
+                        <td>@camera.Camera_id</td>
+                        <td>@camera.Serial_no</td>
+                        <td>@camera.Location_has_camera_Level_no</td>
+                        <td>@camera.Location_location_id</td>
+                        @if (camera.Status.Equals(true))
+                        {
+                            <td>Up</td>
+                        }
+                        @if (camera.Status.Equals(false))
+                        {
+                            <td>Down</td>
+                        }
+                    </tr>
+                }
             </table>
         </div>
     </div>
