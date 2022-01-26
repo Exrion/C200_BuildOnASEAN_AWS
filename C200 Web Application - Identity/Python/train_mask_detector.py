@@ -159,19 +159,13 @@ valid_loss = str(H.history["val_loss"][-1])
 acc = str(H.history["accuracy"][-1])
 valid_acc = str(H.history["val_accuracy"][-1])
 
-header_added == false
 
-file = open("Statistics.csv", "a", newline="")
-writer = csv.writer(file)
+with open('Statistics.csv', mode='w') as csv_file:
+	fieldnames = ['Loss', 'Valid Loss', 'Acc', 'Valid Acc']
+	writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
-if header_added != true:
-	tup1 = ("Loss", "Valid Loss", "Acc", "Valid Loss")
-	writer.writerow(tup1)
-	header_added = true
-
-tup2 = (loss, valid_loss, acc, valid_acc)
-writer.writerow(tup2)
-file.close()
+	writer.writeheader()
+	writer.writerow({'Loss': loss, 'Valid Loss': valid_loss, 'Acc':acc, 'Valid Acc':valid_acc})
 
 # Printing statistics
 print("[INFO] Training Statistics")
