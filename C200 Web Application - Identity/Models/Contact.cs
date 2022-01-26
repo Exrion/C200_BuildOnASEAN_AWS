@@ -18,11 +18,13 @@ namespace C200_Web_Application___Identity.Models
         [Required]
         [DataType(DataType.Date, ErrorMessage = "Invalid date")]
         public DateTime Dob { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Select a location")]
         public string Location_Location_id { get; set; }
         public string Location_name { get; set; }
+        [Required(ErrorMessage = "Select an organisation")]
         public int Organisation_Organisation_id { get; set; }
         public string Company_name { get; set; }
+        [Required(ErrorMessage = "Select a notification id")]
         public int Notification_Notification_id { get; set; }
     }
 
