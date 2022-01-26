@@ -154,18 +154,21 @@ plt.ylabel("Loss/Accuracy")
 plt.legend(loc="lower left")
 plt.savefig("plot.png") #plot.png
 
-loss = str(H.history["loss"][-1])
-valid_loss = str(H.history["val_loss"][-1])
-acc = str(H.history["accuracy"][-1])
-valid_acc = str(H.history["val_accuracy"][-1])
+loss = str("{:.2f}".format(H.history["loss"][-1]))
+
+valid_loss = str("{:.2f}".format(H.history["val_loss"][-1]))
+
+acc = str("{:.2f}".format(H.history["accuracy"][-1]))
+
+valid_acc = str("{:.2f}".format(H.history["val_accuracy"][-1]))
 
 
 with open('Statistics.csv', mode='w') as csv_file:
-	fieldnames = ['Loss', 'Valid Loss', 'Acc', 'Valid Acc']
+	fieldnames = ['Loss', 'Valid Loss', 'Accuracy', 'Valid Accuracy']
 	writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
 	writer.writeheader()
-	writer.writerow({'Loss': loss, 'Valid Loss': valid_loss, 'Acc':acc, 'Valid Acc':valid_acc})
+	writer.writerow({'Loss': loss, 'Valid Loss': valid_loss, 'Accuracy':acc, 'Valid Accuracy':valid_acc})
 
 # Printing statistics
 print("[INFO] Training Statistics")
