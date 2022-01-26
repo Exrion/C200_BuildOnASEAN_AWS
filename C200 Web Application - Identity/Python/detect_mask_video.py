@@ -23,7 +23,7 @@ os.chdir(dirName)
 
 
 client = boto3.client('sns','us-east-1')
-clientS3 = boto3.client('s3')
+s3_resource = boto3.client("s3")
 
 
 
@@ -31,6 +31,7 @@ def printit():
 	print(face_count)
 
 save_path = "../wwwroot/Images/Screenshot/"
+folder_to_view = "../wwwroot/Images/Screenshot/"
 
 
 def detect_and_predict_mask(frame, faceNet, maskNet):
@@ -173,14 +174,13 @@ while True:
 		complete_name = os.path.join(save_path, img_name)
 		cv2.imwrite(complete_name,frame)
 		print("Screenshot Taken " + str(img_name))
-		clientS3.put_object(ContentType = "image/png", Body = img_name, Bucket="retrainbucket", Key=img_name); #Unable to open image in S3, but can upload to S3
 		img_counter += 1
 
 	if withoutMaskP > 95:
 		msg_counter -= 1
 		print("Time left till msg sent: " + str(msg_counter))
 		if msg_counter == 0:
-			client.publish(TopicArn="arn:aws:sns:us-east-1:111369219419:Mask_Notification", Message="Without Mask: " + str(withoutMaskP), Subject="Mask_Notification")
+			#client.publish(TopicArn="arn:aws:sns:us-east-1:111369219419:Mask_Notification", Message="Without Mask: " + str(withoutMaskP), Subject="Mask_Notification")
 			print("Message Sent")
 			msg_counter = 50
 
@@ -192,6 +192,21 @@ while True:
 	# if the `q` key was pressed, break from the loop
 	if key == ord("q"):
 		break
+
+
+for file in os.listdir(folder_to_view):
+	if file.endswith(".png"):
+		img_name = "screenshot{}.png".format(img_counter)
+		complete_name = os.path.join(save_path, file)
+		#print(file + " FILE NAME")
+		#print(img_name + " IMAGE NUMBER")
+		#print(complete_name + " COMPLETE NAME")
+		s3_resource.upload_file(Filename = complete_name, Bucket="retrainbucket", Key=file);
+	else:
+		print(f"File {file} is not a png")
+
+
+
 
 
 

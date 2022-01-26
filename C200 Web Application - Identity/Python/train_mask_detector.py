@@ -32,8 +32,8 @@ os.chdir(dirName)
 # initialize the initial learning rate, number of epochs to train for,
 # and batch size
 INIT_LR = 1e-4
-EPOCHS = 20  #20
-BS = 32      #32
+EPOCHS = 2  #20
+BS = 3      #32
 
 DIRECTORY = r"D:\data"
 CATEGORIES = ["with_mask", "without_mask"]  #Added incorrect_mask
@@ -137,7 +137,7 @@ print(classification_report(testY.argmax(axis=1), predIdxs,
 
 # serialize the model to disk
 print("[INFO] saving mask detector model...")
-model.save("mask_detector.model", save_format="h5") #mask_detector.model
+model.save("mask_detector1.model", save_format="h5") #mask_detector.model
 
 
 # plot the training loss and accuracy
@@ -159,12 +159,17 @@ valid_loss = str(H.history["val_loss"][-1])
 acc = str(H.history["accuracy"][-1])
 valid_acc = str(H.history["val_accuracy"][-1])
 
+header_added == false
 
 file = open("Statistics.csv", "a", newline="")
-tup1 = ("Loss", "Valid Loss", "Acc", "Valid Loss")
-tup2 = (loss, valid_loss, acc, valid_acc)
 writer = csv.writer(file)
-writer.writerow(tup1)
+
+if header_added != true:
+	tup1 = ("Loss", "Valid Loss", "Acc", "Valid Loss")
+	writer.writerow(tup1)
+	header_added = true
+
+tup2 = (loss, valid_loss, acc, valid_acc)
 writer.writerow(tup2)
 file.close()
 
