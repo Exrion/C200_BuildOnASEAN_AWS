@@ -4,10 +4,6 @@
     ViewData["Title"] = "Create Contact | Admin";
 }
 
-<script src="~/lib/moment/moment.min.js"></script>
-<link href="~/lib/dtpicker/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-<script src="~/lib/dtpicker/js/tempusdominus-bootstrap-4.min.js"></script>
-
 <script language="javascript">
     $(document).ready(function () {
         //Date Picker
@@ -16,13 +12,13 @@
     });
 </script>
 
-<h1>Create User</h1>
+<h1>Create Contact</h1>
 <form method="post">
     <div class="form-group row">
         <!--ID Input - Disabled-->
-        <label asp-for="contact.Officer_id" name="Id" class="col-md-2 col-form-label">Officer ID :</label>
+        <label asp-for="contact.Officer_id" name="Id" disabled hidden class="col-md-2 col-form-label">Officer ID :</label>
         <div class="col-md-8">
-            <input asp-for="contact.Officer_id" class="form-control" />
+            <input asp-for="contact.Officer_id" disabled hidden class="form-control" />
         </div>
     </div>
     <div class="form-group row">
@@ -55,7 +51,48 @@
     </div>
 
     <!--TODO: Add Location, Organisation and Notification choosers via dropdown menus.-->
-    
+    <div class="form-group row">
+        <!--Location Input-->
+        <label class="control-label col-sm-2" asp-for="contact.Location_Location_id">Location :</label>
+        <div class="col-sm-5">
+            <select class="form-control" asp-for="contact.Location_Location_id">
+                @{
+                    foreach (Location_Data location in @Model.contactData.locationData)
+                    {
+                        <option value="@location.Location_id">@location.Location_name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <!--Organisation Input-->
+        <label class="control-label col-sm-2" asp-for="contact.Organisation_Organisation_id">Organisation :</label>
+        <div class="col-sm-5">
+            <select class="form-control" asp-for="contact.Organisation_Organisation_id">
+                @{
+                    foreach (Organisation_Data org in @Model.contactData.orgData)
+                    {
+                        <option value="@org.Organisation_id">@org.Company_name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <!--Notification Input-->
+        <label class="control-label col-sm-2" asp-for="contact.Notification_Notification_id">Notification ID :</label>
+        <div class="col-sm-5">
+            <select class="form-control" asp-for="contact.Notification_Notification_id">
+                @{
+                    foreach (int noti in @Model.contactData.notiData)
+                    {
+                        <option value="@noti">@noti</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
 
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group row btn-toolbar">

@@ -110,12 +110,15 @@ namespace C200_Web_Application___Identity.Controllers
         [HttpGet]
         public IActionResult CreateContact()
         {
-            return View();
+            Contact contact = null;
+            Contact_Data contactData = Contact_Package.GetContactData();
+            Contact_Package conPack = new Contact_Package(contact, contactData);
+            return View(conPack);
         }
         [HttpPost]
         public IActionResult CreateContact(Contact contact)
         {
-            string sql = @"UPDATE Onsite_officers SET Officer_id = {0}, Name = '{1}', Contact_no = {2}, Dob = '{3:yyyy-MM-dd}', Location_Location_id = '{4}', Organisation_Organisation_id = {5}, Notification_Notification_id = {6}";
+            string sql = @"INSERT INTO Onsite_officers (Name, Contact_no, Dob, Location_Location_id, Organisation_Organisation_id, Notification_Notification_id) VALUES('{0}', {1}, '{2:yyyy-MM-dd}', '{3}', {4}, {5})";
             int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob, contact.Location_Location_id, contact.Organisation_Organisation_id, contact.Notification_Notification_id);
 
             if (result == 1)

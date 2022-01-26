@@ -4,10 +4,6 @@
     ViewData["Title"] = "Edit Contact | Admin";
 }
 
-<script src="~/lib/moment/moment.min.js"></script>
-<link href="~/lib/dtpicker/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-<script src="~/lib/dtpicker/js/tempusdominus-bootstrap-4.min.js"></script>
-
 <script language="javascript">
     $(document).ready(function () {
         //Date Picker
@@ -16,7 +12,7 @@
     });
 </script>
 
-<h1>Edit User</h1>
+<h1>Edit Contact</h1>
 <form method="post">
     <div class="form-group row">
         <!--ID Input - Disabled-->
@@ -53,7 +49,10 @@
             </div>
         </div>
     </div>
+
     <!--TODO: Add Location, Organisation and Notification choosers via dropdown menus.-->
+    
+    
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group row btn-toolbar">
         <div class="col-md-1 btn-group">
