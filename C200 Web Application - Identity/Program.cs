@@ -28,7 +28,7 @@ namespace C200_Web_Application___Identity
                 var serviceProvider = scope.ServiceProvider;
                 try
                 {
-                    RoleAndUser_Create.createDefaultSuper();
+                    //RoleAndUser_Create.createDefaultSuper();
                 }
                 catch (Exception ex)
                 {

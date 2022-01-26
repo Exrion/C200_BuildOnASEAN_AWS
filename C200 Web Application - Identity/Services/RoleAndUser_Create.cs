@@ -9,6 +9,7 @@ namespace C200_Web_Application___Identity.Services
 {
     public static class RoleAndUser_Create 
     {
+        /*
         private static readonly string ID = "Super_Default";
         private static readonly string USERNAME = ID;
         private static readonly string EMAIL = "Super_Default@gmail.com";
@@ -35,6 +36,7 @@ namespace C200_Web_Application___Identity.Services
                 }
             }
         }
+        */
 
         public static bool createUser(string id, string email, string password, string username)
         {

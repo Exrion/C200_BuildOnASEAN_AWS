@@ -85,9 +85,9 @@
         <div class="col-sm-5">
             <select class="form-control" asp-for="contact.Notification_Notification_id">
                 @{
-                    foreach (int noti in @Model.contactData.notiData)
+                    foreach (Notification_Data noti in @Model.contactData.notiData)
                     {
-                        <option value="@noti">@noti</option>
+                        <option value="@noti.Notification_id">@noti.Notification_id</option>
                     }
                 }
             </select>
