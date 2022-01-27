@@ -108,7 +108,7 @@ faceNet = cv2.dnn.readNet(prototxtPath, weightsPath)
 
 # load the face mask detector model from disk
 currentWorkingDir = os.getcwd()
-maskNet = load_model(os.path.join(currentWorkingDir, "mask_detector.model"))
+maskNet = load_model(os.path.join(currentWorkingDir, "./mask_detector.model"))
 
 # initialize the video stream
 print("[INFO] starting video stream...")

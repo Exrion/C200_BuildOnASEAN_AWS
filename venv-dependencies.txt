@@ -1,3 +1,4 @@
+# dlib, dlib should be installd with conda
 numpy>=1.14.3,<1.21.0
 Cython>=0.29.12
 pandas>=0.22.0
@@ -19,5 +20,7 @@ pytz>=2018.3
 absl-py<0.13,>=0.9
 typing-extensions<4,>=3.7.0
 imutils
-dlib
 tensorflow
+opencv-python
+scikit-learn
+matplotlib

@@ -35,7 +35,7 @@ INIT_LR = 1e-4
 EPOCHS = 2  #20
 BS = 3      #32
 
-DIRECTORY = r"D:\data"
+DIRECTORY = r"./"
 CATEGORIES = ["with_mask", "without_mask"]  #Added incorrect_mask
 
 
@@ -137,7 +137,7 @@ print(classification_report(testY.argmax(axis=1), predIdxs,
 
 # serialize the model to disk
 print("[INFO] saving mask detector model...")
-model.save("mask_detector1.model", save_format="h5") #mask_detector.model
+model.save("./mask_detector1.model", save_format="h5") #mask_detector.model
 
 
 # plot the training loss and accuracy
