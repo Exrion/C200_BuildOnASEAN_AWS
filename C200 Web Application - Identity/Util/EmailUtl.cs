@@ -16,8 +16,10 @@ public static class EmailUtl
    private static string EMAIL_PW = config.GetValue<String>("LivePW");
 
    // Using Microsoft's LIVE
-   private static string HOST = "smtp.live.com";
-   private static int PORT = 25; 
+   // smtp.live.com -> use for myrp email
+   // smtp.gmail.com -> use for gmail
+   private static string HOST = "smtp.gmail.com";
+    private static int PORT = 587; 
 
    public static bool SendEmail(string recipient,
                                 string subject, string msg,

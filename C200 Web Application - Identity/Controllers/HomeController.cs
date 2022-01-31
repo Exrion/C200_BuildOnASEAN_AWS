@@ -56,7 +56,7 @@ namespace C200_Web_Application___Identity.Controllers
             // Old Method of reading values from Forms
             string custname = form["CustName"].ToString().Trim();
             // Replace email with admin / SU
-            string email = "20024377@myrp.edu.sg"; 
+            string email = "maskdetectionapp@gmail.com"; 
             string subject = form["Subject"].ToString().Trim();
             string message = form["Message"].ToString().Trim();
 
