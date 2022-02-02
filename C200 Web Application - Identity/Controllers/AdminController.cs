@@ -74,8 +74,8 @@ namespace C200_Web_Application___Identity.Controllers
             }
             else
             {
-                string sql = @"UPDATE Onsite_officers SET Name = '{1}', Contact_no = {2}, Dob = '{3:yyyy-MM-dd}' WHERE Officer_id = {0}";
-                int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob);
+                string sql = @"UPDATE Onsite_officers SET Name = '{1}', Contact_no = {2}, Dob = '{3:yyyy-MM-dd}', Location_Location_id = '{4}', Organisation_Organisation_id = {5}, Notification_Notification_id = {6} WHERE Officer_id = {0}";
+                int result = DBUtl.ExecSQL(sql, contact.Officer_id, contact.Name, contact.Contact_no, contact.Dob, contact.Location_Location_id, contact.Organisation_Organisation_id, contact.Notification_Notification_id);
 
                 if (result == 1)
                 {

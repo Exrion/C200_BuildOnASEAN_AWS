@@ -33,7 +33,7 @@
         <!--Contact No. Input-->
         <label asp-for="contact.Contact_no" name="Contact_no" class="col-md-2 col-form-label">Contact No. :</label>
         <div class="col-md-8">
-            <input asp-for="contact.Contact_no" class="form-control" />
+            <input asp-for="contact.Contact_no" placeholder="92348765" class="form-control" />
         </div>
     </div>
     <div class="form-group row">
@@ -41,7 +41,7 @@
         <label class="control-label col-sm-2" asp-for="contact.Dob">Date of Birth :</label>
         <div class="col-sm-5">
             <div class="input-group date" id="DatePicker" data-target-input="nearest">
-                <input type="text" asp-for="contact.Dob" class="form-control" />
+                <input type="text" asp-for="contact.Dob" placeholder="YYYY-mm-dd" class="form-control" />
                 <div class="input-group-append"
                      data-target="#DatePicker" data-toggle="datetimepicker">
                     <div class="input-group-text"><i class="fas fa-calendar"></i></div>
