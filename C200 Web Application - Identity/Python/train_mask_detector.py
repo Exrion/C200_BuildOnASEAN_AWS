@@ -19,16 +19,23 @@ from sklearn.metrics import classification_report
 from imutils import paths
 import matplotlib.pyplot as plt
 import numpy as np
+import csv
 import os
+
+
+# ensures file's working directory is where the file is located
+abspath = os.path.abspath(__file__)
+dirName = os.path.dirname(abspath)
+os.chdir(dirName)
 
 
 # initialize the initial learning rate, number of epochs to train for,
 # and batch size
 INIT_LR = 1e-4
-EPOCHS = 20 
-BS = 32 
+EPOCHS = 2  #20
+BS = 3      #32
 
-DIRECTORY = r"D:\data"
+DIRECTORY = r"./"
 CATEGORIES = ["with_mask", "without_mask"]  #Added incorrect_mask
 
 
@@ -130,7 +137,7 @@ print(classification_report(testY.argmax(axis=1), predIdxs,
 
 # serialize the model to disk
 print("[INFO] saving mask detector model...")
-model.save("mask_detector.model", save_format="h5") #mask_detector.model
+model.save("./mask_detector1.model", save_format="h5") #mask_detector.model
 
 
 # plot the training loss and accuracy
@@ -139,19 +146,33 @@ plt.style.use("ggplot")
 plt.figure()
 plt.plot(np.arange(0, N), H.history["loss"], label="train_loss")
 plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
-plt.plot(np.arange(0, N), H.history["acc"], label="train_acc")     #H.history["accuracy"]
-plt.plot(np.arange(0, N), H.history["val_acc"], label="val_acc") #H.history["val_accuracy"]
+plt.plot(np.arange(0, N), H.history["accuracy"], label="train_acc")     #H.history["accuracy"]
+plt.plot(np.arange(0, N), H.history["val_accuracy"], label="val_acc") #H.history["val_accuracy"]
 plt.title("Training Loss and Accuracy")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend(loc="lower left")
 plt.savefig("plot.png") #plot.png
 
+loss = str("{:.2f%}".format(H.history["loss"][-1]))
 
+valid_loss = str("{:.2f%}".format(H.history["val_loss"][-1]))
+
+acc = str("{:.2f%}".format(H.history["accuracy"][-1]))
+
+valid_acc = str("{:.2f%}".format(H.history["val_accuracy"][-1]))
+
+
+with open('Statistics.csv', mode='w') as csv_file:
+	fieldnames = ['Loss', 'Valid Loss', 'Accuracy', 'Valid Accuracy']
+	writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+
+	writer.writeheader()
+	writer.writerow({'Loss': loss, 'Valid Loss': valid_loss, 'Accuracy':acc, 'Valid Accuracy':valid_acc})
 
 # Printing statistics
 print("[INFO] Training Statistics")
 print("Loss: " + str(H.history["loss"][-1]))
 print("Validation Loss: " + str(H.history["val_loss"][-1]))
-print("Accuracy: " + str(H.history["acc"][-1]))
-print("Validation Accuracy: " + str(H.history["val_acc"][-1]))
+print("Accuracy: " + str(H.history["accuracy"][-1]))
+print("Validation Accuracy: " + str(H.history["val_accuracy"][-1]))

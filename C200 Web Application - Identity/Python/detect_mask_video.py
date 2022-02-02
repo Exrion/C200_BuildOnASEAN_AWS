@@ -3,7 +3,6 @@ from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
 from imutils.video import VideoStream
-from flask import Flask,render_template
 import numpy as np
 import imutils
 import time
@@ -17,27 +16,22 @@ import os.path
 import boto3
 
 
-
-
-
+# ensures file's working directory is where the file is located
+abspath = os.path.abspath(__file__)
+dirName = os.path.dirname(abspath)
+os.chdir(dirName)
 
 
 client = boto3.client('sns','us-east-1')
-# client.publish(PhoneNumber='+6597730754', Message="Test from python app") ## Add if statement to only send when no mask detected
+s3_resource = boto3.client("s3")
 
 
 
 def printit():
 	print(face_count)
-#timer = threading.Timer(10.0, printit)
 
-#def screenshot():
-#		img_name = "screenshot{}.png".format(img_counter)
-#		cv2.imwrite(img_name,frame)
-#		print("Screenshot Taken " + str(img_name))
-#		img_counter += 1
-
-save_path = 'wwwroot/Images/Screenshot'
+save_path = "../wwwroot/Images/Screenshot/"
+folder_to_view = "../wwwroot/Images/Screenshot/"
 
 
 def detect_and_predict_mask(frame, faceNet, maskNet):
@@ -64,7 +58,7 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 		# extract the confidence (i.e., probability) associated with
 		# the detection
 		confidence = detections[0, 0, i, 2]
-		
+
 
 		# filter out weak detections by ensuring the confidence is
 		# greater than the minimum confidence
@@ -108,12 +102,13 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 	return (locs, preds)
 
 # load our serialized face detector model from disk
-prototxtPath = r"D:\FaceMaskDetection\face_detector\deploy.prototxt"
-weightsPath = r"D:\FaceMaskDetection\face_detector\res10_300x300_ssd_iter_140000.caffemodel"
+prototxtPath = r"./deploy.prototxt"
+weightsPath = r"./res10_300x300_ssd_iter_140000.caffemodel"
 faceNet = cv2.dnn.readNet(prototxtPath, weightsPath)
 
 # load the face mask detector model from disk
-maskNet = load_model("mask_detector.model")
+currentWorkingDir = os.getcwd()
+maskNet = load_model(os.path.join(currentWorkingDir, "./mask_detector.model"))
 
 # initialize the video stream
 print("[INFO] starting video stream...")
@@ -149,16 +144,18 @@ while True:
 		(mask, withoutMask) = pred
 
 		# Count the number of boxes created
-		face_count = face_count+1
+		face_count = face_count + 1
 
 		maskP = mask * 100
 		withoutMaskP = withoutMask * 100
+
 
 		# determine the class label and color we'll use to draw
 		# the bounding box and text
 		label = "Mask" if mask > withoutMask else "No Mask"
 		color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
 
+		label2 = "Face Count: " + str(face_count)
 
 
 
@@ -172,6 +169,12 @@ while True:
 		cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 
 
+		cv2.putText(frame, label2, (startX, startY - 30),
+			cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
+		cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
+
+
+
 	if maskP < 70 and withoutMaskP < 70:
 		img_name = "screenshot{}.png".format(img_counter)
 		complete_name = os.path.join(save_path, img_name)
@@ -183,9 +186,9 @@ while True:
 		msg_counter -= 1
 		print("Time left till msg sent: " + str(msg_counter))
 		if msg_counter == 0:
-			client.publish(TopicArn="arn:aws:sns:us-east-1:111369219419:Mask_Notification", Message="Without Mask: " + str(withoutMaskP), Subject="Mask_Notification")
+			client.publish(TopicArn="arn:aws:sns:us-east-1:768926642535:Mask_Notification", Message="Without Mask: " + "{:.2f%}".format(withoutMaskP), Subject="Mask_Notification")
 			print("Message Sent")
-			msg_counter = 100
+			msg_counter = 50
 
 	# show the output frame
 	print("[INFO] Total Number Of People: " + str(face_count))
@@ -197,16 +200,25 @@ while True:
 		break
 
 
+for file in os.listdir(folder_to_view):
+	if file.endswith(".png"):
+		img_name = "screenshot{}.png".format(img_counter)
+		complete_name = os.path.join(save_path, file)
+		s3_resource.upload_file(Filename = complete_name, Bucket="screenshot-images-bucket", Key=file)
+	else:
+		print(f"File {file} is not a png")
 
 
 
-print("[INFO] Last Number Of Faces Detected: " + str(face_count));
+
+
+
+
+
+print("[INFO] Last Number Of Faces Detected: " + str(face_count))
 
 
 
 # do a bit of cleanup
 cv2.destroyAllWindows()
 vs.stop()
-
-
-

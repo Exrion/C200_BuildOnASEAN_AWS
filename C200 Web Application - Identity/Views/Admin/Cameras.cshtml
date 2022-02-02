@@ -1,6 +1,4 @@
-﻿@model List<Camera>
-
-@{
+﻿@{
     ViewData["Title"] = "Cameras | Admin";
 }
 
@@ -12,12 +10,23 @@
             background-color: darkseagreen;
         }
     </style>
+
+    <script>
+        function makeRequest(endpoint, reqType) {
+            var xhr = new XMLHttpRequest();
+            xhr.timeout = 5000;
+            xhr.ontimeout = () => { console.error("Request timeout. :("); }
+            xhr.open(reqType, endpoint);
+            xhr.send({});
+            return xhr;
+        }
+    </script>
 </head>
 <main>
     <div class="container">
         <div class="col-sm-8">
             <h1>Camera Clusters</h1>
-            <label><a href="https://awslabs.github.io/amazon-kinesis-video-streams-webrtc-sdk-js/examples/index.html" target="_blank">Click here for test setup</a></label>
+            <label><a href="https://awslabs.github.io/amazon-kinesis-video-streams-webrtc-sdk-js/examples/index.html">Click here for test setup</a></label>
             <table class="table table-condensed hover">
                 <tr style="background-color:transparent">
                     <th scope="col">ID</th>
@@ -26,24 +35,18 @@
                     <th scope="col">Location</th>
                     <th scope="col">Status</th>
                 </tr>
-                @foreach (Camera camera in Model)
-                {
-                    <tr class="clickable" onclick="window.location='https://console.aws.amazon.com/kinesisvideo/home?region=us-east-1#/signalingChannels/signalingChannelName/camera1'" style="cursor:pointer;">
-                        <td>@camera.Camera_id</td>
-                        <td>@camera.Serial_no</td>
-                        <td>@camera.Location_has_camera_Level_no</td>
-                        <td>@camera.Location_location_id</td>
-                        @if (camera.Status.Equals(true))
-                        {
-                            <td>Up</td>
-                        }
-                        @if (camera.Status.Equals(false))
-                        {
-                            <td>Down</td>
-                        }
-                    </tr>
-                }
+                <tr class="clickable" onclick="window.location='https://console.aws.amazon.com/kinesisvideo/home?region=us-east-1#/signalingChannels/signalingChannelName/camera1'" style="cursor:pointer;">
+
+                    <td>001</td>
+                    <td>Camera 1</td>
+                    <td>Level 1</td>
+                    <td>CausewayPoint</td>
+                    <td>On</td>
+
+                </tr>
             </table>
         </div>
     </div>
+    <button onclick="console.log('clicked');makeRequest('/detectmaskrun','GET');" style="margin: 20px;">Opens webcam</button>
+    <button onclick="console.log('clicked');makeRequest('/trainmaskrun','GET');" style="margin: 20px;">Starts training</button>
 </main>

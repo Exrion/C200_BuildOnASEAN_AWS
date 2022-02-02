@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+venv/
+/C200 Web Application - Identity/Python/tracker.py
+/C200 Web Application - Identity/Python/PythonApp2.pyproj
+/C200 Web Application - Identity/Python/PythonApp1.pyproj
+/C200 Web Application - Identity/Python/PythonApp.pyproj
+/C200 Web Application - Identity/Python/PythonApp.py
+/C200 Web Application - Identity/Python/plot1.png
