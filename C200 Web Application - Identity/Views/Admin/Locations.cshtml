@@ -1,4 +1,5 @@
-﻿@model List<Location>
+﻿
+@model List<Location>
 
 @{
     ViewData["Title"] = "Locations | Admin";
@@ -12,8 +13,7 @@
         <th>Location ID</th>
         <th>Location Name</th>
         <th>Address</th>
-        <th>Levels</th>
-        <th>Organisation</th>
+        <th>Actions</th>
     </tr>
 
     @foreach (Location location in Model)
@@ -22,8 +22,6 @@
             <td>@location.Location_id</td>
             <td>@location.Location_name</td>
             <td>@location.Address</td>
-            <td>@location.Level_no</td>
-            <td>@location.Organisation_organisation_id</td>
 
             <td>
                 <a asp-controller="Admin"

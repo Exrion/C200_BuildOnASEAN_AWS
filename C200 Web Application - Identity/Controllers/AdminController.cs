@@ -362,7 +362,7 @@ namespace C200_Web_Application___Identity.Controllers
                 string insertSQL = @"INSERT INTO Organisation(Organisation_id, Company_name, Description, Email_address)
                                     VALUES ({0},'{1}','{2}','{3}')";
 
-                if (DBUtl.ExecSQL(insertSQL, organisation.Organisation_id, organisation.Company_name, organisation.Description, organisation.Email_address ) == 1)
+                if (DBUtl.ExecSQL(insertSQL, organisation.Organisation_id, organisation.Company_name, organisation.Description, organisation.Email_address) == 1)
                 {
                     TempData["Error_msg"] = "New Partner Created";
                     TempData["Error_type"] = "success";
@@ -388,7 +388,7 @@ namespace C200_Web_Application___Identity.Controllers
             List<Organisation> organisationList = DBUtl.GetList<Organisation>(selectSQL, id);
             if (organisationList.Count == 1)
             {
-               return View("EditOrganisation", organisationList[0]);
+                return View("EditOrganisation", organisationList[0]);
             }
             else
             {
@@ -414,9 +414,9 @@ namespace C200_Web_Application___Identity.Controllers
                                     SET Company_name='{1}', Email_address='{2}', Description='{3}'
                                     WHERE Organisation_id={0}";
 
-                if (DBUtl.ExecSQL(updateSQL, organisation.Organisation_id, 
-                                       organisation.Company_name, 
-                                       organisation.Email_address, 
+                if (DBUtl.ExecSQL(updateSQL, organisation.Organisation_id,
+                                       organisation.Company_name,
+                                       organisation.Email_address,
                                        organisation.Description) == 1)
                 {
                     TempData["Error_msg"] = "Partner Details Updated";
@@ -428,7 +428,7 @@ namespace C200_Web_Application___Identity.Controllers
                     TempData["Error_msg"] = DBUtl.DB_Message;
                     TempData["Error_type"] = "danger";
                     return RedirectToAction("Organisations");
-                } 
+                }
             }
         }
         #endregion
@@ -459,25 +459,19 @@ namespace C200_Web_Application___Identity.Controllers
         [Authorize(Roles = "SU")]
         public IActionResult Locations()
         {
-            string insertSQL = @"SELECT Location.Location_id, Location.Location_name, Location.Address, 
+            string selectSQL = @"SELECT Location.Location_id, Location.Location_name, Location.Address, 
                                 MAX(Location_has_camera.Level_no), Location.Organisation_Organisation_id
 								FROM Location_has_camera
                                 INNER JOIN Location
                                 ON Location.Location_id = Location_has_camera.Location_Location_id
-                                GROUP BY Location_has_camera.Location_Location_id;";
+                                GROUP BY Location_has_camera.Location_Location_id";
 
-            List<Location> locationList = DBUtl.GetList<Location>(insertSQL);
+            List<Location> locationList = DBUtl.GetList<Location>(selectSQL);
             return View("Locations", locationList);
         }
         #endregion
 
         #region Create Location
-        private void PopulateViewData() 
-        {
-            DataTable organisationTable = DBUtl.GetTable("SELECT * FROM Organisation");
-            ViewData["Organisations"] = organisationTable.Rows;
-
-        }
 
         [Authorize(Roles = "SU")]
         [HttpGet]
@@ -494,18 +488,20 @@ namespace C200_Web_Application___Identity.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewData["Error_type"] = "Invalid Input";
-                ViewData["Error_msg"] = "warning";
+                ViewData["Error_type"] = "warning";
+                ViewData["Error_msg"] = "Invalid Input";
                 return View("CreateLocation");
             }
             else
             {
-                string insertSQL = @"INSERT INTO Location(Location_id, Location_name, Address, Organisation_Organisation_id, Users_Id)
+                string insertSQL = @"INSERT INTO Location(Location_id, Location_name, Address, Organisation_Organisation_id)
                                     VALUES ('{0}','{1}','{2}','{3}')";
 
-                if (DBUtl.ExecSQL(insertSQL) == 1)
+                int rowsAffected = DBUtl.ExecSQL(insertSQL, location.Location_id, location.Location_name, location.Address, location.Organisation_organisation_id);
+
+                if (rowsAffected == 1)
                 {
-                    TempData["Error_msg"] = "New Partner Created";
+                    TempData["Error_msg"] = "New Location Created";
                     TempData["Error_type"] = "success";
                 }
                 else
@@ -514,26 +510,201 @@ namespace C200_Web_Application___Identity.Controllers
                     TempData["Error_type"] = "danger";
                 }
                 return RedirectToAction("Locations");
+
             }
         }
         #endregion
 
         #region Edit Location
+        [HttpGet]
+        public IActionResult EditLocation(string id)
+        {
+
+            string selectSQL = @"SELECT  * FROM Location WHERE Location_id='{0}'";
+            List<Location> locationList = DBUtl.GetList<Location>(selectSQL, id);
+            if (locationList.Count == 1)
+            {
+                return View(locationList[0]);
+            }
+            else
+            {
+                TempData["Error_msg"] = DBUtl.DB_Message;
+                TempData["Error_type"] = "warning";
+                return RedirectToAction("Locations");
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult EditLocation(Location location)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Error_msg"] = "Invalid input";
+                ViewData["Error_type"] = "warning";
+                return View("EditLocation");
+            }
+            else
+            {
+                string updateSQL = @"UPDATE Location SET Location_name = '{1}', Address = '{2}'
+                                                     WHERE Location_id = '{0}'";
+                int rowsAffected = DBUtl.ExecSQL(updateSQL, location.Location_id, location.Location_name, location.Address);
+                if (rowsAffected == 1)
+                {
+                    TempData["Error_msg"] = "Location updated";
+                    TempData["Error_type"] = "success";
+                    return RedirectToAction("Locations");
+                }
+                else
+                {
+                    TempData["Error_msg"] = DBUtl.DB_Message;
+                    TempData["Error_type"] = "danger";
+                    return RedirectToAction("Locations");
+                }
+
+            }
+        }
+
         #endregion
 
         #region Delete Location
+        public IActionResult DeleteLocation(string id)
+        {
+            string deleteSQL = @"DELETE FROM Location WHERE Location_id={0}";
+            int rowsAffected = DBUtl.ExecSQL(String.Format(deleteSQL, id));
+            if (rowsAffected == 1)
+            {
+                TempData["Error_msg"] = "Location deleted";
+                TempData["Error_type"] = "info";
+                return RedirectToAction("Locations");
+            }
+            else
+            {
+                TempData["Error_msg"] = DBUtl.DB_Message; //Delete Unsuccessful
+                TempData["Error_type"] = "warning";
+                return RedirectToAction("Locations");
+            }
+        }
         #endregion
 
         #region Display Camera - VIEW
+        [Authorize(Roles = "SU")]
+        public IActionResult AllCameras()
+        {
+            List<Camera> cameraList = DBUtl.GetList<Camera>("SELECT Camera_id, Serial_no, Location_has_camera_level_no, Location_location_id FROM Camera");
+            return View("AllCameras", cameraList);
+        }
         #endregion
 
         #region Create Camera
+        [Authorize(Roles = "SU")]
+        [HttpGet]
+        public IActionResult CreateCamera()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "SU")]
+        [HttpPost]
+        public IActionResult CreateCamera(Camera camera)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Error_type"] = "Invalid Input";
+                ViewData["Error_msg"] = "warning";
+                return View("CreateCamera");
+            }
+            else
+            {
+                string insertSQL = @"INSERT INTO Camera(Camera_id, Serial_no, Location_has_camera_Level_no, Location_location_id)
+                                    VALUES ({0},'{1}','{2}','{3}')";
+
+                if (DBUtl.ExecSQL(insertSQL, camera.Camera_id, camera.Serial_no, camera.Location_has_camera_Level_no, camera.Location_location_id) == 1)
+                {
+                    TempData["Error_msg"] = "New Camera Created";
+                    TempData["Error_type"] = "success";
+                }
+                else
+                {
+                    TempData["Error_msg"] = DBUtl.DB_Message;
+                    TempData["Error_type"] = "danger";
+                }
+                return RedirectToAction("AllCameras");
+            }
+        }
         #endregion
 
         #region Edit Camera
+        [Authorize(Roles = "SU")]
+        [HttpGet]
+        //Edit Camera
+        public IActionResult EditCamera(int id)
+        {
+            string selectSQL = @"SELECT * FROM Camera WHERE Camera_id = {0}";
+
+            List<Camera> cameraList = DBUtl.GetList<Camera>(selectSQL, id);
+            if (cameraList.Count == 1)
+            {
+                return View("EditOrganisation", cameraList[0]);
+            }
+            else
+            {
+                TempData["Error_msg"] = DBUtl.DB_Message; //Camera Record does not exist
+                TempData["Error_type"] = "warning";
+                return RedirectToAction("AllCameras");
+            }
+        }
+
+        [Authorize(Roles = "SU")]
+        [HttpPost]
+        public IActionResult EditCamera(Camera camera)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Error_msg"] = "Invalid Input";
+                ViewData["Error_type"] = "danger";
+                return View("EditCamera");
+            }
+            else
+            {
+                string updateSQL = @"UPDATE Camera  
+                                    SET Serial_no='{1}'
+                                    WHERE Camera_id={0}";
+
+                if (DBUtl.ExecSQL(updateSQL, camera.Camera_id, camera.Serial_no) == 1)
+                {
+                    TempData["Error_msg"] = "Camera Details Updated";
+                    TempData["Error_type"] = "success";
+                    return RedirectToAction("AllCameras");
+                }
+                else
+                {
+                    TempData["Error_msg"] = DBUtl.DB_Message;
+                    TempData["Error_type"] = "danger";
+                    return RedirectToAction("AllCameras");
+                }
+            }
+        }
         #endregion
 
         #region Delete Camera
+        public IActionResult DeleteCamera(int id)
+        {
+            string deleteSQL = @"DELETE FROM Camera WHERE Camera_id={0}";
+            int rowsAffected = DBUtl.ExecSQL(String.Format(deleteSQL, id));
+            if (rowsAffected == 1)
+            {
+                TempData["Error_msg"] = "Camera deleted";
+                TempData["Error_type"] = "info";
+                return RedirectToAction("AllCameras");
+            }
+            else
+            {
+                TempData["Error_msg"] = DBUtl.DB_Message; //Delete Unsuccessful
+                TempData["Error_type"] = "warning";
+                return RedirectToAction("AllCameras");
+            }
+        }
         #endregion
 
     }

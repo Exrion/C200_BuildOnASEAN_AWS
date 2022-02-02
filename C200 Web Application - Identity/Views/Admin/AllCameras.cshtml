@@ -1,0 +1,54 @@
+﻿@model List<Camera>
+
+@{
+    ViewData["Title"] = "Our Partners List | Admin";
+}
+
+<h1>Our Camera List</h1>
+<a class="btn btn-primary"
+   asp-controller="Admin"
+   asp-action="CreateCamera">
+    Add New Camera
+</a>
+
+<table class="table table-condensed table-hover">
+    <tr>
+        <th scope="col">Camera ID</th>
+        <th scope="col">Serial No.</th>
+        <th scope="col">Level No.</th>
+        <th scope="col">Location ID</th>
+        <th scope="col">Actions</th>
+    </tr>
+
+    @foreach (Camera camera in Model)
+    {
+        <tr>
+            <td>@camera.Camera_id</td>
+            <td>@camera.Serial_no</td>
+            <td>@camera.Location_has_camera_Level_no</td>
+            <td>@camera.Location_location_id</td>
+
+            <td>
+                <a asp-controller="Admin"
+                   asp-action="EditCamera"
+                   asp-route-id="@camera.Camera_id">
+                    Edit
+                </a> |
+
+                <a asp-controller="Admin"
+                   asp-action="DeleteCamera"
+                   asp-route-id="@camera.Camera_id"
+                   onclick="return confirm('Delete Camera [@camera.Camera_id]')">
+                    Delete
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+
+@if (TempData["Error_msg"] != null)
+{
+    <div class="alert alert-@TempData["Error_type"]">
+        @TempData["Error_msg"]
+    </div>
+}
