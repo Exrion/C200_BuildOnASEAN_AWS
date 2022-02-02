@@ -144,7 +144,7 @@ while True:
 		(mask, withoutMask) = pred
 
 		# Count the number of boxes created
-		face_count = face_count+1
+		face_count = face_count + 1
 
 		maskP = mask * 100
 		withoutMaskP = withoutMask * 100
@@ -155,6 +155,7 @@ while True:
 		label = "Mask" if mask > withoutMask else "No Mask"
 		color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
 
+		label2 = "Face Count: " + str(face_count)
 
 
 
@@ -164,6 +165,11 @@ while True:
 		# display the label and bounding box rectangle on the output
 		# frame
 		cv2.putText(frame, label, (startX, startY - 10),
+			cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
+		cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
+
+
+		cv2.putText(frame, label2, (startX, startY - 30),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
 		cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 
@@ -198,7 +204,7 @@ for file in os.listdir(folder_to_view):
 	if file.endswith(".png"):
 		img_name = "screenshot{}.png".format(img_counter)
 		complete_name = os.path.join(save_path, file)
-		s3_resource.upload_file(Filename = complete_name, Bucket="screenshot-images-bucket", Key=file);
+		s3_resource.upload_file(Filename = complete_name, Bucket="screenshot-images-bucket", Key=file)
 	else:
 		print(f"File {file} is not a png")
 
@@ -209,7 +215,7 @@ for file in os.listdir(folder_to_view):
 
 
 
-print("[INFO] Last Number Of Faces Detected: " + str(face_count));
+print("[INFO] Last Number Of Faces Detected: " + str(face_count))
 
 
 
