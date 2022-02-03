@@ -1,14 +1,14 @@
 ﻿@model List<Organisation>
 
 @{
-    ViewData["Title"] = "Our Partners List | Admin";
+    ViewData["Title"] = "Our Organisations List | Admin";
 }
 
 <h1>Our Partner List</h1>
 <a class="btn btn-primary" 
    asp-controller="Admin" 
    asp-action="CreateOrganisation">
-   Add New Partner
+   Add New Organisation
 </a>
 
 <table class="table table-condensed table-hover">
@@ -38,7 +38,7 @@
                 <a asp-controller="Admin"
                    asp-action="DeleteOrganisation"
                    asp-route-id="@organisation.Organisation_id"
-                   onclick="return confirm('Delete Partner [@organisation.Organisation_id - @organisation.Company_name]')">
+                   onclick="return confirm('Delete Organisation [@organisation.Organisation_id - @organisation.Company_name]')">
                     Delete
                 </a>
             </td>
