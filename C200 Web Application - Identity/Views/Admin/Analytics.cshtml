@@ -4,11 +4,11 @@
 
 @model Statistics
 
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </head>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 <h2> Training Data</h2>
 
 
@@ -16,15 +16,18 @@
 <div class="row">
     <div class="col-sm-4">
         <div>
-            <img src="~/Images/Shared/plot.png" />
-        </div>
-        <input type="file" id="fileUpload"/>
-        <input type="button" id="upload" value="Upload" onclick="Upload()" />
-        <hr />
-        <div id="dvCSV" class="table">
+            <img src="\Python\plot.png" />
         </div>
     </div>
 
+</div>
+
+<div class="col-sm-4">
+    <input type="file" id="fileUpload" />
+    <input type="button" id="upload" value="Upload" onclick="Upload()" />
+    <hr />
+    <div id="dvCSV" class="table">
+    </div>
 </div>
 
 
