@@ -638,14 +638,14 @@ namespace C200_Web_Application___Identity.Controllers
         [Authorize(Roles = "SU")]
         [HttpGet]
         //Edit Camera
-        public IActionResult EditCamera(int id)
+        public IActionResult EditCamera(string id)
         {
-            string selectSQL = @"SELECT * FROM Camera WHERE Camera_id = {0}";
+            string selectSQL = @"SELECT * FROM Camera WHERE Camera_id = '{0}'";
 
             List<Camera> cameraList = DBUtl.GetList<Camera>(selectSQL, id);
             if (cameraList.Count == 1)
             {
-                return View("EditOrganisation", cameraList[0]);
+                return View("EditCamera", cameraList[0]);
             }
             else
             {
@@ -669,7 +669,7 @@ namespace C200_Web_Application___Identity.Controllers
             {
                 string updateSQL = @"UPDATE Camera  
                                     SET Serial_no='{1}'
-                                    WHERE Camera_id={0}";
+                                    WHERE Camera_id='{0}'";
 
                 if (DBUtl.ExecSQL(updateSQL, camera.Camera_id, camera.Serial_no) == 1)
                 {
