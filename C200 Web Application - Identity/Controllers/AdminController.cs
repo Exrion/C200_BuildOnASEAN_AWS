@@ -364,7 +364,7 @@ namespace C200_Web_Application___Identity.Controllers
 
                 if (DBUtl.ExecSQL(insertSQL, organisation.Organisation_id, organisation.Company_name, organisation.Description, organisation.Email_address) == 1)
                 {
-                    TempData["Error_msg"] = "New Partner Created";
+                    TempData["Error_msg"] = "New Organisation Created";
                     TempData["Error_type"] = "success";
                 }
                 else
@@ -419,7 +419,7 @@ namespace C200_Web_Application___Identity.Controllers
                                        organisation.Email_address,
                                        organisation.Description) == 1)
                 {
-                    TempData["Error_msg"] = "Partner Details Updated";
+                    TempData["Error_msg"] = "Organisation Details Updated";
                     TempData["Error_type"] = "success";
                     return RedirectToAction("Organisations");
                 }
