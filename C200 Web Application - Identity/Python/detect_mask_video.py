@@ -186,7 +186,7 @@ while True:
 		msg_counter -= 1
 		print("Time left till msg sent: " + str(msg_counter))
 		if msg_counter == 0:
-			client.publish(TopicArn="arn:aws:sns:us-east-1:768926642535:Mask_Notification", Message="Without Mask: " + "{:.2f%}".format(withoutMaskP), Subject="Mask_Notification")
+			client.publish(TopicArn="arn:aws:sns:us-east-1:768926642535:Mask_Notification", Message="Without Mask: " + "{:.2f}%".format(withoutMaskP), Subject="Mask_Notification")
 			print("Message Sent")
 			msg_counter = 50
 
