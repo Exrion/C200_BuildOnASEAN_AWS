@@ -328,8 +328,6 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Display Organisation (Partners) - VIEW
-        //Super User
-        [Authorize(Roles = "SU")]
         public IActionResult Organisations()
         {
             List<Organisation> organisationList = DBUtl.GetList<Organisation>("SELECT Organisation_id, Company_name, Email_address, Description FROM Organisation");
@@ -338,7 +336,6 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Create Organisation (Partners)
-        [Authorize(Roles = "SU")]
         [HttpGet]
         //Create Organisation Button
         public IActionResult CreateOrganisation()
@@ -346,7 +343,6 @@ namespace C200_Web_Application___Identity.Controllers
             return View();
         }
 
-        [Authorize(Roles = "SU")]
         [HttpPost]
         //Create Organisation Button
         public IActionResult CreateOrganisation(Organisation organisation)
@@ -378,7 +374,6 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Edit Organisation (Partners)
-        [Authorize(Roles = "SU")]
         [HttpGet]
         //Edit Organisation
         public IActionResult EditOrganisation(int id)
@@ -398,7 +393,6 @@ namespace C200_Web_Application___Identity.Controllers
             }
         }
 
-        [Authorize(Roles = "SU")]
         [HttpPost]
         public IActionResult EditOrganisation(Organisation organisation)
         {
@@ -434,7 +428,6 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Delete Organisation
-        [Authorize(Roles = "SU")]
         //Delete Organisation
         public IActionResult DeleteOrganisation(int id)
         {
@@ -456,7 +449,6 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Display Location - VIEW
-        [Authorize(Roles = "SU")]
         public IActionResult Locations()
         {
             string selectSQL = @"SELECT Location.Location_id, Location.Location_name, Location.Address, 
@@ -472,8 +464,6 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Create Location
-
-        [Authorize(Roles = "SU")]
         [HttpGet]
         //Create Location
         public IActionResult CreateLocation()
@@ -481,7 +471,6 @@ namespace C200_Web_Application___Identity.Controllers
             return View();
         }
 
-        [Authorize(Roles = "SU")]
         [HttpPost]
         //Create Location
         public IActionResult CreateLocation(Location location)
@@ -588,7 +577,6 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Display Camera - VIEW
-        [Authorize(Roles = "SU")]
         public IActionResult AllCameras()
         {
             List<Camera> cameraList = DBUtl.GetList<Camera>("SELECT Camera_id, Serial_no, Location_has_camera_level_no, Location_location_id FROM Camera");
@@ -597,14 +585,12 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Create Camera
-        [Authorize(Roles = "SU")]
         [HttpGet]
         public IActionResult CreateCamera()
         {
             return View();
         }
 
-        [Authorize(Roles = "SU")]
         [HttpPost]
         public IActionResult CreateCamera(Camera camera)
         {
@@ -635,7 +621,6 @@ namespace C200_Web_Application___Identity.Controllers
         #endregion
 
         #region Edit Camera
-        [Authorize(Roles = "SU")]
         [HttpGet]
         //Edit Camera
         public IActionResult EditCamera(string id)
@@ -655,7 +640,6 @@ namespace C200_Web_Application___Identity.Controllers
             }
         }
 
-        [Authorize(Roles = "SU")]
         [HttpPost]
         public IActionResult EditCamera(Camera camera)
         {

@@ -6,6 +6,9 @@
         <a class="nav-item nav-link" href="@Url.Action("Cameras", "Admin")">Cameras</a>
         <a class="nav-item nav-link" href="@Url.Action("Contacts", "Admin")">Contacts</a>
         <a class="nav-item nav-link" href="@Url.Action("Analytics", "Admin")">Analytics</a>
+        <a class="nav-item nav-link" href="@Url.Action("Organisations", "Admin")">Organisations</a>
+        <a class="nav-item nav-link" href="@Url.Action("Locations", "Admin")">Locations</a>
+
     }
     else if (!User.Identity.IsAuthenticated)
     {
@@ -16,8 +19,6 @@
     else if (User.Identity.IsAuthenticated && this.User.IsInRole("SU"))
     {
         <a class="nav-item nav-link" href="@Url.Action("Users", "Admin")">Users</a>
-        <a class="nav-item nav-link" href="@Url.Action("Organisations", "Admin")">Organisations</a>
-        <a class="nav-item nav-link" href="@Url.Action("Locations", "Admin")">Locations</a>
-        <a class="nav-item nav-link" href="@Url.Action("AllCameras", "Admin")">Cameras</a>
+
     }
 </div>
