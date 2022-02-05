@@ -32,8 +32,8 @@ os.chdir(dirName)
 # initialize the initial learning rate, number of epochs to train for,
 # and batch size
 INIT_LR = 1e-4
-EPOCHS = 2  #20
-BS = 3      #32
+EPOCHS = 20  
+BS = 32      
 
 DIRECTORY = r"./"
 CATEGORIES = ["with_mask", "without_mask"]  #Added incorrect_mask
@@ -112,7 +112,7 @@ for layer in baseModel.layers:
 print("[INFO] compiling model...")
 opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
 model.compile(loss="binary_crossentropy", optimizer=opt,
-	metrics=["accuracy"])   #loss = binary_crossentropy
+	metrics=["accuracy"]) 
 
 # train the head of the network
 print("[INFO] training head...")
@@ -133,11 +133,11 @@ predIdxs = np.argmax(predIdxs, axis=1)
 
 # show a nicely formatted classification report
 print(classification_report(testY.argmax(axis=1), predIdxs,
-	target_names=lb.classes_))  #target_names=lb.classes_
+	target_names=lb.classes_)) 
 
 # serialize the model to disk
 print("[INFO] saving mask detector model...")
-model.save("./mask_detector1.model", save_format="h5") #mask_detector.model
+model.save("./mask_detector.model", save_format="h5")
 
 
 # plot the training loss and accuracy
@@ -146,13 +146,13 @@ plt.style.use("ggplot")
 plt.figure()
 plt.plot(np.arange(0, N), H.history["loss"], label="train_loss")
 plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
-plt.plot(np.arange(0, N), H.history["accuracy"], label="train_acc")     #H.history["accuracy"]
-plt.plot(np.arange(0, N), H.history["val_accuracy"], label="val_acc") #H.history["val_accuracy"]
+plt.plot(np.arange(0, N), H.history["accuracy"], label="train_acc")     
+plt.plot(np.arange(0, N), H.history["val_accuracy"], label="val_acc") 
 plt.title("Training Loss and Accuracy")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend(loc="lower left")
-plt.savefig(os.path.join('../wwwroot/Images/Shared', 'plot.png')) #plot.png
+plt.savefig(os.path.join('../wwwroot/Images/Shared', 'plot.png')) 
 
 loss = str("{:.2f}%".format(H.history["loss"][-1]))
 
