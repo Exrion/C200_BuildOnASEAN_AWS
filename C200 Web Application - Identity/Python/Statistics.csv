@@ -1,4 +1,2 @@
-Loss,Valid Loss,Acc,Valid Acc
-
-0.04936891421675682,0.02195563167333603,0.9890610575675964,1.0
-
+Loss,Valid Loss,Accuracy,Valid Accuracy
+0.05%,0.03%,0.99%,0.99%
