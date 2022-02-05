@@ -36,7 +36,7 @@ EPOCHS = 20
 BS = 32      
 
 DIRECTORY = r"./"
-CATEGORIES = ["with_mask", "without_mask"]  #Added incorrect_mask
+CATEGORIES = ["with_mask", "without_mask"] 
 
 
 # grab the list of images in our dataset directory, then initialize
