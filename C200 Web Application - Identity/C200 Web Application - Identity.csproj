@@ -7,13 +7,9 @@
 
   <ItemGroup>
     <Compile Remove="Temp\**" />
-    <Compile Remove="wwwroot\Images\Screenshot\**" />
     <Content Remove="Temp\**" />
-    <Content Remove="wwwroot\Images\Screenshot\**" />
     <EmbeddedResource Remove="Temp\**" />
-    <EmbeddedResource Remove="wwwroot\Images\Screenshot\**" />
     <None Remove="Temp\**" />
-    <None Remove="wwwroot\Images\Screenshot\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +52,11 @@
     <PackageReference Include="SendGrid" Version="9.25.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     <PackageReference Include="System.IO" Version="4.3.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Screenshot\" />
   </ItemGroup>
 
 </Project>
