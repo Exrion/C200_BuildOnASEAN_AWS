@@ -11,7 +11,7 @@
     "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-097a2eacf0da3b0ae\";\"aws:ec2:vpc,Subnets\"=\"subnet-07639e3fa129075d8\"",
     "solution-stack"       : "64bit Windows Server Core 2019 v2.8.2 running IIS 10.0",
     "environment-type"     : "SingleInstance",
-    "cname"                : "c200webapp",
+    "cname"                : "c200webapplicationidentitytest-dev",
     "instance-type"        : "t2.micro",
     "key-pair"             : "vockey",
     "instance-profile"     : "LabInstanceProfile",
